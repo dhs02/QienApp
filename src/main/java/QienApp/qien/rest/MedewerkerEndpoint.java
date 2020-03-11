@@ -13,7 +13,7 @@ public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService s;
 	
-	@GetMapping("/checkit")
+	@GetMapping("/test")
 	public String test() {
 		s.inService();
 		return("het werkt");
