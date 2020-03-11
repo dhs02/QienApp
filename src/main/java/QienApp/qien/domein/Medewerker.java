@@ -1,12 +1,14 @@
 package QienApp.qien.domein;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Medewerker {
+public class Medewerker implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
@@ -17,6 +19,7 @@ public class Medewerker {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
+	
 	public long getId() {
 		return id;
 	}
@@ -59,6 +62,4 @@ public class Medewerker {
 	public void setTelefoonnummer(String telefoonnummer) {
 		this.telefoonnummer = telefoonnummer;
 	}
-
-	
 }

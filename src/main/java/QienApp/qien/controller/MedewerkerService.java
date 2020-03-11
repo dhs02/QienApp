@@ -11,8 +11,6 @@ public class MedewerkerService {
 	@Autowired
 	MedewerkerRepository d;
 	
-	
-	
 	public Iterable<Medewerker> getMedewerker() {
 		Iterable<Medewerker> medewerkers;
 		medewerkers = d.findAll();
