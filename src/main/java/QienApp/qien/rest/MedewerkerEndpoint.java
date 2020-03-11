@@ -14,13 +14,14 @@ public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService s;
 	
+
 	@GetMapping("/medewerkers")
 	public Iterable<Medewerker> jojo() {
 		return s.getMedewerker();
 	}
 	
-	
-	@GetMapping("/checkit")
+
+	@GetMapping("/test")
 	public String test() {
 		s.inService();
 		return("het werkt");

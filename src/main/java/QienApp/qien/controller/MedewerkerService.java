@@ -20,8 +20,7 @@ public class MedewerkerService {
 	}
 	
 	public void inService() {
-		System.out.println("we zijn hier");
+		System.out.println("Medewerker toegevoegd aan Database");
 		d.save(new Medewerker());
-
 	}
 }
