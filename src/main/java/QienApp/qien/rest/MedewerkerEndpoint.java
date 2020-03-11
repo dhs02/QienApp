@@ -21,7 +21,7 @@ public class MedewerkerEndpoint {
 	
 	@GetMapping("/test")
 	public String test() {
-		s.inService();
+
 		return("het werkt");
 	}
 }

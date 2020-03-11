@@ -12,6 +12,8 @@ public class Medewerker implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
+
+	
 	private long id;
 	private String voornaam;
 	private String achternaam;
@@ -23,6 +25,8 @@ public class Medewerker implements Serializable {
 	public long getId() {
 		return id;
 	}
+	
+
 	public void setId(long id) {
 		this.id = id;
 	}

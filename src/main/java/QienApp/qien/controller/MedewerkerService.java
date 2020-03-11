@@ -17,8 +17,8 @@ public class MedewerkerService {
 		return medewerkers;
 	}
 	
-	public void inService() {
+	public void inService(Medewerker x) {
 		System.out.println("Medewerker toegevoegd aan Database");
-		d.save(new Medewerker());
+		d.save(x);
 	}
 }
