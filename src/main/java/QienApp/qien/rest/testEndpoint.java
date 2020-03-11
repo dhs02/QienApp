@@ -13,6 +13,7 @@ import QienApp.qien.controller.MedewerkerService;
 public class testEndpoint {
 	@Autowired
 	MedewerkerService s;
+	
 	@PostMapping("/kijkmaar")
 	public Medewerker test(@RequestBody Medewerker medewerker) {
 		System.out.println("hij doet het!!");
