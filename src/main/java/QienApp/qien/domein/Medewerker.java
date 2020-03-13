@@ -4,17 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Medewerker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> master
 	private long id;
 	private String voornaam;
 	private String achternaam;
@@ -23,26 +19,14 @@ public class Medewerker {
 	private String email;
 	private String telefoonnummer;
 	
-<<<<<<< HEAD
-	//MORGEN EVEN KIJKEN OF DIT WERKT
-	Werkgever demijne;
+	@ManyToOne
+	private Werkgever demijne;
 	
-	//NO ARGS CONSTRUCTOR --Michiel
-	Medewerker(){}
 	
-	//plak werkg aan medew constructor --Michiel
-	public Medewerker(Medewerker m, Werkgever w){
-		m = this;
-		w = this.demijne;
-	}
-	//================
 
-=======
->>>>>>> master
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -81,10 +65,5 @@ public class Medewerker {
 	}
 	public void setTelefoonnummer(String telefoonnummer) {
 		this.telefoonnummer = telefoonnummer;
-	}
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
+}
 }

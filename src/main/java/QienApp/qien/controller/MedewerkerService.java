@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import QienApp.qien.domein.Medewerker;
-import QienApp.qien.domein.Werkgever;
 @Service
 @Transactional
 public class MedewerkerService {
@@ -22,18 +21,9 @@ public class MedewerkerService {
 		System.out.println("Medewerker toegevoegd aan Database");
 		d.save(x);
 	}
-	
-<<<<<<< HEAD
-	//--Michiel
-	public void koppelService(Medewerker a, Werkgever b) {
-			Medewerker a = new Medewerker(b);	
-	}
-}
-=======
 	public void verwijderen(Long userId) {
 		System.out.println("Medewerker verwijderd uit Database");
 		d.deleteById(userId);
 	}
 	
 	}
->>>>>>> master

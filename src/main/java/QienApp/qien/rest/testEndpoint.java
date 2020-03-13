@@ -20,9 +20,5 @@ public class testEndpoint {
 		s.inService(medewerker);
 		return(medewerker);
 	}
-<<<<<<< HEAD
 	
 }
-=======
-}
->>>>>>> master

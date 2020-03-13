@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Werkgever {
@@ -17,6 +19,10 @@ public class Werkgever {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
+	
+	@OneToMany
+	Medewerker deonze;
+	
 	public long getId() {
 		return id;
 	}

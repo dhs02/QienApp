@@ -10,8 +10,6 @@ public class ContactPersoon extends Werkgever{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
-
-	
 	private long id;
 	private String voornaam;
 	private String achternaam;
