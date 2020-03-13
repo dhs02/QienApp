@@ -23,8 +23,17 @@ public class MedewerkerService {
 		d.save(x);
 	}
 	
+<<<<<<< HEAD
 	//--Michiel
 	public void koppelService(Medewerker a, Werkgever b) {
 			Medewerker a = new Medewerker(b);	
 	}
 }
+=======
+	public void verwijderen(Long userId) {
+		System.out.println("Medewerker verwijderd uit Database");
+		d.deleteById(userId);
+	}
+	
+	}
+>>>>>>> master

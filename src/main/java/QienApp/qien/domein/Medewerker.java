@@ -9,9 +9,12 @@ import javax.persistence.Id;
 public class Medewerker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> master
 	private long id;
 	private String voornaam;
 	private String achternaam;
@@ -20,6 +23,7 @@ public class Medewerker {
 	private String email;
 	private String telefoonnummer;
 	
+<<<<<<< HEAD
 	//MORGEN EVEN KIJKEN OF DIT WERKT
 	Werkgever demijne;
 	
@@ -33,6 +37,8 @@ public class Medewerker {
 	}
 	//================
 
+=======
+>>>>>>> master
 	public long getId() {
 		return id;
 	}
@@ -76,6 +82,9 @@ public class Medewerker {
 	public void setTelefoonnummer(String telefoonnummer) {
 		this.telefoonnummer = telefoonnummer;
 	}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
 }
