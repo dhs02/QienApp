@@ -20,7 +20,7 @@ public class Medewerker {
 	private String telefoonnummer;
 	
 	@ManyToOne
-	private Werkgever demijne;
+	private Opdrachtgever demijne;
 	
 	
 

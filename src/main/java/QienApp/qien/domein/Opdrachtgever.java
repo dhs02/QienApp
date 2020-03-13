@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Werkgever {
+public class Opdrachtgever {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	

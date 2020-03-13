@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ContactPersoon extends Werkgever{
+public class ContactPersoon extends Opdrachtgever{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	

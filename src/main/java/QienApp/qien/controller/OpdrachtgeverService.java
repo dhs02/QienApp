@@ -3,15 +3,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import QienApp.qien.domein.Werkgever;
+import QienApp.qien.domein.Opdrachtgever;
+
 @Service
 @Transactional
-public class WerkgeverService {
+public class OpdrachtgeverService {
 
 	@Autowired
-	WerkgeverRepository d;
+	OpdrachtgeverRepository d;
 	
-	public void inService(Werkgever x) {
+	public void inService(Opdrachtgever x) {
 		System.out.println("Werkgever toegevoegd aan Database");
 		d.save(x);
 	}

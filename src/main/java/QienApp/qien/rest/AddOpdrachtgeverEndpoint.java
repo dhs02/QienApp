@@ -4,19 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import QienApp.qien.domein.Werkgever;
-import QienApp.qien.controller.WerkgeverService;
+
+import QienApp.qien.domein.Opdrachtgever;
+
+import QienApp.qien.controller.OpdrachtgeverService;
 
 @RestController
-public class AddWerkgeverEndpoint {
+public class AddOpdrachtgeverEndpoint {
 
 	@Autowired
-	WerkgeverService w;
+	OpdrachtgeverService w;
 	
-	@PostMapping("/toevoegenwerkgever")
-	public Werkgever toevoegenWerkgever(@RequestBody Werkgever werkgever) {
+	@PostMapping("/toevoegenopdrachtgever")
+	public Opdrachtgever toevoegenWerkgever(@RequestBody Opdrachtgever opdrachtgever) {
 		System.out.println("werkgevertoevoegingsmethode...go!");
-		w.inService(werkgever);
-		return(werkgever); 
+		w.inService(opdrachtgever);
+		return(opdrachtgever); 
 	}
 }
