@@ -13,9 +13,7 @@ public class Werkgever {
 
 	
 	private long id;
-	private String voornaam;
-	private String achternaam;
-	private String geboortedatum;
+	private String bedrijfsnaam;
 	private String adres;
 	private String email;
 	private String telefoonnummer;
@@ -27,23 +25,11 @@ public class Werkgever {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getVoornaam() {
-		return voornaam;
+	public String getBedrijfsnaam() {
+		return bedrijfsnaam;
 	}
-	public void setVoornaam(String voornaam) {
-		this.voornaam = voornaam;
-	}
-	public String getAchternaam() {
-		return achternaam;
-	}
-	public void setAchternaam(String achternaam) {
-		this.achternaam = achternaam;
-	}
-	public String getGeboortedatum() {
-		return geboortedatum;
-	}
-	public void setGeboortedatum(String geboortedatum) {
-		this.geboortedatum = geboortedatum;
+	public void setBedrijfsnaam(String bedrijfsnaam) {
+		this.bedrijfsnaam = bedrijfsnaam;
 	}
 	public String getAdres() {
 		return adres;

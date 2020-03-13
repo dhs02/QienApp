@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class Medewerker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 
-	
+
+
 	private long id;
 	private String voornaam;
 	private String achternaam;
@@ -19,10 +19,23 @@ public class Medewerker {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
+	
+	//MORGEN EVEN KIJKEN OF DIT WERKT
+	Werkgever demijne;
+	
+	//NO ARGS CONSTRUCTOR --Michiel
+	Medewerker(){}
+	
+	//plak werkg aan medew constructor --Michiel
+	public Medewerker(Medewerker m, Werkgever w){
+		m = this;
+		w = this.demijne;
+	}
+	//================
+
 	public long getId() {
 		return id;
 	}
-	
 
 	public void setId(long id) {
 		this.id = id;
@@ -64,5 +77,5 @@ public class Medewerker {
 		this.telefoonnummer = telefoonnummer;
 	}
 
-	
+
 }
