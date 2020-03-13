@@ -21,4 +21,10 @@ public class MedewerkerService {
 		System.out.println("Medewerker toegevoegd aan Database");
 		d.save(x);
 	}
-}
+	
+	public void verwijderen(Long userId) {
+		System.out.println("Medewerker verwijderd uit Database");
+		d.deleteById(userId);
+	}
+	
+	}
