@@ -4,13 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Medewerker {
+public class ContactPersoon extends Opdrachtgever{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
+	
 	private long id;
 	private String voornaam;
 	private String achternaam;
@@ -18,15 +17,11 @@ public class Medewerker {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
-	
-	@ManyToOne
-	private Opdrachtgever demijne;
-	
-	
-
 	public long getId() {
 		return id;
 	}
+	
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -65,5 +60,7 @@ public class Medewerker {
 	}
 	public void setTelefoonnummer(String telefoonnummer) {
 		this.telefoonnummer = telefoonnummer;
-}
+	}
+
+	
 }

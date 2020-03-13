@@ -10,6 +10,7 @@ import QienApp.qien.controller.MedewerkerService;
 
 @RestController
 public class testEndpoint {
+	
 	@Autowired
 	MedewerkerService s;
 	
@@ -19,4 +20,5 @@ public class testEndpoint {
 		s.inService(medewerker);
 		return(medewerker);
 	}
+	
 }
