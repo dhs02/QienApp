@@ -1,9 +1,12 @@
 package QienApp.qien.domein;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -18,6 +21,9 @@ public class Opdrachtgever {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
+	
+	@OneToMany(mappedBy = "opdrachtgever")
+	private List<Medewerker> trainees;
 
 	
 	public long getId() {
