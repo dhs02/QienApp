@@ -1,5 +1,4 @@
 package QienApp.qien.domein;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
