@@ -1,10 +1,7 @@
 package QienApp.qien.controller;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import QienApp.qien.domein.Medewerker;
 
-	@Component
-	public interface MedewerkerRepository extends CrudRepository<Medewerker, Long>{
-
-	}
+@Transactional
+public interface MedewerkerRepository extends GebruikerRepository<Medewerker>{}
