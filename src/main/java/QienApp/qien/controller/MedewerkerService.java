@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import QienApp.qien.domein.Medewerker;
+import QienApp.qien.domein.Opdrachtgever;
 
 @Service
 @Transactional
@@ -19,6 +20,13 @@ public class MedewerkerService {
 	public Medewerker getMedewerkerById(Long userId) {
 		System.out.println("Medewerker gevonden in Database");
 		return medewerkerRepository.findById(userId).get();
+	}
+	public void addOpdrachtgever(Long medewerkerId, Long opdrachtgeverId) {
+		Medewerker medewerker = medewerkerRepository.findById(medewerkerId).get();
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();
+		medewerker.setOpdrachtgever(opdrachtgever);
+		medewerkerRepository.save(medewerker);
+		System.out.println("Opdrachtgever toegevoegd aan werknemer.");
 	}
 	public Medewerker addMedewerker(Medewerker medewerker) {
 		System.out.println("Medewerker toegevoegd aan Database");

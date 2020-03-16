@@ -28,6 +28,10 @@ public class MedewerkerEndpoint {
 	public Medewerker toevoegenMedewerker(@RequestBody Medewerker medewerker) {
 		return medewerkerService.addMedewerker(medewerker);
 	}
+	@GetMapping("/gebruikers/medewerkers/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
+	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
+		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
+	}
 	@DeleteMapping("/gebruikers/medewerkers/{id}")
 	public void verwijderMedewerker(@PathVariable(value = "id") String medewerkerId) {
 		medewerkerService.deleteMedewerker(Long.parseLong(medewerkerId));

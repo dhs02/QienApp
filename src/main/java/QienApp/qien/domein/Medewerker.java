@@ -14,4 +14,3 @@ public class Medewerker extends Gebruiker {
 		this.opdrachtgever = opdrachtgever;
 	}
 }
-
