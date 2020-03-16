@@ -13,7 +13,7 @@ public class OpdrachtgeverService {
 	OpdrachtgeverRepository d;
 	
 	public void inService(Opdrachtgever x) {
-		System.out.println("Werkgever toegevoegd aan Database");
+		System.out.println("Opdrachtgever toegevoegd aan Database");
 		d.save(x);
 	}
 }
