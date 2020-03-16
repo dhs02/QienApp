@@ -1,11 +1,7 @@
 package QienApp.qien.controller;
-
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import QienApp.qien.domein.Opdrachtgever;
 
-	@Component
-	public interface OpdrachtgeverRepository extends CrudRepository<Opdrachtgever, Long>{
-
-	}
+@Repository
+public interface OpdrachtgeverRepository extends CrudRepository<Opdrachtgever, Long>{}

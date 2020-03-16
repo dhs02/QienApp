@@ -10,6 +10,9 @@ public class MedewerkerService {
 	@Autowired
 	MedewerkerRepository medewerkerRepository;
 	
+	@Autowired
+	OpdrachtgeverRepository opdrachtgeverRepository;
+	
 	public Iterable<Medewerker> getAllMedewerkers() {
 		return medewerkerRepository.findAll();
 	}

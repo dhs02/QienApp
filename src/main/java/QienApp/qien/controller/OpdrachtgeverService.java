@@ -8,7 +8,6 @@ import QienApp.qien.domein.Opdrachtgever;
 @Service
 @Transactional
 public class OpdrachtgeverService {
-
 	@Autowired
 	OpdrachtgeverRepository d;
 	

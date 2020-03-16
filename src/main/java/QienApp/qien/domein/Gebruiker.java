@@ -4,7 +4,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +13,6 @@ public class Gebruiker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
 	private String voornaam;
 	private String achternaam;
 	private String geboorteDatum;
@@ -22,18 +20,9 @@ public class Gebruiker {
 	private String email;
 	private String telefoonNummer;
 	private String wachtwoordHash;
-	
-	@ManyToOne
-	Opdrachtgever opdrachtgever;
 
 	public long getId() {
 		return id;
-	}
-	public Opdrachtgever getOpdrachtgever() {
-		return opdrachtgever;
-	}
-	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
-		this.opdrachtgever = opdrachtgever;
 	}
 	public void setId(long id) {
 		this.id = id;
