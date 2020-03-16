@@ -22,10 +22,9 @@ public class Opdrachtgever {
 	private String email;
 	private String telefoonnummer;
 	
-	// @OneToMany(mappedBy = "opdrachtgever")
-	// private List<Medewerker> trainees;
-
-	
+	 @OneToMany(mappedBy = "opdrachtgever")
+	 private List<Medewerker> trainees;
+	 
 	public long getId() {
 		return id;
 	}
