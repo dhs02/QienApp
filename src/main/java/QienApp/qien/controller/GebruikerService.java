@@ -1,4 +1,6 @@
 package QienApp.qien.controller;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,17 @@ import QienApp.qien.domein.Gebruiker;
 public class GebruikerService {
 	@Autowired
 	GebruikerRepository<Gebruiker> gebruikerRepository;
+	
+	public List<Gebruiker> findByAchternaam(String achternaam) {
+		return gebruikerRepository.findByAchternaam(achternaam);
+	}
+	
+	public Optional<Gebruiker> findByVoornaam(String voornaam) {
+		return gebruikerRepository.findByVoornaam(voornaam);
+	}
+	
+	
+	
 	
 	public Iterable<Gebruiker> getAllGebruikers() {
 		return gebruikerRepository.findAll();

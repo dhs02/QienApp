@@ -2,12 +2,11 @@ package QienApp.qien.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.domein.Contactpersoon;
 
@@ -32,7 +31,7 @@ public class ContactpersoonEndpoint {
 	public void verwijderContactpersoon(@PathVariable(value = "id") String contactpersoonId) {
 		contactpersoonService.deleteContactpersoon(Long.parseLong(contactpersoonId));
 	}
-	@PatchMapping("/gebruikers/contactpersonen/{id}")
+	@PutMapping("/gebruikers/contactpersonen/{id}")
 	public Contactpersoon vernieuwContactpersoon(@PathVariable(value = "id") String contactpersoonId, @RequestBody Contactpersoon contactpersoonDetails) {
 		return contactpersoonService.updateContactpersoon(Long.parseLong(contactpersoonId), contactpersoonDetails);
 	}

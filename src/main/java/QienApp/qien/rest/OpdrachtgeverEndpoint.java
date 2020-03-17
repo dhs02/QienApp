@@ -1,5 +1,4 @@
 package QienApp.qien.rest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,15 +9,12 @@ import QienApp.qien.domein.Opdrachtgever;
 import QienApp.qien.controller.OpdrachtgeverService;
 
 @RestController
-public class AddOpdrachtgeverEndpoint {
-
+public class OpdrachtgeverEndpoint {
 	@Autowired
-	OpdrachtgeverService w;
+	OpdrachtgeverService opdrachtgeverService;
 	
-	@PostMapping("/toevoegenopdrachtgever")
-	public Opdrachtgever toevoegenWerkgever(@RequestBody Opdrachtgever opdrachtgever) {
-		System.out.println("werkgevertoevoegingsmethode...go!");
-		w.inService(opdrachtgever);
-		return(opdrachtgever); 
+	@PostMapping("/opdrachtgevers")
+	public Opdrachtgever toevoegenOpdrachtgever(@RequestBody Opdrachtgever opdrachtgever) {
+		return opdrachtgeverService.addOpdrachtgever(opdrachtgever);
 	}
 }
