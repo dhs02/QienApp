@@ -9,10 +9,10 @@ import QienApp.qien.domein.Opdrachtgever;
 @Transactional
 public class OpdrachtgeverService {
 	@Autowired
-	OpdrachtgeverRepository d;
+	OpdrachtgeverRepository opdrachtgeverRepository;
 	
-	public void inService(Opdrachtgever x) {
+	public Opdrachtgever addOpdrachtgever(Opdrachtgever opdrachtgever) {
 		System.out.println("Opdrachtgever toegevoegd aan Database");
-		d.save(x);
+		return opdrachtgeverRepository.save(opdrachtgever);
 	}
 }
