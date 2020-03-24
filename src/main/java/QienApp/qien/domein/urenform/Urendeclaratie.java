@@ -34,7 +34,6 @@ import QienApp.qien.domein.Medewerker;
 */
 
 
-
 @Entity
 @Table(name = "urendeclaratie")
 public class Urendeclaratie {
