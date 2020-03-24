@@ -41,4 +41,14 @@ public class Medewerker extends Gebruiker {
 	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
 		this.opdrachtgever = opdrachtgever;
 	}
+
+
+	public List<Urendeclaratie> getUrendeclaraties() {
+		return urendeclaraties;
+	}
+
+
+	public void setUrendeclaraties(List<Urendeclaratie> urendeclaraties) {
+		this.urendeclaraties = urendeclaraties;
+	}
 }

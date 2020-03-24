@@ -8,5 +8,6 @@ public class QienApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(QienApplication.class, args);
+	System.out.println("\nIt's, it's... ALIIIIIIVEEEEE!!");
 	}
 }

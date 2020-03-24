@@ -1,4 +1,4 @@
-package QienApp.qien.controller.form;
+package QienApp.qien.controller.urenform;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

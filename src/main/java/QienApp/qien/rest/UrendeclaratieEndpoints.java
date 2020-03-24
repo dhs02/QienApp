@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import QienApp.qien.controller.MedewerkerRepository;
-import QienApp.qien.controller.form.GewerkteDagService;
-import QienApp.qien.controller.form.UrenDeclaratieService;
+import QienApp.qien.controller.urenform.GewerkteDagService;
+import QienApp.qien.controller.urenform.UrenDeclaratieService;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @RestController
 @RequestMapping
-public class UrendeclaratieFormEndpoints {
+public class UrendeclaratieEndpoints {
 	
 	//ik ben vrienden met deze lui:
 		@Autowired
@@ -42,7 +42,7 @@ public class UrendeclaratieFormEndpoints {
 	 */
 	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
 	public void createAndAddUniqueUrendeclaratieToMedewerkers(@PathVariable(value = "maandnaam") String maandNaam, 
-							@PathVariable(value = "maandNr") int maandNr) {
+							@PathVariable(value = "maandnr") int maandNr) {
 		for (Medewerker persoon: medewerkerRepository.findAll()) {
 			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr, persoon);
 		}

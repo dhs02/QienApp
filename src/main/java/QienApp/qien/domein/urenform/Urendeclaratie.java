@@ -41,16 +41,16 @@ public class Urendeclaratie {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	// TODO: deze 5
-	private Medewerker medewerker;
-	private boolean goedKeuring;
-	private boolean goedKeuringOpdrachtgever;
-	private String notitie;
-	private LocalDateTime verzendTijd;
-	
-	// TODO implementeren LocalDateTime zaken
-	Month maand;
-	Locale locale = Locale.getDefault();
+//	// TODO: deze 5
+//	private Medewerker medewerker;
+//	private boolean goedKeuring;
+//	private boolean goedKeuringOpdrachtgever;
+//	private String notitie;
+//	private LocalDateTime verzendTijd;
+//	
+//	// TODO implementeren LocalDateTime zaken
+//	Month maand;
+//	Locale locale = Locale.getDefault();
 	
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private String maandNaam;
@@ -74,62 +74,6 @@ public class Urendeclaratie {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public Medewerker getMedewerker() {
-		return medewerker;
-	}
-
-	public void setMedewerker(Medewerker medewerker) {
-		this.medewerker = medewerker;
-	}
-
-	public boolean isGoedKeuring() {
-		return goedKeuring;
-	}
-
-	public void setGoedKeuring(boolean goedKeuring) {
-		this.goedKeuring = goedKeuring;
-	}
-
-	public boolean isGoedKeuringOpdrachtgever() {
-		return goedKeuringOpdrachtgever;
-	}
-
-	public void setGoedKeuringOpdrachtgever(boolean goedKeuringOpdrachtgever) {
-		this.goedKeuringOpdrachtgever = goedKeuringOpdrachtgever;
-	}
-
-	public String getNotitie() {
-		return notitie;
-	}
-
-	public void setNotitie(String notitie) {
-		this.notitie = notitie;
-	}
-
-	public LocalDateTime getVerzendTijd() {
-		return verzendTijd;
-	}
-
-	public void setVerzendTijd(LocalDateTime verzendTijd) {
-		this.verzendTijd = verzendTijd;
-	}
-
-	public Month getMaand() {
-		return maand;
-	}
-
-	public void setMaand(Month maand) {
-		this.maand = maand;
-	}
-
-	public Locale getLocale() {
-		return locale;
-	}
-
-	public void setLocale(Locale locale) {
-		this.locale = locale;
 	}
 
 	public String getMaandNaam() {
