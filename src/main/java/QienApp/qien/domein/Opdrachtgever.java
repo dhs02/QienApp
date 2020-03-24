@@ -44,5 +44,5 @@ public class Opdrachtgever {
 	}
 	public void setTelefoonnummer(String telefoonnummer) {
 		this.telefoonnummer = telefoonnummer;
-	}	
+	}
 }
