@@ -15,7 +15,22 @@ import QienApp.qien.domein.urenform.Urendeclaratie;
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
+  
+  @ManyToOne
+	Contactpersoon contactpersoon;
 	
+	public Opdrachtgever getOpdrachtgever() {
+		return opdrachtgever;
+	}
+	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
+		this.opdrachtgever = opdrachtgever;
+	}
+  public Contactpersoon getContactpersoon() {
+		return contactpersoon;
+	}
+	public void setContactpersoon(Contactpersoon contactpersoon) {
+		this.contactpersoon = contactpersoon;
+
 //ik heb een lijst met urendeclaraties
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="urendecs_id")
@@ -32,21 +47,11 @@ public class Medewerker extends Gebruiker {
 	public void addUrendeclaratie (Urendeclaratie u) {
 		this.urendeclaraties.add(u);
 		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
-    }
-	
-	
-	public Opdrachtgever getOpdrachtgever() {
-		return opdrachtgever;
-	}
-	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
-		this.opdrachtgever = opdrachtgever;
-	}
-
+  }
 
 	public List<Urendeclaratie> getUrendeclaraties() {
 		return urendeclaraties;
 	}
-
 
 	public void setUrendeclaraties(List<Urendeclaratie> urendeclaraties) {
 		this.urendeclaraties = urendeclaraties;
