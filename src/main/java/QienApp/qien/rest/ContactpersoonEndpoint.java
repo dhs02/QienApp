@@ -6,32 +6,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.domein.Contactpersoon;
 
 @RestController
+@RequestMapping("/api/contactpersonen")
 public class ContactpersoonEndpoint {
 	@Autowired
 	ContactpersoonService contactpersoonService;
 
-	@GetMapping("/gebruikers/contactpersonen")
+	@GetMapping("/")
 	public Iterable<Contactpersoon> verkrijgContactpersonen() {
 		return contactpersoonService.getAllContactpersonen();
 	}
-	@GetMapping("/gebruikers/contactpersonen/{id}")
+	@GetMapping("/{id}")
 	public Contactpersoon verkrijgContactpersoon(@PathVariable(value = "id") String contactpersoonId) {
 		return contactpersoonService.getContactpersoonById(Long.parseLong(contactpersoonId));
 	}
-	@PostMapping("/gebruikers/contactpersonen")
+	@GetMapping("/{cpid}/{wgid}") // @PostMapping alleen met objecten meesturen
+	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="wgid") String opdrachtgeverId) {
+		contactpersoonService.addOpdrachtgever(Long.parseLong(contactpersoonId), Long.parseLong(opdrachtgeverId));
+	}
+	@PostMapping("/")
 	public Contactpersoon toevoegenContactpersoon(@RequestBody Contactpersoon contactpersoon) {
 		return contactpersoonService.addContactpersoon(contactpersoon);
 	}
-	@DeleteMapping("/gebruikers/contactpersonen/{id}")
+	@DeleteMapping("/{id}")
 	public void verwijderContactpersoon(@PathVariable(value = "id") String contactpersoonId) {
 		contactpersoonService.deleteContactpersoon(Long.parseLong(contactpersoonId));
 	}
-	@PutMapping("/gebruikers/contactpersonen/{id}")
+	@PutMapping("/{id}")
 	public Contactpersoon vernieuwContactpersoon(@PathVariable(value = "id") String contactpersoonId, @RequestBody Contactpersoon contactpersoonDetails) {
 		return contactpersoonService.updateContactpersoon(Long.parseLong(contactpersoonId), contactpersoonDetails);
 	}

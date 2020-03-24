@@ -15,6 +15,7 @@ import QienApp.qien.controller.GebruikerService;
 import QienApp.qien.domein.Gebruiker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -24,9 +25,6 @@ import io.swagger.annotations.ApiResponses;
 public class GebruikerEndpoint {
 	@Autowired
 	GebruikerService gebruikerService;
-	
-
-	
 	
 	@GetMapping("/achternaam/{achternaam}") 
 	public List<Gebruiker> zoekAchternaam(@PathVariable(value="achternaam") String achternaam) {
@@ -38,16 +36,16 @@ public class GebruikerEndpoint {
 		return gebruikerService.findByVoornaam(voornaam);
 	}
 
-	@ApiOperation(value = "Verkrijg alle gebruikers.", notes = "Verkrijg alle gebruikers uit de database.", response = Gebruiker.class)
-	@ApiResponses({ @ApiResponse(code = 200, message = "Alle gebruikers succesvol verkregen."),
-					@ApiResponse(code = 404, message = "Could not retrieve an applicant with the specified ID"),
-					@ApiResponse(code = 400, message = "Invalid ID value") })
 	@GetMapping("/")
 	public Iterable<Gebruiker> verkrijgGebruikers() {
 		return gebruikerService.getAllGebruikers();
 	}
+	
+	@ApiOperation(value = "Verkrijg een gebruiker.", notes = "Verkrijg een gebruiker uit de Database met het gespecificeerde ID.", response = Gebruiker.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "Gebruiker succesvol verkregen."),
+					@ApiResponse(code = 404, message = "Gebruiker kon niet worden verkregen") })
 	@GetMapping("/{id}")
-	public Gebruiker verkrijgGebruiker(@PathVariable(value = "id") String gebruikerId) {
+	public Gebruiker verkrijgGebruiker(@ApiParam(required = true, name = "id", value = "Gebruiker-ID", type = "String", example="10") @PathVariable(value = "id") String gebruikerId) {
 		return gebruikerService.getGebruikerById(Long.parseLong(gebruikerId));
 	}
 	@PostMapping("/")

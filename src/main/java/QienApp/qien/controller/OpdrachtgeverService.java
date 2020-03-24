@@ -11,8 +11,36 @@ public class OpdrachtgeverService {
 	@Autowired
 	OpdrachtgeverRepository opdrachtgeverRepository;
 	
+	public Iterable<Opdrachtgever> getAllOpdrachtgevers() {
+		return opdrachtgeverRepository.findAll();
+	}
+	public Opdrachtgever getOpdrachtgeverById(Long userId) {
+		System.out.println("Opdrachtgever gevonden in Database");
+		return opdrachtgeverRepository.findById(userId).get();
+	}
 	public Opdrachtgever addOpdrachtgever(Opdrachtgever opdrachtgever) {
 		System.out.println("Opdrachtgever toegevoegd aan Database");
 		return opdrachtgeverRepository.save(opdrachtgever);
+	}
+	public void deleteOpdrachtgever(Long userId) {
+		System.out.println("Opdrachtgever verwijderd uit Database");
+		opdrachtgeverRepository.deleteById(userId);
+	}
+	public Opdrachtgever updateOpdrachtgever(Long userId, Opdrachtgever opdrachtgeverDetails) {
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(userId).get();
+		if (opdrachtgeverDetails.getBedrijfsnaam() != null && opdrachtgeverDetails.getBedrijfsnaam() != "") {
+			opdrachtgever.setBedrijfsnaam(opdrachtgeverDetails.getBedrijfsnaam());
+		}
+		if (opdrachtgeverDetails.getAdres() != null && opdrachtgeverDetails.getAdres() != "") {
+			opdrachtgever.setAdres(opdrachtgeverDetails.getAdres());
+		}
+		if (opdrachtgeverDetails.getEmail() != null && opdrachtgeverDetails.getEmail() != "") {
+			opdrachtgever.setEmail(opdrachtgeverDetails.getEmail());
+		}
+		if (opdrachtgeverDetails.getTelefoonnummer() != null && opdrachtgeverDetails.getTelefoonnummer() != "") {
+			opdrachtgever.setTelefoonnummer(opdrachtgeverDetails.getTelefoonnummer());
+		}
+	    System.out.println("Opdrachtgever veranderd in Database");
+	    return opdrachtgeverRepository.save(opdrachtgever);
 	}
 }
