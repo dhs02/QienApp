@@ -10,13 +10,12 @@ import javax.persistence.OneToMany;
 
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
-
 @Entity
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
   
-  @ManyToOne
+	@ManyToOne
 	Contactpersoon contactpersoon;
 	
 	public Opdrachtgever getOpdrachtgever() {
@@ -25,13 +24,14 @@ public class Medewerker extends Gebruiker {
 	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
 		this.opdrachtgever = opdrachtgever;
 	}
-  public Contactpersoon getContactpersoon() {
+	public Contactpersoon getContactpersoon() {
 		return contactpersoon;
 	}
 	public void setContactpersoon(Contactpersoon contactpersoon) {
 		this.contactpersoon = contactpersoon;
+	}
 
-//ik heb een lijst met urendeclaraties
+	//ik heb een lijst met urendeclaraties
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="urendecs_id")
 	private List<Urendeclaratie> urendeclaraties = new ArrayList<Urendeclaratie>();
@@ -47,8 +47,8 @@ public class Medewerker extends Gebruiker {
 	public void addUrendeclaratie (Urendeclaratie u) {
 		this.urendeclaraties.add(u);
 		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
-  }
-
+	}
+	
 	public List<Urendeclaratie> getUrendeclaraties() {
 		return urendeclaraties;
 	}
