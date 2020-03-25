@@ -1,5 +1,7 @@
 package QienApp.qien.rest;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.urenform.GewerkteDagService;
+import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
 import QienApp.qien.controller.urenform.UrenDeclaratieService;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
@@ -27,6 +30,8 @@ public class UrendeclaratieEndpoints {
 		GewerkteDagService dagService;
 		@Autowired
 		MedewerkerRepository medewerkerRepository;
+		@Autowired
+		UrenDeclaratieRepository urenDeclaratieRepository;
 
 	/*
 	 * Urendeclaratie ENDPOINTS
@@ -40,13 +45,39 @@ public class UrendeclaratieEndpoints {
 	 * 1 met GewerkteDagen populated UrendeclaratieFormulier per Medewerker in de database
 	 * 
 	 */
-	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
+	@PostMapping("/urendeclaraties/{maandnaam}/{maandnr}")
 	public void createAndAddUniqueUrendeclaratieToMedewerkers(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {
 		for (Medewerker persoon: medewerkerRepository.findAll()) {
 			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr, persoon);
 		}
 	}
+	
+	// ALS DEVELOPER KAN IK EEN URENDECLARATIE INVULLEN
+//	@PutMapping("/urendeclaraties/{formId}")
+//	public Urendeclaratie updateUrenForm(@PathVariable(value = "formId") Long formId,
+//			@RequestBody Urendeclaratie urendDeclaratieDetails) {
+//		Urendeclaratie u = urenDeclaratieRepository.findById(formId).get();
+//		
+//		for (GewerkteDag dag : u.getGewerkteDagen() ) {
+//			dag.setAantalUrenOpdracht(urendDeclaratieDetails.getAantalUrenOpdracht());
+//			dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
+//			dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
+//			dag.setAantalUrenTraining(dagDetails.getAantalUrenTraining());
+//			dag.setAantalUrenVerlof(dagDetails.getAantalUrenVerlof());
+//			dag.setAantalUrenZiek(dagDetails.getAantalUrenZiek());
+//			dag.setVerklaringOverig(dagDetails.getVerklaringOverig());
+//
+//			return gewerkteDagRepository.save(dag);
+//		return urenDeclaratieService.updateUrendeclaratie(Long.parseLong(formId), urendDeclaratieDetails);
+//	}
+	
+	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
+	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
+							@PathVariable(value = "maandnr") int maandNr) {
+	
+			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
+		}
 
 	@GetMapping("/urendeclaraties")
 	public Iterable<Urendeclaratie> getUrendeclaraties() {
@@ -55,14 +86,13 @@ public class UrendeclaratieEndpoints {
 
 	/*
 	 * GewerkteDag ENDPOINTS
-	 * 
-	 * TODO: Maurice, hoe werkt deze precies?
-	 * is dit endpoint om de dag in te vullen?
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
 	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId,
 			@RequestBody GewerkteDag dagDetails) {
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
+	
+
 
 }
