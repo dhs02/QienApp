@@ -6,19 +6,32 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
+@ApiModel(value="Gebruiker", description="Bevat alle waarden van de Gebruiker-entiteit.")
 @Inheritance
 @Table(name="gebruiker_table")
 public class Gebruiker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(hidden = true)
 	private long id;
+	
+	@ApiModelProperty(position = 1, value = "De voornaam van een Gebruiker.")
 	private String voornaam;
+	@ApiModelProperty(position = 2, value = "De achternaam van een Gebruiker.")
 	private String achternaam;
+	@ApiModelProperty(position = 3, value = "De geboortedatum van een Gebruiker.")
 	private String geboorteDatum;
+	@ApiModelProperty(position = 4, value = "Het adres van een Gebruiker.")
 	private String adres;
+	@ApiModelProperty(position = 5, value = "Het emailadres van een Gebruiker.")
 	private String email;
+	@ApiModelProperty(position = 6, value = "Het telefoonnummer van een Gebruiker.")
 	private String telefoonNummer;
+	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
 
 	public long getId() {

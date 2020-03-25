@@ -4,12 +4,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import QienApp.qien.domein.Contactpersoon;
+import QienApp.qien.domein.Opdrachtgever;
 
 @Service
 @Transactional
 public class ContactpersoonService {
 	@Autowired
 	ContactpersoonRepository contactpersoonRepository;
+	
+	@Autowired
+	OpdrachtgeverRepository opdrachtgeverRepository;
+	
+	public void addOpdrachtgever(Long contactpersoonId, Long opdrachtgeverId) {
+		Contactpersoon contactpersoon = contactpersoonRepository.findById(contactpersoonId).get();
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();
+		contactpersoon.setOpdrachtgever(opdrachtgever);
+		contactpersoonRepository.save(contactpersoon);
+		System.out.println("Opdrachtgever toegevoegd aan contactpersoon.");
+	}
 	
 	public Iterable<Contactpersoon> getAllContactpersonen() {
 		return contactpersoonRepository.findAll();
