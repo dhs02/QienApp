@@ -34,6 +34,14 @@ public class ContactpersoonService {
 		System.out.println("Contactpersoon toegevoegd aan Database");
 		return contactpersoonRepository.save(contactpersoon);
 	}
+	public Contactpersoon addContactpersoon(Contactpersoon contactpersoon, long opdrachtgeverId) {
+		System.out.println("Contactpersoon toegevoegd aan Database");
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();
+		contactpersoon.setOpdrachtgever(opdrachtgever);
+		return contactpersoonRepository.save(contactpersoon);
+	}
+	
+	
 	public void deleteContactpersoon(Long userId) {
 		System.out.println("Contactpersoon verwijderd uit Database");
 		contactpersoonRepository.deleteById(userId);
@@ -64,4 +72,8 @@ public class ContactpersoonService {
 	    System.out.println("Contactpersoon veranderd in Database");
 	    return contactpersoonRepository.save(contactpersoon);
 	}
+
+
+	
+
 }

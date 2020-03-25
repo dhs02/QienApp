@@ -29,6 +29,11 @@ public class ContactpersoonEndpoint {
 	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="wgid") String opdrachtgeverId) {
 		contactpersoonService.addOpdrachtgever(Long.parseLong(contactpersoonId), Long.parseLong(opdrachtgeverId));
 	}
+	@PostMapping("/{wgid}")
+	public Contactpersoon toevoegenContactpersoon(@PathVariable(value="wgid") String opdrachtgeverId, 
+	@RequestBody Contactpersoon contactpersoon) {
+		return contactpersoonService.addContactpersoon(contactpersoon, Long.parseLong(opdrachtgeverId));
+	}
 	@PostMapping("/")
 	public Contactpersoon toevoegenContactpersoon(@RequestBody Contactpersoon contactpersoon) {
 		return contactpersoonService.addContactpersoon(contactpersoon);
