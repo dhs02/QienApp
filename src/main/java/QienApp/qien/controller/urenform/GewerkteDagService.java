@@ -19,12 +19,11 @@ public GewerkteDag addDag(GewerkteDag dag) {
 }
 
 //methode wijzigt urensoortvelden als je de juiste dagID en objectnaanm ingeeft
-// TODO: Maurice, hoe gebruik je dat?
 public GewerkteDag updateDag(long dagId, GewerkteDag dagDetails) {
 	System.out.println("Dag aangepast in database");
 	GewerkteDag dag = gewerkteDagRepository.findById(dagId).get();
 	
-	// TODO Michiel denkt dat deze argumenten moeten worden toegespitst op biinenkomed JSON format
+	// TODO Michiel denkt dat deze argumenten moeten worden toegespitst op binnenkomed JSON format
 	dag.setAantalUrenOpdracht(dagDetails.getAantalUrenOpdracht());
 	dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
 	dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
