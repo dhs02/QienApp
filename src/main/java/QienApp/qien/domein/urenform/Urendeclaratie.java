@@ -43,8 +43,7 @@ public class Urendeclaratie {
 
 //	// TODO: deze 5
 //	private Medewerker medewerker;
-//	private boolean goedKeuring;
-//	private boolean goedKeuringOpdrachtgever;
+	private Status status;
 //	private String notitie;
 //	private LocalDateTime verzendTijd;
 //	
@@ -90,6 +89,14 @@ public class Urendeclaratie {
 
 	public void setGewerkteDagen(List<GewerkteDag> gewerkteDagen) {
 		this.gewerkteDagen = gewerkteDagen;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 

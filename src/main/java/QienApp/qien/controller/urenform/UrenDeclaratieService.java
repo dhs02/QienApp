@@ -18,11 +18,23 @@ public class UrenDeclaratieService {
 	private MedewerkerRepository medewerkerRepository;
 	@Autowired
 	private GewerkteDagService gewerkteDagService;
+	@Autowired
+	private GewerkteDagRepository gewerkteDagRepository;
 	
 	//VIND ALLE URENDECLARATIEFORMULIEREN
 	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
 		return urenDeclaratieRepository.findAll();
 	}
+	
+	//ADDED LASZLO & MICHIEL
+		public Urendeclaratie createOrUpdateUrendeclaratie(Urendeclaratie urendeclaratie) {
+		    for (GewerkteDag dag : urendeclaratie.getGewerkteDagen()) {
+		    	gewerkteDagRepository.save(dag);
+			}	
+		    return urenDeclaratieRepository.save(urendeclaratie);
+		}
+		
+		
 	
 	//wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
 	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie urendDeclaratieDetails) {
