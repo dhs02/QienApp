@@ -5,127 +5,139 @@ import org.springframework.stereotype.Service;
 
 
 import QienApp.qien.controller.MedewerkerRepository;
+import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @Service
 public class UrenDeclaratieService {
-	
+
 	@Autowired
 	private UrenDeclaratieRepository urenDeclaratieRepository;
 	@Autowired
 	private MedewerkerRepository medewerkerRepository;
 	@Autowired
+	private MedewerkerService medewerkerService;
+	@Autowired
 	private GewerkteDagService gewerkteDagService;
-	
+
+	/**
+	 * GET ONE URENDECLARATIE
+	 * @PARAM id	ID van een specifieke urendeclaratie
+	 * @RETURN		de gevraagde urendeclaratie
+	 */
+	public Urendeclaratie getUrendeclaraties(Long id) {
+		return urenDeclaratieRepository.findById(id).get();
+	}
+
 	//VIND ALLE URENDECLARATIEFORMULIEREN
 	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
 		return urenDeclaratieRepository.findAll();
 	}
-	
-	//wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
-	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie urendDeclaratieDetails) {
-		System.out.println("declaratie in database aangepast");
-		Urendeclaratie ud = urenDeclaratieRepository.findById(udId).get();
-		
-		// TODO Michiel denkt dat deze argumenten moeten worden toegespitst op binnenkomed JSON format
-//		dag.setAantalUrenOpdracht(dagDetails.getAantalUrenOpdracht());
-//		dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
-//		dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
-//		dag.setAantalUrenTraining(dagDetails.getAantalUrenTraining());
-//		dag.setAantalUrenVerlof(dagDetails.getAantalUrenVerlof());
-//		dag.setAantalUrenZiek(dagDetails.getAantalUrenZiek());
-//		dag.setVerklaringOverig(dagDetails.getVerklaringOverig());
 
+	/**
+	 * UPDATEURENDECLARATIE ===>> IK WEET NIET ZEKER OF DEZE WERKT...
+	 * 
+	 * wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
+	 * @param udId						ID van een urendeclaratie die aangepast moet worden
+	 * @param urendDeclaratieDetails	urendeclaratie object
+	 * @return ud						de aangepaste urendeclaratie		
+	 */
+	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie nieuw) 
+	{
+		Urendeclaratie oud = urenDeclaratieRepository.findById(udId).get();
+		
+		for (GewerkteDag oudedag : oud.getGewerkteDagen() ) {
+			GewerkteDag nieuwedag : nieuw.getGewerkteDagen();
+
+			dag.setAantalUrenOpdracht(dag.getAantalUrenOpdracht());
+			dag.setAantalUrenOverig(dag.getAantalUrenOverig());
+			dag.setAantalUrenOverwerk(dag.getAantalUrenOverwerk());
+			dag.setAantalUrenTraining(dag.getAantalUrenTraining());
+			dag.setAantalUrenVerlof(dag.getAantalUrenVerlof());
+			dag.setAantalUrenZiek(dag.getAantalUrenZiek());
+			dag.setVerklaringOverig(dag.getVerklaringOverig());
+		
+		}
 		return urenDeclaratieRepository.save(ud);
 	}
-	
-	/*
-	 * CONSUMES 
-	 * maandNaam String uit JSON, 
-	 * MaandNr (1-12) uit JSON
-	 * Medewerker object uit lijst in METHODE van ENDPOINT 
-	 * PRODUCES
-	 * per medewerker uit die lijst een Urendeclaratie Object,
-	 * populated met Dag Objects (hoeveeheid hiervan wordt bepaald dmv
-	 * maandNr, zie Switch hieronder)
+
+	/**
+	 * KOPPEL FORM AAN MEDEWERKER & SAVE
+	 * @param formId
+	 * @param medewerkerId		
+	 * @return urendeclaratieformulier met eigenaar
 	 */
-	public Urendeclaratie maakUrendeclaratieForm(String maandNaam, int maandNr, Medewerker dezepersoon) {
-		// maak nieuw urendeclaratie object
-		Urendeclaratie dezemaand = new Urendeclaratie();
-		// geef de maand een naam
-		dezemaand.setMaandNaam(maandNaam);
-		// populate met dagen
-		switch(maandNr) {
-		case 2:
-			for (int x = 0; x < 29; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		case 4: case 6: case 9: case 11:
-			for (int x = 0; x < 30; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		default:
-			for (int x = 0; x < 31; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		}
-		// voeg de gemaakte maand/form toe aan de lijst van de medewerker die je als argument kreeg
-		dezepersoon.addUrendeclaratie(dezemaand);
-		medewerkerRepository.save(dezepersoon);
-		System.out.println("" + dezepersoon.getVoornaam() + dezepersoon.getAchternaam() + "gesaved met urendeclaratiefornulier voor deze maand");
-		return dezemaand;
-	}
-	
-	
-	public Urendeclaratie maakUrendeclaratieForm(String maandNaam, int maandNr) {
-		// maak nieuw urendeclaratie object
-		Urendeclaratie dezemaand = new Urendeclaratie();
-		// geef de maand een naam
-		dezemaand.setMaandNaam(maandNaam);
-		// populate met dagen
-		switch(maandNr) {
-		case 2:
-			for (int x = 0; x < 29; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		case 4: case 6: case 9: case 11:
-			for (int x = 0; x < 30; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		default:
-			for (int x = 0; x < 31; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			}
-			break;
-		}
-		urenDeclaratieRepository.save(dezemaand);
-		
-		return dezemaand;
+	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
+	{
+		Urendeclaratie tempUd = getUrendeclaraties(formId);
+		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
+
+		//add FORM to MW
+		tempMw.addUrendeclaratie(tempUd);
+		medewerkerRepository.save(tempMw);
+
+		//add MW to FORM
+		tempUd.setMedewerker(tempMw);
+		return urenDeclaratieRepository.save(tempUd);
 	}
 
+
+	/**
+	 * KOPPEL EEN LEEG URENDECLARATIEOBJECT AAN ALLE MEDEWERKERS IN DE DATABASE
+	 * @param u		leeg urendeclaratieobject
+	 * @return		mededeling dat het gelukt is
+	 */
+	public String koppelAanAllen(Urendeclaratie u) 
+	{
+		for (Medewerker persoon: medewerkerRepository.findAll()) {
+			persoon.addUrendeclaratie(u);
+			medewerkerRepository.save(persoon);
+			u.setMedewerker(persoon);
+			urenDeclaratieRepository.save(u);
+		}
+		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";
+	}
+
+
+	/**
+	 * MAAK EEN LEEG URENDECLARATIEFORMULIER
+	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
+	 * @PARAM maandNr		het nummer van de maand, benodigd voor aantal dagen dat er in komt
+	 * @RETURN dezemaand	het lege urenformulier voor deze maand
+	 */
+	public Urendeclaratie maakUrendeclaratieForm(String maandNaam, int maandNr) 
+	{
+		// maak nieuw urendeclaratie object
+		Urendeclaratie dezemaand = new Urendeclaratie();
+		// geef de maand een naam
+		dezemaand.setMaandNaam(maandNaam);
+		// populate met dagen
+		switch(maandNr) {
+		case 2:
+			for (int x = 0; x < 29; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDag(dag);
+				gewerkteDagService.addDag(dag);
+			} break;
+		case 4: case 6: case 9: case 11:
+			for (int x = 0; x < 30; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDag(dag);
+				gewerkteDagService.addDag(dag);
+			} break;
+		default:
+			for (int x = 0; x < 31; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDag(dag);
+				gewerkteDagService.addDag(dag);
+			} break;
+		}
+		urenDeclaratieRepository.save(dezemaand);
+		return dezemaand;
+	}
 }

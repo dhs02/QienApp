@@ -41,10 +41,8 @@ public class Urendeclaratie {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-//	// TODO: deze 5
-//	private Medewerker medewerker;
-//	private boolean goedKeuring;
-//	private boolean goedKeuringOpdrachtgever;
+//	// TODO
+	private Medewerker medewerker;
 //	private String notitie;
 //	private LocalDateTime verzendTijd;
 //	
@@ -55,8 +53,15 @@ public class Urendeclaratie {
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private String maandNaam;
 	
+	/**
+	 * Status is een ENUM class met de mogelijkheden:
+	 * BESCHIKBAAR, TER_GOEDKEURING, GOEDGEKEURD, AFGEKEURD, AFGEROND; 
+	 */
+	private Status status;
 	
-	//heeft een lijst met GewerkteDagen, zoveel als de maand lang is
+	/**
+	 * heeft een lijst met GewerkteDagen, zoveel als de maand lang is
+	 */
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="dag_id")
 	private List<GewerkteDag> gewerkteDagen = new ArrayList<>();
@@ -90,6 +95,22 @@ public class Urendeclaratie {
 
 	public void setGewerkteDagen(List<GewerkteDag> gewerkteDagen) {
 		this.gewerkteDagen = gewerkteDagen;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Medewerker getMedewerker() {
+		return medewerker;
+	}
+
+	public void setMedewerker(Medewerker medewerker) {
+		this.medewerker = medewerker;
 	}
 	
 
