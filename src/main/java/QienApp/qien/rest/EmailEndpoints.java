@@ -1,4 +1,4 @@
-package QienApp.qien.controller;
+package QienApp.qien.rest;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
