@@ -12,9 +12,13 @@ public enum Status {
 
 
 class Test { 
-
 	// spiekbriefje
-	public void watIsDeStatus(Status s) { 
+	public void watIsDeStatus(Status s) {
+		System.out.println("Mogelijke statussen:");
+		for(Status x: Status.values())
+		{
+		   System.out.println(x); 
+		}
 		switch (s) { 
 		case BESCHIKBAAR: 
 			System.out.println("Vul graag je uren in. (rood bolletje?)"); 
