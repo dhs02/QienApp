@@ -1,0 +1,36 @@
+# =======================================================================================
+# Setting connection to database. Make sure MySQL running with correct port, database,
+#  username and password.
+spring.datasource.url=jdbc:mysql://localhost:3306/[PLACEHOLDER]?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#spring.datasource.driverClassName=com.mysql.jdbc.Driver NO LONGER REQUIRED
+spring.datasource.username=[PLACEHOLDER]
+spring.datasource.password=[PLACEHOLDER]
+
+# =======================================================================================
+# Setting logging level
+# more info on levels in: https://www.tutorialspoint.com/log4j/log4j_logging_levels.htm
+# set root level for logging to INFO (n.b. the dot after logging.level is no typo)
+#logging.level.=INFO
+# logging.level.=DEBUG
+# Lots of additional debugging information
+
+# =======================================================================================
+# Settings for JPA
+spring.jpa.database_platform=org.hibernate.dialect.MySQL5Dialect
+
+# The setting below determines what must be done each with tables in database each time
+#   this application is started
+# options for spring.jpa.hibernate.ddl-auto: none, validate, update, create, create-drop
+spring.jpa.hibernate.ddl-auto=create-drop
+# NOTE: above setting will drop created tables after every app shutdown
+
+#please show the sql so I know what happens around here
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+
+#to prevent mysql/jpa timeout issue each hour (3600000 millis) please poll the DB
+spring.datasource.testWhileIdle=true
+spring.datasource.timeBetweenEvictionRunsMillis=3600000
+spring.datasource.validationQuery=SELECT 1
+
+server.port=8082
