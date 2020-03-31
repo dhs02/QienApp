@@ -11,6 +11,12 @@ public class GewerkteDagService {
 @Autowired
 private GewerkteDagRepository gewerkteDagRepository;
 
+//LASZLO ADDED deze functionaliteit nodig in urendeclaratie service
+//mogelijk de addDag verwijderen?
+public void save(GewerkteDag gewerkteDag) {
+	gewerkteDagRepository.save(gewerkteDag);
+}
+
 //methode genereert dagen als er een urenform(maand) wordt aangemaakt voor een medewerker
 public GewerkteDag addDag(GewerkteDag dag) {
 	System.out.println("DEBUG Dag aangemaakt voor deze maand in database");

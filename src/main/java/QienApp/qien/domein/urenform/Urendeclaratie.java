@@ -42,8 +42,8 @@ public class Urendeclaratie {
 	private long id;
 
 //	// TODO: deze 5
-//	private Medewerker medewerker;
-//	private boolean goedKeuring;
+//	private Medewerker medewerker; -> simpele many to one relatie
+//	private boolean goedKeuring;	-> uitzoeken booleans in database
 //	private boolean goedKeuringOpdrachtgever;
 //	private String notitie;
 //	private LocalDateTime verzendTijd;

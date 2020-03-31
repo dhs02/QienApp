@@ -45,6 +45,16 @@ public class UrendeclaratieEndpoints {
 	 * 1 met GewerkteDagen populated UrendeclaratieFormulier per Medewerker in de database
 	 * 
 	 */
+	
+	//LASZLO ADDED
+	@PostMapping("/api/urendeclaraties")
+	public Urendeclaratie addUrendeclaratie(@RequestBody Urendeclaratie urendeclaratie) {
+		System.out.println("posturendeclaratie");
+		urenDeclaratieService.addUrendeclaratie(urendeclaratie);
+		return urendeclaratie;
+	}	
+		
+	
 	@PostMapping("/urendeclaraties/{maandnaam}/{maandnr}")
 	public void createAndAddUniqueUrendeclaratieToMedewerkers(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {
@@ -52,26 +62,7 @@ public class UrendeclaratieEndpoints {
 			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr, persoon);
 		}
 	}
-	
-	// ALS DEVELOPER KAN IK EEN URENDECLARATIE INVULLEN
-//	@PutMapping("/urendeclaraties/{formId}")
-//	public Urendeclaratie updateUrenForm(@PathVariable(value = "formId") Long formId,
-//			@RequestBody Urendeclaratie urendDeclaratieDetails) {
-//		Urendeclaratie u = urenDeclaratieRepository.findById(formId).get();
-//		
-//		for (GewerkteDag dag : u.getGewerkteDagen() ) {
-//			dag.setAantalUrenOpdracht(urendDeclaratieDetails.getAantalUrenOpdracht());
-//			dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
-//			dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
-//			dag.setAantalUrenTraining(dagDetails.getAantalUrenTraining());
-//			dag.setAantalUrenVerlof(dagDetails.getAantalUrenVerlof());
-//			dag.setAantalUrenZiek(dagDetails.getAantalUrenZiek());
-//			dag.setVerklaringOverig(dagDetails.getVerklaringOverig());
-//
-//			return gewerkteDagRepository.save(dag);
-//		return urenDeclaratieService.updateUrendeclaratie(Long.parseLong(formId), urendDeclaratieDetails);
-//	}
-	
+
 	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
 	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {

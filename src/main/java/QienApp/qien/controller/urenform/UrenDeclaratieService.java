@@ -19,6 +19,16 @@ public class UrenDeclaratieService {
 	@Autowired
 	private GewerkteDagService gewerkteDagService;
 	
+	
+	//ADDED LASZLO
+	public void addUrendeclaratie(Urendeclaratie urendeclaratie) {
+	    for (GewerkteDag dag : urendeclaratie.getGewerkteDagen()) {
+	    	this.gewerkteDagService.save(dag);
+		}
+		urenDeclaratieRepository.save(urendeclaratie);
+	}
+	
+	
 	//VIND ALLE URENDECLARATIEFORMULIEREN
 	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
 		return urenDeclaratieRepository.findAll();
