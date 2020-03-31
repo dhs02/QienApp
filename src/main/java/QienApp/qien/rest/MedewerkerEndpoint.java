@@ -12,7 +12,7 @@ import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.domein.Medewerker;
 
 @RestController
-@RequestMapping("/api/medewerkers")
+@RequestMapping("/api/medewerkers") // LASZLO KAN DIT medewerker enkelvoud worden? wat intuïtiever
 public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService medewerkerService;
