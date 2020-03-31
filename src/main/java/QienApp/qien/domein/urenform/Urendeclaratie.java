@@ -140,9 +140,6 @@ public class Urendeclaratie {
 		this.status = status;
 	}
 
-	public void setGewerkteDagen(Collection<GewerkteDag> gewerkteDagen) {
-		this.gewerkteDagen = gewerkteDagen;
-	}
 	
 
 	

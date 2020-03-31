@@ -20,7 +20,7 @@ import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/urendeclaraties")
 public class UrendeclaratieEndpoints {
 	
 	//ik ben vrienden met deze lui:
@@ -47,14 +47,21 @@ public class UrendeclaratieEndpoints {
 	 */
 	
 	//LASZLO ADDED
-	@PostMapping("/api/urendeclaraties")
+	@PostMapping("/")
 	public Urendeclaratie addUrendeclaratie(@RequestBody Urendeclaratie urendeclaratie) {
 		System.out.println("posturendeclaratie");
 		urenDeclaratieService.addUrendeclaratie(urendeclaratie);
 		return urendeclaratie;
 	}	
-		
+
 	
+	@GetMapping("/{id}")	
+	public Urendeclaratie addUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
+		System.out.println("getUrendeclaratie");
+		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
+	}
+		
+// ------------------------------------------------
 	@PostMapping("/urendeclaraties/{maandnaam}/{maandnr}")
 	public void createAndAddUniqueUrendeclaratieToMedewerkers(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {

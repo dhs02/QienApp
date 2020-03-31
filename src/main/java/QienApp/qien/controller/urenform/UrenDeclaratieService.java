@@ -34,6 +34,11 @@ public class UrenDeclaratieService {
 		return urenDeclaratieRepository.findAll();
 	}
 	
+	//Get one urendeclaratie
+	public Urendeclaratie getUrendeclaraties(Long id) {
+		return urenDeclaratieRepository.findById(id).get();
+	}
+	
 	//wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
 	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie urendDeclaratieDetails) {
 		System.out.println("declaratie in database aangepast");
