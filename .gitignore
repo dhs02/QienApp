@@ -5,6 +5,7 @@ target/
 !**/src/test/**
 
 **.properties
+application-prod.yml
 **.DS_Store
 
 ### STS ###

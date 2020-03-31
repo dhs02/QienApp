@@ -7,6 +7,7 @@ import QienApp.qien.security.service.GebruikerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -49,6 +50,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    // Add endpoints to secure below:
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic()
@@ -56,6 +58,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(authorize -> authorize
                         .antMatchers("/css/**", "/index").permitAll()
                         .antMatchers("/api/auth-examples/**").hasRole("USER")
+                        .antMatchers("/api/dit-zijn-ook-beveiligde-endpoints/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/api/alleen-post-is-voor-deze-endpoint-beveiligd").hasRole("USER")
                 );
 
         http
