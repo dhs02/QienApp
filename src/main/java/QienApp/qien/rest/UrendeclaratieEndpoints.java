@@ -42,7 +42,7 @@ public class UrendeclaratieEndpoints {
 	 * @return		leeg urenform
 	 */
 	@PostMapping("/{maandnaam}/{maandnr}")
-	public Urendeclaratie maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
+	public Urendeclaratie maakLegeUrendeclaratie1(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) 
 	{
 		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
@@ -102,16 +102,27 @@ public class UrendeclaratieEndpoints {
 	
 	//urenDeclaratieService.updateUrendeclaratie(udId, urendDeclaratieDetails);
 	
+	
 	/**
 	 * ENDPOINT 4: update urendeclaratie van een persoon
 	 */
-	@PutMapping("/{userid}")
-	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId,
-			@RequestBody Urendeclaratie u) {
-		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
-	}
-	//MAURICE & MICHIEL
+//TODO
 
+
+
+
+	@GetMapping("/{id}")	
+	public Urendeclaratie addUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
+		System.out.println("getUrendeclaratie");
+		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
+	}
+
+	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
+	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
+			@PathVariable(value = "maandnr") int maandNr) {
+
+		urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
+	}
 
 	/**
 	 * GET ALL URENDECLARATIES
@@ -129,29 +140,8 @@ public class UrendeclaratieEndpoints {
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
 	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId,
-			@RequestBody GewerkteDag dagDetails) {
+			@RequestBody GewerkteDag dagDetails) 
+	{
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
-
-
-	// ALS DEVELOPER KAN IK EEN URENDECLARATIE INVULLEN
-	//	@PutMapping("/urendeclaraties/{formId}")
-	//	public Urendeclaratie updateUrenForm(@PathVariable(value = "formId") Long formId,
-	//			@RequestBody Urendeclaratie urendDeclaratieDetails) {
-	//		Urendeclaratie u = urenDeclaratieRepository.findById(formId).get();
-	//		
-	//		for (GewerkteDag dag : u.getGewerkteDagen() ) {
-	//			dag.setAantalUrenOpdracht(urendDeclaratieDetails.getAantalUrenOpdracht());
-	//			dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
-	//			dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
-	//			dag.setAantalUrenTraining(dagDetails.getAantalUrenTraining());
-	//			dag.setAantalUrenVerlof(dagDetails.getAantalUrenVerlof());
-	//			dag.setAantalUrenZiek(dagDetails.getAantalUrenZiek());
-	//			dag.setVerklaringOverig(dagDetails.getVerklaringOverig());
-	//
-	//			return gewerkteDagRepository.save(dag);
-	//		return urenDeclaratieService.updateUrendeclaratie(Long.parseLong(formId), urendDeclaratieDetails);
-	//	}
-
-
 }

@@ -41,8 +41,7 @@ public class Urendeclaratie {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-//	// TODO
-	private Medewerker medewerker;
+
 //	private String notitie;
 //	private LocalDateTime verzendTijd;
 //	
@@ -52,6 +51,7 @@ public class Urendeclaratie {
 	
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private String maandNaam;
+	private Medewerker medewerker;
 	
 	/**
 	 * Status is een ENUM class met de mogelijkheden:
@@ -112,6 +112,7 @@ public class Urendeclaratie {
 	public void setMedewerker(Medewerker medewerker) {
 		this.medewerker = medewerker;
 	}
+
 	
 
 
