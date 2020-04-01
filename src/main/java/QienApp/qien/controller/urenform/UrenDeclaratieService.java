@@ -24,8 +24,77 @@ public class UrenDeclaratieService {
 	private MedewerkerService medewerkerService;
 	@Autowired
 	private GewerkteDagService gewerkteDagService;
+	@Autowired
+	private GewerkteDagRepository gewerkteDagRepository;
+	
+	/** 1 *
+	 * UPDATEURENDECLARATIE
+	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
+	 * @return ud						de aangepaste urendeclaratie		
+	 */
+	public Urendeclaratie postOrUpdateUrendeclaratie(Urendeclaratie urendeclaratie ) 
+	{
+		return urenDeclaratieRepository.save(urendeclaratie);
+	}
+	
+	/** 2 *
+	 * MAAK EEN LEEG URENDECLARATIEFORMULIER, gevuld met dagen
+	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
+	 * @PARAM maandNr		het nummer van de maand, benodigd voor aantal dagen dat er in komt
+	 * @RETURN dezemaand	het lege urenformulier voor deze maand
+	 */
+	public Urendeclaratie maakUrendeclaratieForm(String maandNaam, int maandNr) 
+	{
+		// maak nieuw urendeclaratie object
+		Urendeclaratie dezemaand = new Urendeclaratie();
+		// geef de maand een naam
+		dezemaand.setMaandNaam(maandNaam);
+		// populate met dagen
+		switch(maandNr) {
+		case 2:
+			for (int x = 0; x < 29; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDagToList(dag);
+				gewerkteDagRepository.save(dag);	//TODO: is dit beter dan zoals op regel 66, 73? Ivo, Felix???
+			} break;
+		case 4: case 6: case 9: case 11:		
+			for (int x = 0; x < 30; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDagToList(dag);
+				gewerkteDagService.addDagToRepository(dag);
+			} break;
+		default:
+			for (int x = 0; x < 31; x++) {
+				GewerkteDag dag = new GewerkteDag();
+				dag.setDagnr(x+1);
+				dezemaand.addDagToList(dag);
+				gewerkteDagService.addDagToRepository(dag);
+			} break;
+		}
+		urenDeclaratieRepository.save(dezemaand);
+		return dezemaand;
+	}
+	
+	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+	 * @param u		leeg urendeclaratieobject
+	 * @return		mededeling dat het gelukt is
+	 */
+	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) 
+	{
+		for (Medewerker persoon: medewerkerRepository.findAll()) {
+			
+			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+			persoon.addUrendeclaratie(u);
+			medewerkerRepository.save(persoon);
+			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
+			//urenDeclaratieRepository.save(u);
+		}
+		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+	}
 
-	/** 1.
+	/** 1 *
 	 * GET ONE URENDECLARATIE
 	 * @PARAM id	ID van een specifieke urendeclaratie
 	 * @RETURN		de gevraagde urendeclaratie
@@ -34,20 +103,15 @@ public class UrenDeclaratieService {
 		return urenDeclaratieRepository.findById(id).get();
 	}
 
-	//VIND ALLE URENDECLARATIEFORMULIEREN
+	/** 2 * VIND ALLE URENDECLARATIEFORMULIEREN
+	 * 
+	 * @return
+	 */
 	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
 		return urenDeclaratieRepository.findAll();
 	}
 
-	/** 2.
-	 * UPDATEURENDECLARATIE
-	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
-	 * @return ud						de aangepaste urendeclaratie		
-	 */
-	public Urendeclaratie laszloMethode(Urendeclaratie nieuw) 
-	{
-		return urenDeclaratieRepository.save(nieuw);
-	}
+
 
 	/** 3.
 	 * KOPPEL FORM AAN MEDEWERKER & SAVE
@@ -70,59 +134,5 @@ public class UrenDeclaratieService {
 	}
 
 
-	/** 4.
-	 * KOPPEL EEN LEEG URENDECLARATIEOBJECT AAN ALLE MEDEWERKERS IN DE DATABASE
-	 * @param u		leeg urendeclaratieobject
-	 * @return		mededeling dat het gelukt is
-	 */
-	public String koppelAanAllen(Urendeclaratie u) 
-	{
-		for (Medewerker persoon: medewerkerRepository.findAll()) {
-			persoon.addUrendeclaratie(u);
-			medewerkerRepository.save(persoon);
-			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
-			urenDeclaratieRepository.save(u);
-		}
-		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";
-	}
-
-	/** 5.
-	 * MAAK EEN LEEG URENDECLARATIEFORMULIER
-	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
-	 * @PARAM maandNr		het nummer van de maand, benodigd voor aantal dagen dat er in komt
-	 * @RETURN dezemaand	het lege urenformulier voor deze maand
-	 */
-	public Urendeclaratie maakUrendeclaratieForm(String maandNaam, int maandNr) 
-	{
-		// maak nieuw urendeclaratie object
-		Urendeclaratie dezemaand = new Urendeclaratie();
-		// geef de maand een naam
-		dezemaand.setMaandNaam(maandNaam);
-		// populate met dagen
-		switch(maandNr) {
-		case 2:
-			for (int x = 0; x < 29; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			} break;
-		case 4: case 6: case 9: case 11:		
-			for (int x = 0; x < 30; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			} break;
-		default:
-			for (int x = 0; x < 31; x++) {
-				GewerkteDag dag = new GewerkteDag();
-				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
-			} break;
-		}
-		urenDeclaratieRepository.save(dezemaand);
-		return dezemaand;
-	}
+	
 }

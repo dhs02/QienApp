@@ -45,8 +45,6 @@ public class Urendeclaratie {
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private int jaar;
 	private String maandNaam;
-	
-	
 
 	@ManyToOne
 	private Medewerker medewerker;
@@ -56,7 +54,7 @@ public class Urendeclaratie {
 	 * BESCHIKBAAR, TER_GOEDKEURING, GOEDGEKEURD, AFGEKEURD, AFGEROND; 
 	 */
 	private Status status;
-	
+
 	/**
 	 * heeft een lijst met GewerkteDagen, zoveel als de maand lang is
 	 */
@@ -65,7 +63,7 @@ public class Urendeclaratie {
 	private List<GewerkteDag> gewerkteDagen = new ArrayList<>();
 	
 	//methode wordt gebruikt door maakForm() in UrendeclaratieService
-	public void addDag(GewerkteDag dag) {
+	public void addDagToList(GewerkteDag dag) {
 		this.gewerkteDagen.add(dag);
 		}
 	

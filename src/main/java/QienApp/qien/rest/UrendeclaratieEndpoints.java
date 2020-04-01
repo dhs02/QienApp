@@ -33,113 +33,71 @@ public class UrendeclaratieEndpoints {
 	MedewerkerRepository medewerkerRepository;
 	@Autowired
 	UrenDeclaratieRepository urenDeclaratieRepository;
-	
-	//TODO
-	@PostMapping("/test/{urendeclaratieid}")
-	public void doeHet(@PathVariable(value = "urendeclaratieid") long uId, @RequestBody Urendeclaratie u) {	
-	//	urenDeclaratieService.updateUrendeclaratie(u);
-	}
-	
-	/**
-	 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
-	 * 1.als er een ID meekomt, 2. als er geen ID meekomt
+
+	/** 1 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
+	 * 1e.als er een ID meekomt, 2e. als er geen ID meekomt
 	 * @param Urendeclaratie object
-	 * @return
+	 * @return het nieuwe Urendeclaratie object
 	 */
 	@PutMapping("/")
-	public Urendeclaratie updateUren(@RequestBody Urendeclaratie u) {
-		return urenDeclaratieService.laszloMethode(u);
+	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u) {
+		return urenDeclaratieService.postOrUpdateUrendeclaratie(u);
 	}
 
-	/**
-	 * ENDPOINT 1:	maak leeg urendeclaratieformulier
+	/** 2 * maak leeg urendeclaratieformulier
 	 * 
 	 * TODO iets met ENUM maandnaam en maandnummers
 	 * @return		leeg urenform
 	 */
 	@PostMapping("/{maandnaam}/{maandnr}")
-	public Urendeclaratie maakLegeUrendeclaratie1(@PathVariable(value = "maandnaam") String maandNaam, 
+	public Urendeclaratie maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) 
 	{
 		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
-	
-	/**
-	 * ENDPOINT 2:	koppel een leeg form aan alle medewerkers met form ID
-	 * 
-	 * @param formId
-	 * @return statusbericht: gekoppeld
-	 */
-	@PostMapping("/koppel/{formId}")
-	public String koppelZeAllemaal(@PathVariable(value = "formId") long formId)	
-	{
-	return urenDeclaratieService.koppelAanAllen(urenDeclaratieService.getUrendeclaraties(formId));
-	}
-	
-	/**
-	 * ENDPOINT 2.5:	koppel een leeg form aan alle medewerkers met een FORM object
+
+	/** 3 * koppel een nieuw gegenereerd leeg form aan alle medewerkers
 	 * 
 	 * @param urendeclaratie object
 	 * @return statusbericht: gekoppeld
+	 * @AUTHOR Laszlo & Michiel!!!
 	 */
-	@PostMapping("/koppelallen/{formId}")
-	public String koppelZeAllemaal2(@RequestBody Urendeclaratie u)	
-	{
-	return urenDeclaratieService.koppelAanAllen(u);
-	}
-	
-	/**
-	 * ENDPOINT 2.8:	koppel een nieuw gegenereerd leeg form aan alle medewerkers
-	 * 
-	 * @param urendeclaratie object
-	 * @return statusbericht: gekoppeld
-	 */
-	@PostMapping("/doealles/{maandnaam}/{maandnr}")
+	@PostMapping("/maakenkoppel/{maandnaam}/{maandnr}")
 	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) 
 	{
-	return urenDeclaratieService.koppelAanAllen(urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr));
+		return urenDeclaratieService.maakEnKoppelAanAllen(maandNaam, maandNr);
 	}
 
-	
-	/**
-	 * ENDPOINT 3:	koppel een form aan een specifieke medewerker
+	/** 4 *	koppel een form aan een specifieke medewerker
 	 * 
 	 * @param formId
 	 * @param medewerkerId
 	 * @return gekoppeld formulier
 	 */
-	@PostMapping("/{formId}/{medewerkerId}")
+	@PostMapping("/temp/{formId}/{medewerkerId}")
 	public Urendeclaratie koppelZe(@PathVariable(value = "formId") long formId, 
 			@PathVariable(value = "medewerkerId") long medewerkerId)
 	{
-	return urenDeclaratieService.koppelFormAanMedewerker(formId, medewerkerId);
+		return urenDeclaratieService.koppelFormAanMedewerker(formId, medewerkerId);
 	}
-	
-	//urenDeclaratieService.updateUrendeclaratie(udId, urendDeclaratieDetails);
-	
-	
+
 	/**
-	 * ENDPOINT 4: update urendeclaratie van een persoon
+	 * ENDPOINT 5: update urendeclaratie van een persoon
 	 */
-//TODO
-
-
-
-
 	@GetMapping("/{id}")	
 	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
 		System.out.println("getUrendeclaratie");
 		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
 	}
-/**
- * LEGE URENFORM, ZONDER ID
- * 
- * @param maandNaam
- * @param maandNr
- */
+	/**
+	 * LEGE URENFORM, ZONDER ID
+	 * 
+	 * @param maandNaam
+	 * @param maandNr
+	 */
 	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
-	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
+	public void maakLegeUrendeclaratieXXXXX(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) {
 
 		urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
@@ -149,7 +107,8 @@ public class UrendeclaratieEndpoints {
 	 * GET ALL URENDECLARATIES
 	 * @return iterable met alle urendeclaraties
 	 */
-	@GetMapping("/urendeclaraties")
+
+	@GetMapping("/")
 	public Iterable<Urendeclaratie> getUrendeclaraties() {
 		return urenDeclaratieService.getAllUrendeclaraties();
 	}
@@ -165,4 +124,17 @@ public class UrendeclaratieEndpoints {
 	{
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
+	//======================================
+	//	OVERBODIGE METHODEN, NUTTELOZE LOSSE FUNCTIONALITEIT< WAT EEN ZOOI!>
+	//	
+	//	/** 3 *	koppel een leeg form aan alle medewerkers middels form ID
+	//	 * 
+	//	 * @param formId
+	//	 * @return statusbericht: gekoppeld
+	//	 */
+	//	@PostMapping("/koppel/{formId}")
+	//	public String koppelZeAllemaal(@PathVariable(value = "formId") long formId)	
+	//	{
+	//	return urenDeclaratieService.koppelAanAllen(urenDeclaratieService.getUrendeclaraties(formId));
+	//	}
 }
