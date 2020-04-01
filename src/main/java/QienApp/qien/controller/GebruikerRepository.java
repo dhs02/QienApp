@@ -13,6 +13,8 @@ public interface GebruikerRepository<T extends Gebruiker> extends CrudRepository
 	List<T> findByAchternaam(String achternaam);
 	
 	Optional<T> findByVoornaam(String voornaam);
+
+	Optional<Gebruiker> findByEmail(String email);
 	
 //	long countByLastname(String achternaam);
 	
