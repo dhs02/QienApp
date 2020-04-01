@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmailCfg {
-    @Value("${spring.mail.host}")
+    @Value("${spring.mail.host:default}")
     private String host;
 
-    @Value("${spring.mail.port}")
+    @Value("${spring.mail.port:default}")
     private int port;
 
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.username:default}")
     private String username;
 
-    @Value("${spring.mail.password}")
+    @Value("${spring.mail.password:default}")
     private String password;
 
     public String getHost() {
