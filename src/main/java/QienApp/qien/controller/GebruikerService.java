@@ -21,9 +21,6 @@ public class GebruikerService {
 		return gebruikerRepository.findByVoornaam(voornaam);
 	}
 	
-	
-	
-	
 	public Iterable<Gebruiker> getAllGebruikers() {
 		return gebruikerRepository.findAll();
 	}

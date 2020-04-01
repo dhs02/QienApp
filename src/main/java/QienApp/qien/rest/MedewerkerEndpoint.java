@@ -25,16 +25,10 @@ public class MedewerkerEndpoint {
 	public Medewerker verkrijgMedewerker(@PathVariable(value = "id") String medewerkerId) {
 		return medewerkerService.getMedewerkerById(Long.parseLong(medewerkerId));
 	}
-	@GetMapping("/opdrachtgever/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
-	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
-		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
-	}
-//	@GetMapping("/contactpersoon/{mwid}/{cpid}")
-//	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
-//		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
-//	}
 	@PostMapping("/")
 	public Medewerker toevoegenMedewerker(@RequestBody Medewerker medewerker) {
+//		System.out.println(medewerker.getAchternaam());
+//		medewerker.setAchternaam(medewerker.getAchternaam().substring(2));
 		return medewerkerService.addMedewerker(medewerker);
 	}
 	@DeleteMapping("/{id}")
@@ -45,4 +39,15 @@ public class MedewerkerEndpoint {
 	public Medewerker vernieuwMedewerker(@PathVariable(value = "id") String medewerkerId, @RequestBody Medewerker medewerkerDetails) {
 		return medewerkerService.updateMedewerker(Long.parseLong(medewerkerId), medewerkerDetails);
 	}
+	
+	@GetMapping("/opdrachtgever/{mwid}/{ogid}") // @PostMapping alleen met objecten meesturen
+	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="ogid") String opdrachtgeverId) {
+		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
+	}
+	
+	@GetMapping("/contactpersoon/{mwid}/{cpid}")
+	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
+		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
+	}
+	
 }

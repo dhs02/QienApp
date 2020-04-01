@@ -20,7 +20,7 @@ import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/urendeclaraties")
 public class UrendeclaratieEndpoints {
 	
 	//ik ben vrienden met deze lui:
@@ -45,6 +45,22 @@ public class UrendeclaratieEndpoints {
 	 * 1 met GewerkteDagen populated UrendeclaratieFormulier per Medewerker in de database
 	 * 
 	 */
+	
+	//LASZLO ADDED
+	@PostMapping("/")
+	public Urendeclaratie addUrendeclaratie(@RequestBody Urendeclaratie urendeclaratie) {
+		System.out.println("posturendeclaratie");
+		urenDeclaratieService.addUrendeclaratie(urendeclaratie);
+		return urendeclaratie;
+	}
+
+	@GetMapping("/{id}")
+	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
+		System.out.println("getUrendeclaratie");
+		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
+	}
+		
+// ------------------------------------------------
 	@PostMapping("/urendeclaraties/{maandnaam}/{maandnr}")
 	public void createAndAddUniqueUrendeclaratieToMedewerkers(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {
@@ -52,26 +68,7 @@ public class UrendeclaratieEndpoints {
 			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr, persoon);
 		}
 	}
-	
-	// ALS DEVELOPER KAN IK EEN URENDECLARATIE INVULLEN
-//	@PutMapping("/urendeclaraties/{formId}")
-//	public Urendeclaratie updateUrenForm(@PathVariable(value = "formId") Long formId,
-//			@RequestBody Urendeclaratie urendDeclaratieDetails) {
-//		Urendeclaratie u = urenDeclaratieRepository.findById(formId).get();
-//		
-//		for (GewerkteDag dag : u.getGewerkteDagen() ) {
-//			dag.setAantalUrenOpdracht(urendDeclaratieDetails.getAantalUrenOpdracht());
-//			dag.setAantalUrenOverig(dagDetails.getAantalUrenOverig());
-//			dag.setAantalUrenOverwerk(dagDetails.getAantalUrenOverwerk());
-//			dag.setAantalUrenTraining(dagDetails.getAantalUrenTraining());
-//			dag.setAantalUrenVerlof(dagDetails.getAantalUrenVerlof());
-//			dag.setAantalUrenZiek(dagDetails.getAantalUrenZiek());
-//			dag.setVerklaringOverig(dagDetails.getVerklaringOverig());
-//
-//			return gewerkteDagRepository.save(dag);
-//		return urenDeclaratieService.updateUrendeclaratie(Long.parseLong(formId), urendDeclaratieDetails);
-//	}
-	
+
 	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
 	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
 							@PathVariable(value = "maandnr") int maandNr) {
@@ -79,7 +76,7 @@ public class UrendeclaratieEndpoints {
 			urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 		}
 
-	@GetMapping("/urendeclaraties")
+	@GetMapping("/")
 	public Iterable<Urendeclaratie> getUrendeclaraties() {
 		return urenDeclaratieService.getAllUrendeclaraties();
 	}
@@ -88,11 +85,7 @@ public class UrendeclaratieEndpoints {
 	 * GewerkteDag ENDPOINTS
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
-	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId,
-			@RequestBody GewerkteDag dagDetails) {
+	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId, @RequestBody GewerkteDag dagDetails) {
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
-	
-
-
 }

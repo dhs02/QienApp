@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModel;
+
 @Entity
+@ApiModel(value="Opdrachtgever", description="Bevat alle waarden van de Opdrachtgever-entiteit.")
 public class Opdrachtgever {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +17,21 @@ public class Opdrachtgever {
 	private String adres;
 	private String email;
 	private String telefoonnummer;
+	private String plaats;
+	private String postcode;
 
+	public String getPlaats() {
+		return plaats;
+	}
+	public void setPlaats(String plaats) {
+		this.plaats = plaats;
+	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
 	public long getId() {
 		return id;
 	}

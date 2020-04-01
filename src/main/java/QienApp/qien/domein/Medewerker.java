@@ -9,8 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import QienApp.qien.domein.urenform.Urendeclaratie;
+import io.swagger.annotations.ApiModel;
 
 @Entity
+@ApiModel(value="Medewerker", description="Bevat alle waarden van de Medewerker-entiteit.")
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
