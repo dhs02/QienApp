@@ -25,7 +25,7 @@ public class UrenDeclaratieService {
 	@Autowired
 	private GewerkteDagService gewerkteDagService;
 
-	/**
+	/** 1.
 	 * GET ONE URENDECLARATIE
 	 * @PARAM id	ID van een specifieke urendeclaratie
 	 * @RETURN		de gevraagde urendeclaratie
@@ -39,12 +39,9 @@ public class UrenDeclaratieService {
 		return urenDeclaratieRepository.findAll();
 	}
 
-	/**
-	 * UPDATEURENDECLARATIE ===>> IK WEET NIET ZEKER OF DEZE WERKT...
-	 * 
-	 * wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
-	 * @param udId						ID van een urendeclaratie die aangepast moet worden
-	 * @param urendDeclaratieDetails	urendeclaratie object
+	/** 2.
+	 * UPDATEURENDECLARATIE
+	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
 	 * @return ud						de aangepaste urendeclaratie		
 	 */
 	public Urendeclaratie laszloMethode(Urendeclaratie nieuw) 
@@ -52,13 +49,12 @@ public class UrenDeclaratieService {
 		return urenDeclaratieRepository.save(nieuw);
 	}
 
-	/**
+	/** 3.
 	 * KOPPEL FORM AAN MEDEWERKER & SAVE
 	 * @param formId
 	 * @param medewerkerId		
 	 * @return urendeclaratieformulier met eigenaar
-	 * -------
-	 * michiel */
+	 */
 	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
 	{
 		Urendeclaratie tempUd = getUrendeclaraties(formId);
@@ -74,7 +70,7 @@ public class UrenDeclaratieService {
 	}
 
 
-	/**
+	/** 4.
 	 * KOPPEL EEN LEEG URENDECLARATIEOBJECT AAN ALLE MEDEWERKERS IN DE DATABASE
 	 * @param u		leeg urendeclaratieobject
 	 * @return		mededeling dat het gelukt is
@@ -90,7 +86,7 @@ public class UrenDeclaratieService {
 		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";
 	}
 
-	/**
+	/** 5.
 	 * MAAK EEN LEEG URENDECLARATIEFORMULIER
 	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
 	 * @PARAM maandNr		het nummer van de maand, benodigd voor aantal dagen dat er in komt

@@ -37,7 +37,7 @@ public class Urendeclaratie {
 	private long id;
 	private String notitie;
 
-//	// TODO implementeren LocalDateTime zaken	
+//	// TODO implementeren LocalDateTime zaken	s
 //	private LocalDateTime verzendTijd;
 //	Month maand;
 //	Locale locale = Locale.getDefault();

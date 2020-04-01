@@ -41,10 +41,12 @@ public class UrendeclaratieEndpoints {
 	}
 	
 	/**
-	 * 
-	 * 
+	 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
+	 * 1.als er een ID meekomt, 2. als er geen ID meekomt
+	 * @param Urendeclaratie object
+	 * @return
 	 */
-	@PutMapping("/doeff")
+	@PutMapping("/")
 	public Urendeclaratie updateUren(@RequestBody Urendeclaratie u) {
 		return urenDeclaratieService.laszloMethode(u);
 	}
