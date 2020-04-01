@@ -1,5 +1,7 @@
 package QienApp.qien.controller.urenform;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
+
 
 @Service
 public class UrenDeclaratieService {
@@ -44,24 +47,10 @@ public class UrenDeclaratieService {
 	 * @param urendDeclaratieDetails	urendeclaratie object
 	 * @return ud						de aangepaste urendeclaratie		
 	 */
-//	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie nieuw) 
-//	{
-//		Urendeclaratie oud = urenDeclaratieRepository.findById(udId).get();
-//		
-//		for (GewerkteDag oudedag : oud.getGewerkteDagen() ) {
-//			GewerkteDag nieuwedag : nieuw.getGewerkteDagen();
-//
-//			dag.setAantalUrenOpdracht(dag.getAantalUrenOpdracht());
-//			dag.setAantalUrenOverig(dag.getAantalUrenOverig());
-//			dag.setAantalUrenOverwerk(dag.getAantalUrenOverwerk());
-//			dag.setAantalUrenTraining(dag.getAantalUrenTraining());
-//			dag.setAantalUrenVerlof(dag.getAantalUrenVerlof());
-//			dag.setAantalUrenZiek(dag.getAantalUrenZiek());
-//			dag.setVerklaringOverig(dag.getVerklaringOverig());
-//		
-//		}
-//		return urenDeclaratieRepository.save(ud);
-//	}
+	public Urendeclaratie laszloMethode(Urendeclaratie nieuw) 
+	{
+		return urenDeclaratieRepository.save(nieuw);
+	}
 
 	/**
 	 * KOPPEL FORM AAN MEDEWERKER & SAVE
@@ -101,7 +90,6 @@ public class UrenDeclaratieService {
 		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";
 	}
 
-
 	/**
 	 * MAAK EEN LEEG URENDECLARATIEFORMULIER
 	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
@@ -123,7 +111,7 @@ public class UrenDeclaratieService {
 				dezemaand.addDag(dag);
 				gewerkteDagService.addDag(dag);
 			} break;
-		case 4: case 6: case 9: case 11:
+		case 4: case 6: case 9: case 11:		
 			for (int x = 0; x < 30; x++) {
 				GewerkteDag dag = new GewerkteDag();
 				dag.setDagnr(x+1);

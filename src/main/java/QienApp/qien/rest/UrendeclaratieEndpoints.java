@@ -33,6 +33,21 @@ public class UrendeclaratieEndpoints {
 	MedewerkerRepository medewerkerRepository;
 	@Autowired
 	UrenDeclaratieRepository urenDeclaratieRepository;
+	
+	//TODO
+	@PostMapping("/test/{urendeclaratieid}")
+	public void doeHet(@PathVariable(value = "urendeclaratieid") long uId, @RequestBody Urendeclaratie u) {	
+	//	urenDeclaratieService.updateUrendeclaratie(u);
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	@PutMapping("/doeff")
+	public Urendeclaratie updateUren(@RequestBody Urendeclaratie u) {
+		return urenDeclaratieService.laszloMethode(u);
+	}
 
 	/**
 	 * ENDPOINT 1:	maak leeg urendeclaratieformulier
@@ -115,7 +130,12 @@ public class UrendeclaratieEndpoints {
 		System.out.println("getUrendeclaratie");
 		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
 	}
-
+/**
+ * LEGE URENFORM, ZONDER ID
+ * 
+ * @param maandNaam
+ * @param maandNr
+ */
 	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
 	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) {

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,11 +43,13 @@ public class Urendeclaratie {
 //	Locale locale = Locale.getDefault();
 	
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
+	private int jaar;
 	private String maandNaam;
 	
-//TODO"bidirectionele relatie. Nu heeft alleen een medewerken vele Urendec.objecten in zn lijst
-//	@OneToMany
-//	private Medewerker medewerker;
+	
+
+	@ManyToOne
+	private Medewerker medewerker;
 	
 	/**
 	 * Status is een ENUM class met de mogelijkheden:
@@ -106,5 +109,13 @@ public class Urendeclaratie {
 
 	public void setNotitie(String notitie) {
 		this.notitie = notitie;
+	}
+
+	public int getJaar() {
+		return jaar;
+	}
+
+	public void setJaar(int jaar) {
+		this.jaar = jaar;
 	}
 }
