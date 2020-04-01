@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.domein.EmailBericht;
 import QienApp.qien.domein.EmailCfg;
 
@@ -40,7 +41,7 @@ public class EmailEndpoints {
         // Create an email instance
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(emailBericht.getEmail());
-        mailMessage.setTo("Werkgever@nos.nl");
+        mailMessage.setTo(emailBericht.getEmail());
         mailMessage.setSubject("Goedkeuring vereist " + emailBericht.getName());
         mailMessage.setText(emailBericht.getFeedback());
 
