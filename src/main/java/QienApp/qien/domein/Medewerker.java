@@ -46,9 +46,10 @@ public class Medewerker extends Gebruiker {
 	 * met deze methode wordt mijn lijst gevuld
 	 * 
 	 */
-	public void addUrendeclaratie (Urendeclaratie u) {
+	public Urendeclaratie addUrendeclaratie (Urendeclaratie u) {
 		this.urendeclaraties.add(u);
 		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
+		return u;
 	}
 	
 	public List<Urendeclaratie> getUrendeclaraties() {

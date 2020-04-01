@@ -1,10 +1,7 @@
 package QienApp.qien.domein.urenform;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,12 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import QienApp.qien.controller.urenform.Status;
 
 import QienApp.qien.domein.Medewerker;
-
 /*CLASS DIAGRAM SAYS:
-*
 *
 - medewerker: Medewerker
 - opdracht: Opdracht(TODO)?? in overleg met Thomas overgeslagen 24/04
@@ -33,10 +27,7 @@ import QienApp.qien.domein.Medewerker;
 - goedKeuringOpdrachtgever: boolean
 - notitie: String
 - verzendTijd: LocalDateTime
-*
-*
 */
-
 
 @Entity
 @Table(name = "urendeclaratie")
@@ -44,34 +35,34 @@ public class Urendeclaratie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private String notitie;
 
-	//ADDED LASZLO
+//	// TODO implementeren LocalDateTime zaken	
+//	private LocalDateTime verzendTijd;
+//	Month maand;
+//	Locale locale = Locale.getDefault();
+	
+	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
+	private int jaar;
+	private String maandNaam;
+	
+	
+
 	@ManyToOne
 	private Medewerker medewerker;
-	private LocalDate maand;
-	private String notitie;
+	
+	/**
+	 * Status is een ENUM class met de mogelijkheden:
+	 * BESCHIKBAAR, TER_GOEDKEURING, GOEDGEKEURD, AFGEKEURD, AFGEROND; 
+	 */
 	private Status status;
 	
-	@OneToMany
-	//@OneToMany(cascade = CascadeType.ALL)
-	//@JoinColumn(name="dag_id")
-	private Collection<GewerkteDag> gewerkteDagen;
-	
-	//NOG TE DOEN
-//	private boolean goedKeuring;	-> uitzoeken booleans in database
-//	private boolean goedKeuringOpdrachtgever;
-//	private LocalDateTime verzendTijd;	
-	//Ongecomment LASZLO
-	
-
-	//?WEET NIET WAT DIT IS?
-//	Locale locale = Locale.getDefault();
-
-//	LASZLO gecomment mogelijk weg
-//	private String maandNaam;
-	
-	
-	
+	/**
+	 * heeft een lijst met GewerkteDagen, zoveel als de maand lang is
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="dag_id")
+	private List<GewerkteDag> gewerkteDagen = new ArrayList<>();
 	
 	//methode wordt gebruikt door maakForm() in UrendeclaratieService
 	public void addDag(GewerkteDag dag) {
@@ -83,49 +74,48 @@ public class Urendeclaratie {
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	//LASZLO UITGECOMMENT
-//	public String getMaandNaam() {
-//		return maandNaam;
-//	}
-//
-//	public void setMaandNaam(String maandNaam) {
-//		this.maandNaam = maandNaam;
-//	}
-	public Collection<GewerkteDag> getGewerkteDagen() {
+
+	public String getMaandNaam() {
+		return maandNaam;
+	}
+
+	public void setMaandNaam(String maandNaam) {
+		this.maandNaam = maandNaam;
+	}
+
+	public List<GewerkteDag> getGewerkteDagen() {
 		return gewerkteDagen;
 	}
+
 	public void setGewerkteDagen(List<GewerkteDag> gewerkteDagen) {
 		this.gewerkteDagen = gewerkteDagen;
 	}
-	//LASZLO ADDED
-	public String getNotitie() {
-		return this.notitie;
-	}
-	//LASZLO ADDED
-	public void setNotitie(String notitie) {
-		this.notitie = notitie;
-	}
-	//LASZLO ADDED
-	public LocalDate getMaand() {
-		return maand;
-	}
-	//LASZLO ADDED
-	public void setMaand(LocalDate maand) {
-		this.maand = maand;
-	}
-	public Medewerker getMedewerker() {
-		return medewerker;
-	}
-	public void setMedewerker(Medewerker medewerker) {
-		this.medewerker = medewerker;
-	}
+
 	public Status getStatus() {
 		return status;
 	}
+
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public String getNotitie() {
+		return notitie;
+	}
+
+	public void setNotitie(String notitie) {
+		this.notitie = notitie;
+	}
+
+	public int getJaar() {
+		return jaar;
+	}
+
+	public void setJaar(int jaar) {
+		this.jaar = jaar;
 	}
 }

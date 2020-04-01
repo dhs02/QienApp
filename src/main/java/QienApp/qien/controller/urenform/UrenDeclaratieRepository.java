@@ -10,4 +10,5 @@ import QienApp.qien.domein.urenform.Urendeclaratie;
 public interface UrenDeclaratieRepository extends 
 					CrudRepository<Urendeclaratie, Long> {
 
+
 }

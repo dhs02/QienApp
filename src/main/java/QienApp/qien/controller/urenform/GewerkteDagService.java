@@ -11,8 +11,6 @@ public class GewerkteDagService {
 @Autowired
 private GewerkteDagRepository gewerkteDagRepository;
 
-//LASZLO ADDED deze functionaliteit nodig in urendeclaratie service
-//mogelijk de addDag verwijderen?
 public void save(GewerkteDag gewerkteDag) {
 	gewerkteDagRepository.save(gewerkteDag);
 }
@@ -23,6 +21,7 @@ public GewerkteDag addDag(GewerkteDag dag) {
 	gewerkteDagRepository.save(dag);
 	return dag;		
 }
+
 
 //methode wijzigt urensoortvelden als je de juiste dagID en objectnaanm ingeeft
 public GewerkteDag updateDag(long dagId, GewerkteDag dagDetails) {
