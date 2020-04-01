@@ -1,5 +1,4 @@
 package QienApp.qien.domein.urenform;
-
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -16,9 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import QienApp.qien.domein.Medewerker;
-
 /*CLASS DIAGRAM SAYS:
-*
 *
 - medewerker: Medewerker
 - opdracht: Opdracht(TODO)?? in overleg met Thomas overgeslagen 24/04
@@ -29,10 +26,7 @@ import QienApp.qien.domein.Medewerker;
 - goedKeuringOpdrachtgever: boolean
 - notitie: String
 - verzendTijd: LocalDateTime
-*
-*
 */
-
 
 @Entity
 @Table(name = "urendeclaratie")
@@ -40,18 +34,19 @@ public class Urendeclaratie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private String notitie;
 
-
-//	private String notitie;
+//	// TODO implementeren LocalDateTime zaken	
 //	private LocalDateTime verzendTijd;
-//	
-//	// TODO implementeren LocalDateTime zaken
 //	Month maand;
 //	Locale locale = Locale.getDefault();
 	
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private String maandNaam;
-	private Medewerker medewerker;
+	
+//TODO"bidirectionele relatie. Nu heeft alleen een medewerken vele Urendec.objecten in zn lijst
+//	@OneToMany
+//	private Medewerker medewerker;
 	
 	/**
 	 * Status is een ENUM class met de mogelijkheden:
@@ -105,20 +100,11 @@ public class Urendeclaratie {
 		this.status = status;
 	}
 
-	public Medewerker getMedewerker() {
-		return medewerker;
+	public String getNotitie() {
+		return notitie;
 	}
 
-	public void setMedewerker(Medewerker medewerker) {
-		this.medewerker = medewerker;
+	public void setNotitie(String notitie) {
+		this.notitie = notitie;
 	}
-
-	
-
-
-	
-	
-	
-
-	
 }

@@ -44,31 +44,32 @@ public class UrenDeclaratieService {
 	 * @param urendDeclaratieDetails	urendeclaratie object
 	 * @return ud						de aangepaste urendeclaratie		
 	 */
-	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie nieuw) 
-	{
-		Urendeclaratie oud = urenDeclaratieRepository.findById(udId).get();
-		
-		for (GewerkteDag oudedag : oud.getGewerkteDagen() ) {
-			GewerkteDag nieuwedag : nieuw.getGewerkteDagen();
-
-			dag.setAantalUrenOpdracht(dag.getAantalUrenOpdracht());
-			dag.setAantalUrenOverig(dag.getAantalUrenOverig());
-			dag.setAantalUrenOverwerk(dag.getAantalUrenOverwerk());
-			dag.setAantalUrenTraining(dag.getAantalUrenTraining());
-			dag.setAantalUrenVerlof(dag.getAantalUrenVerlof());
-			dag.setAantalUrenZiek(dag.getAantalUrenZiek());
-			dag.setVerklaringOverig(dag.getVerklaringOverig());
-		
-		}
-		return urenDeclaratieRepository.save(ud);
-	}
+//	public Urendeclaratie updateUrendeclaratie(long udId, Urendeclaratie nieuw) 
+//	{
+//		Urendeclaratie oud = urenDeclaratieRepository.findById(udId).get();
+//		
+//		for (GewerkteDag oudedag : oud.getGewerkteDagen() ) {
+//			GewerkteDag nieuwedag : nieuw.getGewerkteDagen();
+//
+//			dag.setAantalUrenOpdracht(dag.getAantalUrenOpdracht());
+//			dag.setAantalUrenOverig(dag.getAantalUrenOverig());
+//			dag.setAantalUrenOverwerk(dag.getAantalUrenOverwerk());
+//			dag.setAantalUrenTraining(dag.getAantalUrenTraining());
+//			dag.setAantalUrenVerlof(dag.getAantalUrenVerlof());
+//			dag.setAantalUrenZiek(dag.getAantalUrenZiek());
+//			dag.setVerklaringOverig(dag.getVerklaringOverig());
+//		
+//		}
+//		return urenDeclaratieRepository.save(ud);
+//	}
 
 	/**
 	 * KOPPEL FORM AAN MEDEWERKER & SAVE
 	 * @param formId
 	 * @param medewerkerId		
 	 * @return urendeclaratieformulier met eigenaar
-	 */
+	 * -------
+	 * michiel */
 	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
 	{
 		Urendeclaratie tempUd = getUrendeclaraties(formId);
@@ -78,8 +79,8 @@ public class UrenDeclaratieService {
 		tempMw.addUrendeclaratie(tempUd);
 		medewerkerRepository.save(tempMw);
 
-		//add MW to FORM
-		tempUd.setMedewerker(tempMw);
+		//TODO add MW to FORM ==>>> relatie is nog niet bidirectioneel
+		//tempUd.setMedewerker(tempMw);
 		return urenDeclaratieRepository.save(tempUd);
 	}
 
@@ -94,7 +95,7 @@ public class UrenDeclaratieService {
 		for (Medewerker persoon: medewerkerRepository.findAll()) {
 			persoon.addUrendeclaratie(u);
 			medewerkerRepository.save(persoon);
-			u.setMedewerker(persoon);
+			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
 			urenDeclaratieRepository.save(u);
 		}
 		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";

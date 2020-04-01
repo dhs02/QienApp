@@ -38,7 +38,6 @@ public class UrendeclaratieEndpoints {
 	 * ENDPOINT 1:	maak leeg urendeclaratieformulier
 	 * 
 	 * TODO iets met ENUM maandnaam en maandnummers
-	 *
 	 * @return		leeg urenform
 	 */
 	@PostMapping("/{maandnaam}/{maandnr}")
@@ -54,7 +53,7 @@ public class UrendeclaratieEndpoints {
 	 * @param formId
 	 * @return statusbericht: gekoppeld
 	 */
-	@PostMapping("/{formId}")
+	@PostMapping("/koppel/{formId}")
 	public String koppelZeAllemaal(@PathVariable(value = "formId") long formId)	
 	{
 	return urenDeclaratieService.koppelAanAllen(urenDeclaratieService.getUrendeclaraties(formId));
@@ -66,7 +65,7 @@ public class UrendeclaratieEndpoints {
 	 * @param urendeclaratie object
 	 * @return statusbericht: gekoppeld
 	 */
-	@PostMapping("/{formId}")
+	@PostMapping("/koppelallen/{formId}")
 	public String koppelZeAllemaal2(@RequestBody Urendeclaratie u)	
 	{
 	return urenDeclaratieService.koppelAanAllen(u);
@@ -78,7 +77,7 @@ public class UrendeclaratieEndpoints {
 	 * @param urendeclaratie object
 	 * @return statusbericht: gekoppeld
 	 */
-	@PostMapping("/alles/{maandnaam}/{maandnr}")
+	@PostMapping("/doealles/{maandnaam}/{maandnr}")
 	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam, 
 			@PathVariable(value = "maandnr") int maandNr) 
 	{
@@ -112,7 +111,7 @@ public class UrendeclaratieEndpoints {
 
 
 	@GetMapping("/{id}")	
-	public Urendeclaratie addUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
+	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
 		System.out.println("getUrendeclaratie");
 		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
 	}
