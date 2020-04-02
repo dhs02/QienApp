@@ -124,7 +124,7 @@ public class UrendeclaratieEndpoints {
 		 * @param medewerkerId
 		 * @return gekoppeld formulier
 		 */
-		@PostMapping("/koppelaanmedewerker/{formId}/{medewerkerId}")
+		@PutMapping("/koppelaanmedewerker/{formId}/{medewerkerId}")
 		public Urendeclaratie koppelZe(@PathVariable(value = "formId") long formId, 
 				@PathVariable(value = "medewerkerId") long medewerkerId)
 		{

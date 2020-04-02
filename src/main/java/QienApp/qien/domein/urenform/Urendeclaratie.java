@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import QienApp.qien.domein.Medewerker;
 /*CLASS DIAGRAM SAYS:
 *
@@ -43,32 +45,36 @@ public class Urendeclaratie {
 //	Month maand;
 //	Locale locale = Locale.getDefault();
 	
-	public void setMedewerker(Medewerker medewerker) {
-		this.medewerker = medewerker;
-	}
-
-	public int getEigenaarId() {
-		return eigenaarId;
-	}
-
-	public void setEigenaarId(int eigenaarId) {
-		this.eigenaarId = eigenaarId;
-	}
+//	public void setMedewerker(Medewerker medewerker) {
+//		this.medewerker = medewerker;
+//	}
 
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private int jaar;
 	private String maandNaam;
 	
+	//@JsonIgnore
+	public Medewerker getMedewerker() {
+		return medewerker;
+	}
 	/** Laszlo & Michiels nieuwe ORM methode
 	 *  2/4/20
 	 */
-	private Medewerker medewerker;
+	
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="EIGENAAR_ID")
-	private int eigenaarId;
+	@JoinColumn(name="MEDEWERKER")
+	private Medewerker medewerker;
 	
-	
+	/** NIEUWE SETTERS DIE NIET WERKEN
+	 * 
+	 */
+	public void setMedewerker(Medewerker medewerker) {
+        this.medewerker = medewerker;
+        if (!medewerker.getUrendeclaraties().contains(this)) { 
+        	medewerker.getUrendeclaraties().add(this);
+        }
+    }
 	
 	/**
 	 * Status is een ENUM class met de mogelijkheden:

@@ -146,7 +146,7 @@ public class UrenDeclaratieService {
 		System.out.println("DEBUG" + tempMw);
 		//add FORM to MW
 		tempMw.addUrendeclaratie(tempUd);
-		tempUd.setMedewerker(tempMw);
+		//tempUd.setMedewerker(tempMw);
 		
 		medewerkerRepository.save(tempMw);
 		return urenDeclaratieRepository.save(tempUd);

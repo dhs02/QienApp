@@ -40,24 +40,31 @@ public class Medewerker extends Gebruiker {
 	/** Laszlo & Michiels nieuwe ORM methode
 	 *  2/4/20
 	 */
-	@OneToMany//(mappedBy="eigenaarId")
+	@OneToMany(mappedBy="medewerker")
 	private List<Urendeclaratie> urendeclaraties = new ArrayList<Urendeclaratie>();
 	
 
-	/*
-	 * 
-	 * CONSUMES
-	 * Urendeclaratie Object van methode maakUrendeclaratieForm uit UrendeclaratieService
-	 * 
-	 * met deze methode wordt mijn lijst gevuld
+	/** OUDE METHODE
 	 * 
 	 */
-	public Urendeclaratie addUrendeclaratie (Urendeclaratie u) {
-		this.urendeclaraties.add(u);
-		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
-		return u;
-	}
+//	public Urendeclaratie addUrendeclaratie (Urendeclaratie u) {
+//		this.urendeclaraties.add(u);
+//		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
+//		return u;
+//	}
 	
+	/**
+	 * NIEUWE METHODE
+	 * @return
+	 */
+	 public void addUrendeclaratie(Urendeclaratie u) {
+		 	this.urendeclaraties.add(u);
+	        if (u.getMedewerker() != this) {
+	            u.setMedewerker(this);
+	        }
+		 	
+	 }
+	        
 	public List<Urendeclaratie> getUrendeclaraties() {
 		return urendeclaraties;
 	}
