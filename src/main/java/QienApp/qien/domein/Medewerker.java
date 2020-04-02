@@ -31,11 +31,19 @@ public class Medewerker extends Gebruiker {
 		this.contactpersoon = contactpersoon;
 	}
 
-	//ik heb een lijst met urendeclaraties
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="urendecs_id")
+	/**
+	 * Maurice oude manier van ORM
+	 */
+	//@OneToMany(cascade = CascadeType.ALL)
+	//@JoinColumn(name="urendecs_id")
+	
+	/** Laszlo & Michiels nieuwe ORM methode
+	 *  2/4/20
+	 */
+	@OneToMany//(mappedBy="eigenaarId")
 	private List<Urendeclaratie> urendeclaraties = new ArrayList<Urendeclaratie>();
 	
+
 	/*
 	 * 
 	 * CONSUMES

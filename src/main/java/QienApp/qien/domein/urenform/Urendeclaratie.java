@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,12 +43,32 @@ public class Urendeclaratie {
 //	Month maand;
 //	Locale locale = Locale.getDefault();
 	
+	public void setMedewerker(Medewerker medewerker) {
+		this.medewerker = medewerker;
+	}
+
+	public int getEigenaarId() {
+		return eigenaarId;
+	}
+
+	public void setEigenaarId(int eigenaarId) {
+		this.eigenaarId = eigenaarId;
+	}
+
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private int jaar;
 	private String maandNaam;
-
-	@ManyToOne
+	
+	/** Laszlo & Michiels nieuwe ORM methode
+	 *  2/4/20
+	 */
 	private Medewerker medewerker;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="EIGENAAR_ID")
+	private int eigenaarId;
+	
+	
 	
 	/**
 	 * Status is een ENUM class met de mogelijkheden:
@@ -68,7 +89,6 @@ public class Urendeclaratie {
 		}
 	
 	//VEEL GETTER & SETTERS
-
 	public long getId() {
 		return id;
 	}

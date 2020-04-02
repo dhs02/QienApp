@@ -77,7 +77,7 @@ public class UrenDeclaratieService {
 		return dezemaand;
 	}
 	
-	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+	/** TEST * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
 	 * @param u		leeg urendeclaratieobject
 	 * @return		mededeling dat het gelukt is
 	 */
@@ -86,13 +86,32 @@ public class UrenDeclaratieService {
 		for (Medewerker persoon: medewerkerRepository.findAll()) {
 			
 			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+			
+			u.setMedewerker(persoon);
 			persoon.addUrendeclaratie(u);
+			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);
-			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
-			//urenDeclaratieRepository.save(u);
+			
 		}
 		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
 	}
+	
+//	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+//	 * @param u		leeg urendeclaratieobject
+//	 * @return		mededeling dat het gelukt is
+//	 */
+//	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) 
+//	{
+//		for (Medewerker persoon: medewerkerRepository.findAll()) {
+//			
+//			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+//			persoon.addUrendeclaratie(u);
+//			medewerkerRepository.save(persoon);
+//			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
+//			//urenDeclaratieRepository.save(u);
+//		}
+//		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+//	}
 
 	/** 1 *
 	 * GET ONE URENDECLARATIE
@@ -123,13 +142,13 @@ public class UrenDeclaratieService {
 	{
 		Urendeclaratie tempUd = getUrendeclaraties(formId);
 		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
-
+		System.out.println("DEBUG" + tempUd);
+		System.out.println("DEBUG" + tempMw);
 		//add FORM to MW
 		tempMw.addUrendeclaratie(tempUd);
+		tempUd.setMedewerker(tempMw);
+		
 		medewerkerRepository.save(tempMw);
-
-		//TODO add MW to FORM ==>>> relatie is nog niet bidirectioneel
-		//tempUd.setMedewerker(tempMw);
 		return urenDeclaratieRepository.save(tempUd);
 	}
 
