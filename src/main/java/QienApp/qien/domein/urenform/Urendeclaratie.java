@@ -60,11 +60,8 @@ public class Urendeclaratie {
 	//@JsonManagedReference
 	
 	@ManyToOne
-//    @JoinColumn(name="medewerker_id")
 	private Medewerker medewerker;
-	
 
-	
 	public Medewerker getMedewerker() 
 	{
 		return medewerker;
@@ -81,7 +78,7 @@ public class Urendeclaratie {
 	 * heeft een lijst met GewerkteDagen, zoveel als de maand lang is
 	 */
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="dag_id")
+	@JoinColumn
 	private List<GewerkteDag> gewerkteDagen = new ArrayList<>();
 	
 	//methode wordt gebruikt door maakForm() in UrendeclaratieService

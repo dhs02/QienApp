@@ -19,7 +19,7 @@ import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
-
+ 
 @RestController
 @RequestMapping("/api/urendeclaraties")
 public class UrendeclaratieEndpoints {
@@ -38,6 +38,7 @@ public class UrendeclaratieEndpoints {
 	public void getZnUren(@PathVariable(value = "id") long id) {
 		urenDeclaratieService.hemZnUrendeclaraties(id);
 	}
+
 
 	/** 1 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
 	 * 1e.als er een ID meekomt, 2e. als er geen ID meekomt

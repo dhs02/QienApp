@@ -48,11 +48,12 @@ public class Medewerker extends Gebruiker {
 	
 	//@JsonBackReference
 	
-	@JsonIgnore
+	
 	@OneToMany
 	@JoinColumn(name="medewerker_id")
 	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
 	
+	@JsonIgnore
 	public Set<Urendeclaratie> getUrendeclaraties() 
 	{
 		return urendeclaraties;
@@ -66,7 +67,7 @@ public class Medewerker extends Gebruiker {
 	}
 	public void addUrendeclaratie(Urendeclaratie tempUd) {
 		tempUd.setMedewerker(this);
-		//urendeclaraties.add(tempUd);
+		urendeclaraties.add(tempUd);
 	}
 
 	//	public List<Urendeclaratie> getUrendeclaraties() {
