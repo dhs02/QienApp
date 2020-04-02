@@ -11,12 +11,17 @@ public class GewerkteDagService {
 @Autowired
 private GewerkteDagRepository gewerkteDagRepository;
 
+public void save(GewerkteDag gewerkteDag) {
+	gewerkteDagRepository.save(gewerkteDag);
+}
+
 //methode genereert dagen als er een urenform(maand) wordt aangemaakt voor een medewerker
 public GewerkteDag addDag(GewerkteDag dag) {
 	System.out.println("DEBUG Dag aangemaakt voor deze maand in database");
 	gewerkteDagRepository.save(dag);
 	return dag;		
 }
+
 
 //methode wijzigt urensoortvelden als je de juiste dagID en objectnaanm ingeeft
 public GewerkteDag updateDag(long dagId, GewerkteDag dagDetails) {
