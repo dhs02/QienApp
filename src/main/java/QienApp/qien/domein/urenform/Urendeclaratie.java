@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import QienApp.qien.domein.Medewerker;
 /*CLASS DIAGRAM SAYS:
@@ -31,6 +32,10 @@ import QienApp.qien.domein.Medewerker;
 - notitie: String
 - verzendTijd: LocalDateTime
 */
+//// TODO implementeren LocalDateTime zaken	s
+//private LocalDateTime verzendTijd;
+//Month maand;
+//Locale locale = Locale.getDefault();
 
 @Entity
 @Table(name = "urendeclaratie")
@@ -39,49 +44,39 @@ public class Urendeclaratie {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String notitie;
-
-//	// TODO implementeren LocalDateTime zaken	s
-//	private LocalDateTime verzendTijd;
-//	Month maand;
-//	Locale locale = Locale.getDefault();
-	
-//	public void setMedewerker(Medewerker medewerker) {
-//		this.medewerker = medewerker;
-//	}
-
 	//VOOR NU GEBRUIKEN WE DEZE VEREENVOUDIGDE MANIER:
 	private int jaar;
 	private String maandNaam;
-	
-	//@JsonIgnore
-	public Medewerker getMedewerker() {
-		return medewerker;
-	}
-	/** Laszlo & Michiels nieuwe ORM methode
-	 *  2/4/20
-	 */
-	
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="MEDEWERKER")
-	private Medewerker medewerker;
-	
-	/** NIEUWE SETTERS DIE NIET WERKEN
-	 * 
-	 */
-	public void setMedewerker(Medewerker medewerker) {
-        this.medewerker = medewerker;
-        if (!medewerker.getUrendeclaraties().contains(this)) { 
-        	medewerker.getUrendeclaraties().add(this);
-        }
-    }
+	//Status is een ENUM class met de mogelijkheden:
+	//BESCHIKBAAR, TER_GOEDKEURING, GOEDGEKEURD, AFGEKEURD, AFGEROND; 
+	private Status status;
 	
 	/**
-	 * Status is een ENUM class met de mogelijkheden:
-	 * BESCHIKBAAR, TER_GOEDKEURING, GOEDGEKEURD, AFGEKEURD, AFGEROND; 
+	 * HOWTOPROGRAMWITHJAVA.COM=================
+	 * bidirectional test
+	 * 
+	 * 
 	 */
-	private Status status;
+	//@JsonManagedReference
+	
+	@ManyToOne
+//    @JoinColumn(name="medewerker_id")
+	private Medewerker medewerker;
+	
 
+	
+	public Medewerker getMedewerker() 
+	{
+		return medewerker;
+	}
+	/**
+	 * =================================TOT HIER 
+	 */
+
+	public void setMedewerker(Medewerker medewerker) {
+        this.medewerker = medewerker;
+    }
+	
 	/**
 	 * heeft een lijst met GewerkteDagen, zoveel als de maand lang is
 	 */

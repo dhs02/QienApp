@@ -33,6 +33,11 @@ public class UrendeclaratieEndpoints {
 	MedewerkerRepository medewerkerRepository;
 	@Autowired
 	UrenDeclaratieRepository urenDeclaratieRepository;
+	
+	@GetMapping("/test2/{id}")
+	public void getZnUren(@PathVariable(value = "id") long id) {
+		urenDeclaratieService.hemZnUrendeclaraties(id);
+	}
 
 	/** 1 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
 	 * 1e.als er een ID meekomt, 2e. als er geen ID meekomt

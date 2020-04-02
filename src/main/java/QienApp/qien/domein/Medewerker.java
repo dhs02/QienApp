@@ -1,23 +1,30 @@
 package QienApp.qien.domein;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @Entity
+@Table(name = "medewerkers")
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
-  
+
 	@ManyToOne
 	Contactpersoon contactpersoon;
-	
+
 	public Opdrachtgever getOpdrachtgever() {
 		return opdrachtgever;
 	}
@@ -31,45 +38,42 @@ public class Medewerker extends Gebruiker {
 		this.contactpersoon = contactpersoon;
 	}
 
-	/**
-	 * Maurice oude manier van ORM
-	 */
-	//@OneToMany(cascade = CascadeType.ALL)
-	//@JoinColumn(name="urendecs_id")
-	
-	/** Laszlo & Michiels nieuwe ORM methode
-	 *  2/4/20
-	 */
-	@OneToMany(mappedBy="medewerker")
-	private List<Urendeclaratie> urendeclaraties = new ArrayList<Urendeclaratie>();
-	
 
-	/** OUDE METHODE
+	/**
+	 * HOWTOPROGRAMWITHJAVA.COM=================
+	 * bidirectional test
+	 * 
 	 * 
 	 */
-//	public Urendeclaratie addUrendeclaratie (Urendeclaratie u) {
-//		this.urendeclaraties.add(u);
-//		System.out.println("DEBUG urendeclaratie toegevoegd aan de lijst van " + getVoornaam());
-//		return u;
-//	}
 	
-	/**
-	 * NIEUWE METHODE
-	 * @return
-	 */
-	 public void addUrendeclaratie(Urendeclaratie u) {
-		 	this.urendeclaraties.add(u);
-	        if (u.getMedewerker() != this) {
-	            u.setMedewerker(this);
-	        }
-		 	
-	 }
-	        
-	public List<Urendeclaratie> getUrendeclaraties() {
+	//@JsonBackReference
+	
+	@JsonIgnore
+	@OneToMany
+	@JoinColumn(name="medewerker_id")
+	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
+	
+	public Set<Urendeclaratie> getUrendeclaraties() 
+	{
 		return urendeclaraties;
-	}
+	} 
+	/**
+	 * TOT HIER =================================
+	 */
 
-	public void setUrendeclaraties(List<Urendeclaratie> urendeclaraties) {
+	public void setUrendeclaraties(Set<Urendeclaratie> urendeclaraties) {
 		this.urendeclaraties = urendeclaraties;
 	}
+	public void addUrendeclaratie(Urendeclaratie tempUd) {
+		tempUd.setMedewerker(this);
+		//urendeclaraties.add(tempUd);
+	}
+
+	//	public List<Urendeclaratie> getUrendeclaraties() {
+	//		return urendeclaraties;
+	//	}
+	//
+	//	public void setUrendeclaraties(List<Urendeclaratie> urendeclaraties) {
+	//		this.urendeclaraties = urendeclaraties;
+	//	}
 }

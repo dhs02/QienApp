@@ -1,6 +1,7 @@
 package QienApp.qien.controller.urenform;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,7 +89,7 @@ public class UrenDeclaratieService {
 			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
 			
 			u.setMedewerker(persoon);
-			persoon.addUrendeclaratie(u);
+			//persoon.addUrendeclaratie(u);
 			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);
 			
@@ -148,9 +149,18 @@ public class UrenDeclaratieService {
 		tempMw.addUrendeclaratie(tempUd);
 		//tempUd.setMedewerker(tempMw);
 		
-		medewerkerRepository.save(tempMw);
+		//medewerkerRepository.save(tempMw);
 		return urenDeclaratieRepository.save(tempUd);
 	}
+	
+	public Iterable<Urendeclaratie> hemZnUrendeclaraties(long uid) {
+		//Medewerker m = medewerkerRepository.findById(uid).get();
+		System.out.println("DEBUG doet i het?");
+		return urenDeclaratieRepository.findByMedewerkerId(uid);
+	}
+	
+
+	
 
 
 	
