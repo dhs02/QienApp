@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.domein.Medewerker;
 
@@ -16,7 +18,9 @@ import QienApp.qien.domein.Medewerker;
 public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService medewerkerService;
-
+	@Autowired
+	MedewerkerRepository medewerkerRepository;
+	
 	@GetMapping("/")
 	public Iterable<Medewerker> verkrijgMedewerkers() {
 		return medewerkerService.getAllMedewerkers();
@@ -29,10 +33,10 @@ public class MedewerkerEndpoint {
 	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
 		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
 	}
-//	@GetMapping("/contactpersoon/{mwid}/{cpid}")
-//	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
-//		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
-//	}
+	@GetMapping("/contactpersoon/{mwid}/{cpid}")
+	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
+		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
+	}
 	@PostMapping("/")
 	public Medewerker toevoegenMedewerker(@RequestBody Medewerker medewerker) {
 		return medewerkerService.addMedewerker(medewerker);

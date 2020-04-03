@@ -25,8 +25,8 @@ public class ContactpersoonEndpoint {
 	public Contactpersoon verkrijgContactpersoon(@PathVariable(value = "id") String contactpersoonId) {
 		return contactpersoonService.getContactpersoonById(Long.parseLong(contactpersoonId));
 	}
-	@GetMapping("/{cpid}/{wgid}") // @PostMapping alleen met objecten meesturen
-	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="wgid") String opdrachtgeverId) {
+	@GetMapping("/opdrachtgever/{cpid}/{ogid}") // @PostMapping alleen met objecten meesturen
+	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="ogid") String opdrachtgeverId) {
 		contactpersoonService.addOpdrachtgever(Long.parseLong(contactpersoonId), Long.parseLong(opdrachtgeverId));
 	}
 	@PostMapping("/")
