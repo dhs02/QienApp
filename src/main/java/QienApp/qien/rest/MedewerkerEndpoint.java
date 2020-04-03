@@ -45,4 +45,10 @@ public class MedewerkerEndpoint {
 	public Medewerker vernieuwMedewerker(@PathVariable(value = "id") String medewerkerId, @RequestBody Medewerker medewerkerDetails) {
 		return medewerkerService.updateMedewerker(Long.parseLong(medewerkerId), medewerkerDetails);
 	}
+	@PutMapping("/maakMedewerkerenKoppelOpdrachtgever/{wgid}")
+	public Medewerker toevoegenMedewerkerMetOpdrachtgever(@RequestBody Medewerker medewerker ,@PathVariable(value = "wgid") String opdrachtgeverId){
+		Medewerker nieuweMedewerker = medewerkerService.addMedewerker(medewerker);
+		medewerkerService.addOpdrachtgever(nieuweMedewerker.getId(), Long.parseLong(opdrachtgeverId));
+		return nieuweMedewerker;
+	}
 }
