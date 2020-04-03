@@ -15,10 +15,8 @@ public class GewerkteDagService {
 	}
 
 	//methode genereert dagen als er een urenform(maand) wordt aangemaakt voor een medewerker
-	public GewerkteDag addDag(GewerkteDag dag) {
-		System.out.println("DEBUG Dag aangemaakt voor deze maand in database");
-		gewerkteDagRepository.save(dag);
-		return dag;
+	public GewerkteDag addDagToRepository(GewerkteDag dag) {
+		return gewerkteDagRepository.save(dag);
 	}
 
 	//methode wijzigt urensoortvelden als je de juiste dagID en objectnaanm ingeeft

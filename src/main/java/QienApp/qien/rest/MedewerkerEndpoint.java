@@ -8,16 +8,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.MedewerkerService;
+import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
+import QienApp.qien.controller.urenform.UrenDeclaratieService;
 import QienApp.qien.domein.Medewerker;
+import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @RestController
 @RequestMapping("/api/medewerkers")
 public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService medewerkerService;
-
-	@GetMapping("/")
+	@Autowired
+	MedewerkerRepository medewerkerRepository;
+	
+	@GetMapping
 	public Iterable<Medewerker> verkrijgMedewerkers() {
 		return medewerkerService.getAllMedewerkers();
 	}
@@ -25,10 +32,16 @@ public class MedewerkerEndpoint {
 	public Medewerker verkrijgMedewerker(@PathVariable(value = "id") String medewerkerId) {
 		return medewerkerService.getMedewerkerById(Long.parseLong(medewerkerId));
 	}
-	@PostMapping("/")
+	@GetMapping("/opdrachtgever/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
+	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
+		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
+	}
+//	@GetMapping("/contactpersoon/{mwid}/{cpid}")
+//	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
+//		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
+//	}
+	@PostMapping
 	public Medewerker toevoegenMedewerker(@RequestBody Medewerker medewerker) {
-//		System.out.println(medewerker.getAchternaam());
-//		medewerker.setAchternaam(medewerker.getAchternaam().substring(2));
 		return medewerkerService.addMedewerker(medewerker);
 	}
 	@DeleteMapping("/{id}")
@@ -39,15 +52,4 @@ public class MedewerkerEndpoint {
 	public Medewerker vernieuwMedewerker(@PathVariable(value = "id") String medewerkerId, @RequestBody Medewerker medewerkerDetails) {
 		return medewerkerService.updateMedewerker(Long.parseLong(medewerkerId), medewerkerDetails);
 	}
-	
-	@GetMapping("/opdrachtgever/{mwid}/{ogid}") // @PostMapping alleen met objecten meesturen
-	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="ogid") String opdrachtgeverId) {
-		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
-	}
-	
-	@GetMapping("/contactpersoon/{mwid}/{cpid}")
-	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
-		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
-	}
-	
 }
