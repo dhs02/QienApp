@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiModel;
 
 @Entity
 @ApiModel(value="Medewerker", description="Bevat alle waarden van de Medewerker-entiteit.")
-@Table(name = "medewerkers")
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
