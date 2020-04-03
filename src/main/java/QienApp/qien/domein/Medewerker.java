@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @Entity
-@Table(name = "medewerkers")
 public class Medewerker extends Gebruiker {
 	@ManyToOne
 	Opdrachtgever opdrachtgever;
