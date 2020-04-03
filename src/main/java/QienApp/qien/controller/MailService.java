@@ -21,18 +21,14 @@ public class MailService {
 //    @Autowired
 //    EmailBericht emailBericht;
 
-    public void mailVersturen(long Ruben){
+    public void mailVersturen(long opdrachtgeverId){
         System.out.println("email versturen");
-        System.out.println(Ruben);
 
-        Optional <Opdrachtgever> hupelakee = opdrachtgeverRepository.findById(Ruben);
-       Opdrachtgever b = hupelakee.get();
+
+        Optional <Opdrachtgever> opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId);
+        boolean a = opdrachtgever.isPresent();
+        Opdrachtgever b = opdrachtgever.get();
         System.out.println(b.getEmail());
-
-
-        String hallo = "Vrijdag";
-        char a = hallo.charAt(0);
-
 
         System.out.println();
         // Create a mail sender
@@ -46,8 +42,8 @@ public class MailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("rubenvanrij@gmail.com");
         mailMessage.setTo(b.getEmail());
-        mailMessage.setSubject("Goedkeuring vereist ");
-        mailMessage.setText("" + Ruben);
+        mailMessage.setSubject("Goedkeuring vereist " + b.getBedrijfsnaam());
+        mailMessage.setText("" + opdrachtgeverId);
 
         // Send mail
         mailSender.send(mailMessage);
