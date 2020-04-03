@@ -8,8 +8,6 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @ApiModel(value="Gebruiker", description="Bevat alle waarden van de Gebruiker-entiteit.")
@@ -20,9 +18,6 @@ public class Gebruiker {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@ApiModelProperty(hidden = true)
 	private long id;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	
 	@ApiModelProperty(position = 1, value = "De voornaam van een Gebruiker.")
 	private String voornaam;
@@ -85,6 +80,6 @@ public class Gebruiker {
 		return wachtwoordHash;
 	}
 	public void setWachtwoordHash(String wachtwoordHash) {
-		this.wachtwoordHash = this.passwordEncoder.encode(wachtwoordHash);
+		this.wachtwoordHash = wachtwoordHash;
 	}
 }
