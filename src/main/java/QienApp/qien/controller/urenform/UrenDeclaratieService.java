@@ -1,6 +1,7 @@
 package QienApp.qien.controller.urenform;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,74 +25,30 @@ public class UrenDeclaratieService {
 	private MedewerkerService medewerkerService;
 	@Autowired
 	private GewerkteDagService gewerkteDagService;
-
-	/**
-	 * GET ONE URENDECLARATIE
-	 * @PARAM id	ID van een specifieke urendeclaratie
-	 * @RETURN		de gevraagde urendeclaratie
-	 */
-	public Urendeclaratie getUrendeclaraties(Long id) {
-		return urenDeclaratieRepository.findById(id).get();
-	}
-
-	//VIND ALLE URENDECLARATIEFORMULIEREN
-	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
-		return urenDeclaratieRepository.findAll();
-	}
-
-	/**
-	 * UPDATEURENDECLARATIE ===>> IK WEET NIET ZEKER OF DEZE WERKT...
+	@Autowired
+	private GewerkteDagRepository gewerkteDagRepository;
+	
+	/** 2e VERSNELLING zoek met een field
 	 * 
-	 * wijzigt declaratie als je de juiste udID en objectnaanm ingeeft
-	 * @param udId						ID van een urendeclaratie die aangepast moet worden
-	 * @param urendDeclaratieDetails	urendeclaratie object
+	 * @param maandNaam
+	 * @return lijst betreffende UD's
+	 */
+	public List<Urendeclaratie> byMaandNaam(String maandNaam) {
+		return urenDeclaratieRepository.findAllBymaandNaam(maandNaam);
+	}
+	
+	/** 1 *
+	 * UPDATEURENDECLARATIE
+	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
 	 * @return ud						de aangepaste urendeclaratie		
 	 */
-	public Urendeclaratie laszloMethode(Urendeclaratie nieuw) 
+	public Urendeclaratie postOrUpdateUrendeclaratie(Urendeclaratie urendeclaratie ) 
 	{
-		return urenDeclaratieRepository.save(nieuw);
+		return urenDeclaratieRepository.save(urendeclaratie);
 	}
-
-	/**
-	 * KOPPEL FORM AAN MEDEWERKER & SAVE
-	 * @param formId
-	 * @param medewerkerId		
-	 * @return urendeclaratieformulier met eigenaar
-	 * -------
-	 * michiel */
-	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
-	{
-		Urendeclaratie tempUd = getUrendeclaraties(formId);
-		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
-
-		//add FORM to MW
-		tempMw.addUrendeclaratie(tempUd);
-		medewerkerRepository.save(tempMw);
-
-		//TODO add MW to FORM ==>>> relatie is nog niet bidirectioneel
-		//tempUd.setMedewerker(tempMw);
-		return urenDeclaratieRepository.save(tempUd);
-	}
-
-
-	/**
-	 * KOPPEL EEN LEEG URENDECLARATIEOBJECT AAN ALLE MEDEWERKERS IN DE DATABASE
-	 * @param u		leeg urendeclaratieobject
-	 * @return		mededeling dat het gelukt is
-	 */
-	public String koppelAanAllen(Urendeclaratie u) 
-	{
-		for (Medewerker persoon: medewerkerRepository.findAll()) {
-			persoon.addUrendeclaratie(u);
-			medewerkerRepository.save(persoon);
-			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
-			urenDeclaratieRepository.save(u);
-		}
-		return "Alle medewerkers kunnen nu de declaratie voor " + u.getMaandNaam() + "gaan invullen";
-	}
-
-	/**
-	 * MAAK EEN LEEG URENDECLARATIEFORMULIER
+	
+	/** 2 *
+	 * MAAK EEN LEEG URENDECLARATIEFORMULIER, gevuld met dagen
 	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
 	 * @PARAM maandNr		het nummer van de maand, benodigd voor aantal dagen dat er in komt
 	 * @RETURN dezemaand	het lege urenformulier voor deze maand
@@ -108,25 +65,100 @@ public class UrenDeclaratieService {
 			for (int x = 0; x < 29; x++) {
 				GewerkteDag dag = new GewerkteDag();
 				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
+				dezemaand.addDagToList(dag);
+				gewerkteDagRepository.save(dag);	//TODO: is dit beter dan zoals op regel 66, 73? Ivo, Felix???
 			} break;
 		case 4: case 6: case 9: case 11:		
 			for (int x = 0; x < 30; x++) {
 				GewerkteDag dag = new GewerkteDag();
 				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
+				dezemaand.addDagToList(dag);
+				gewerkteDagService.addDagToRepository(dag);
 			} break;
 		default:
 			for (int x = 0; x < 31; x++) {
 				GewerkteDag dag = new GewerkteDag();
 				dag.setDagnr(x+1);
-				dezemaand.addDag(dag);
-				gewerkteDagService.addDag(dag);
+				dezemaand.addDagToList(dag);
+				gewerkteDagService.addDagToRepository(dag);
 			} break;
 		}
 		urenDeclaratieRepository.save(dezemaand);
 		return dezemaand;
+	}
+	
+	/** TEST * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+	 * @param u		leeg urendeclaratieobject
+	 * @return		mededeling dat het gelukt is
+	 */
+	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) 
+	{
+		for (Medewerker persoon: medewerkerRepository.findAll()) {
+			
+			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+			
+			u.setMedewerker(persoon);
+			//persoon.addUrendeclaratie(u);
+			urenDeclaratieRepository.save(u);
+			medewerkerRepository.save(persoon);
+			
+		}
+		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+	}
+	
+//	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+//	 * @param u		leeg urendeclaratieobject
+//	 * @return		mededeling dat het gelukt is
+//	 */
+//	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) 
+//	{
+//		for (Medewerker persoon: medewerkerRepository.findAll()) {
+//			
+//			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+//			persoon.addUrendeclaratie(u);
+//			medewerkerRepository.save(persoon);
+//			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
+//			//urenDeclaratieRepository.save(u);
+//		}
+//		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+//	}
+
+	/** 1 *
+	 * GET ONE URENDECLARATIE
+	 * @PARAM id	ID van een specifieke urendeclaratie
+	 * @RETURN		de gevraagde urendeclaratie
+	 */
+	public Urendeclaratie getUrendeclaratie(Long id) {
+		return urenDeclaratieRepository.findById(id).get();
+	}
+
+	/** 2 * VIND ALLE URENDECLARATIEFORMULIEREN
+	 * 
+	 * @return
+	 */
+	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
+		return urenDeclaratieRepository.findAll();
+	}
+
+
+
+	/** 3.
+	 * KOPPEL FORM AAN MEDEWERKER & SAVE
+	 * @param formId
+	 * @param medewerkerId		
+	 * @return urendeclaratieformulier met eigenaar
+	 */
+	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
+	{
+		Urendeclaratie tempUd = getUrendeclaratie(formId);
+		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
+		System.out.println("DEBUG" + tempUd);
+		System.out.println("DEBUG" + tempMw);
+		//add FORM to MW
+		tempMw.addUrendeclaratie(tempUd);
+		//tempUd.setMedewerker(tempMw);
+		
+		//medewerkerRepository.save(tempMw);
+		return urenDeclaratieRepository.save(tempUd);
 	}
 }

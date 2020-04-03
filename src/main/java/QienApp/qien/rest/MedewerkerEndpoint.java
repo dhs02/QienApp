@@ -8,16 +8,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.MedewerkerService;
+import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
+import QienApp.qien.controller.urenform.UrenDeclaratieService;
 import QienApp.qien.domein.Medewerker;
+import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @RestController
 @RequestMapping("/api/medewerkers")
 public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerService medewerkerService;
-
-	@GetMapping("/")
+	@Autowired
+	MedewerkerRepository medewerkerRepository;
+	
+	@GetMapping
 	public Iterable<Medewerker> verkrijgMedewerkers() {
 		return medewerkerService.getAllMedewerkers();
 	}
@@ -33,7 +40,7 @@ public class MedewerkerEndpoint {
 //	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
 //		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
 //	}
-	@PostMapping("/")
+	@PostMapping
 	public Medewerker toevoegenMedewerker(@RequestBody Medewerker medewerker) {
 		return medewerkerService.addMedewerker(medewerker);
 	}
