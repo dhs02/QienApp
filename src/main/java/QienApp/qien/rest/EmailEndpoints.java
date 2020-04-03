@@ -26,9 +26,10 @@ public class EmailEndpoints {
     @Autowired
     private MailService mailService;
 
-    @GetMapping("/jojo")
-    public void jojo(){
-        mailService.mailVersturen();
+    @GetMapping("/jojo/{id}")
+    public void jojo(@PathVariable(value = "id")long contactpersoonId){
+        System.out.println(contactpersoonId);
+        mailService.mailVersturen(contactpersoonId);
     }
 
     @PostMapping

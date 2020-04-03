@@ -2,23 +2,39 @@ package QienApp.qien.controller;
 
 import QienApp.qien.domein.EmailBericht;
 import QienApp.qien.domein.EmailCfg;
+import QienApp.qien.domein.Opdrachtgever;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
+
 public class MailService {
 
+    @Autowired
+    OpdrachtgeverRepository opdrachtgeverRepository;
     @Autowired
     EmailCfg emailCfg;
 //    @Autowired
 //    EmailBericht emailBericht;
 
-    public void mailVersturen(){
+    public void mailVersturen(long Ruben){
         System.out.println("email versturen");
+        System.out.println(Ruben);
+
+        Optional <Opdrachtgever> hupelakee = opdrachtgeverRepository.findById(Ruben);
+       Opdrachtgever b = hupelakee.get();
+        System.out.println(b.getEmail());
 
 
+        String hallo = "Vrijdag";
+        char a = hallo.charAt(0);
+
+
+        System.out.println();
         // Create a mail sender
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(this.emailCfg.getHost());
@@ -29,9 +45,9 @@ public class MailService {
         // Create an email instance
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("rubenvanrij@gmail.com");
-        mailMessage.setTo("rubenvanrij@gmail.com");
+        mailMessage.setTo(b.getEmail());
         mailMessage.setSubject("Goedkeuring vereist ");
-        mailMessage.setText("jojo");
+        mailMessage.setText("" + Ruben);
 
         // Send mail
         mailSender.send(mailMessage);
