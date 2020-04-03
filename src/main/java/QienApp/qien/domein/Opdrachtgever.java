@@ -15,23 +15,11 @@ public class Opdrachtgever {
 	private long id;
 	private String bedrijfsnaam;
 	private String adres;
-	private String email;
-	private String telefoonnummer;
-	private String plaats;
 	private String postcode;
+	private String plaats;
+	private String email;
+	private String telefoonNummer;
 
-	public String getPlaats() {
-		return plaats;
-	}
-	public void setPlaats(String plaats) {
-		this.plaats = plaats;
-	}
-	public String getPostcode() {
-		return postcode;
-	}
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
 	public long getId() {
 		return id;
 	}
@@ -50,16 +38,28 @@ public class Opdrachtgever {
 	public void setAdres(String adres) {
 		this.adres = adres;
 	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getPlaats() {
+		return plaats;
+	}
+	public void setPlaats(String plaats) {
+		this.plaats = plaats;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getTelefoonnummer() {
-		return telefoonnummer;
+	public String getTelefoonNummer() {
+		return telefoonNummer;
 	}
-	public void setTelefoonnummer(String telefoonnummer) {
-		this.telefoonnummer = telefoonnummer;
+	public void setTelefoonNummer(String telefoonNummer) {
+		this.telefoonNummer = telefoonNummer;
 	}
 }

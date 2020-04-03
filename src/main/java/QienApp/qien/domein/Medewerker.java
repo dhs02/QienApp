@@ -1,17 +1,11 @@
 package QienApp.qien.domein;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import QienApp.qien.domein.urenform.Urendeclaratie;
@@ -55,10 +49,10 @@ public class Medewerker extends Gebruiker {
 	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
 	
 	@JsonIgnore
-	public Set<Urendeclaratie> getUrendeclaraties() 
-	{
+	public Set<Urendeclaratie> getUrendeclaraties() {
 		return urendeclaraties;
 	} 
+	
 	/**
 	 * TOT HIER =================================
 	 */

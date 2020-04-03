@@ -34,11 +34,17 @@ public class OpdrachtgeverService {
 		if (opdrachtgeverDetails.getAdres() != null && opdrachtgeverDetails.getAdres() != "") {
 			opdrachtgever.setAdres(opdrachtgeverDetails.getAdres());
 		}
+		if (opdrachtgeverDetails.getPostcode() != null && opdrachtgeverDetails.getPostcode() != "") {
+			opdrachtgever.setPostcode(opdrachtgeverDetails.getPostcode());
+		}
+		if (opdrachtgeverDetails.getPlaats() != null && opdrachtgeverDetails.getPlaats() != "") {
+			opdrachtgever.setPlaats(opdrachtgeverDetails.getPlaats());
+		}
 		if (opdrachtgeverDetails.getEmail() != null && opdrachtgeverDetails.getEmail() != "") {
 			opdrachtgever.setEmail(opdrachtgeverDetails.getEmail());
 		}
-		if (opdrachtgeverDetails.getTelefoonnummer() != null && opdrachtgeverDetails.getTelefoonnummer() != "") {
-			opdrachtgever.setTelefoonnummer(opdrachtgeverDetails.getTelefoonnummer());
+		if (opdrachtgeverDetails.getTelefoonNummer() != null && opdrachtgeverDetails.getTelefoonNummer() != "") {
+			opdrachtgever.setTelefoonNummer(opdrachtgeverDetails.getTelefoonNummer());
 		}
 	    System.out.println("Opdrachtgever veranderd in Database");
 	    return opdrachtgeverRepository.save(opdrachtgever);
