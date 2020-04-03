@@ -24,8 +24,7 @@ public class GebruikerService {
 	public Optional<Gebruiker> findById(Long id) {
 		return this.gebruikerRepository.findById(id);
 	}
-	
-	
+
 	public Iterable<Gebruiker> getAllGebruikers() {
 		return gebruikerRepository.findAll();
 	}
