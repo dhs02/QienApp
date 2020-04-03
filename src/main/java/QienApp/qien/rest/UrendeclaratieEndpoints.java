@@ -1,5 +1,6 @@
 package QienApp.qien.rest;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,34 @@ public class UrendeclaratieEndpoints {
 	@Autowired
 	UrenDeclaratieRepository urenDeclaratieRepository;
 	
-	@GetMapping("/test2/{id}")
-	public void getZnUren(@PathVariable(value = "id") long id) {
-		urenDeclaratieService.hemZnUrendeclaraties(id);
+	/** 2e versnelling RepZoek; get alle udecs BY maandnaam
+	 * @param maandNaam
+	 * @return lijst Udecs.
+	 */
+	@GetMapping("/byMaandNaam/{maandNaam}")
+	public List<Urendeclaratie> byMaandNaam(@PathVariable(value = "maandNaam") String maandNaam) {
+		return urenDeclaratieService.byMaandNaam(maandNaam);
 	}
-
-
+	
+	/** 0  GET 1 UDEC van een Medewerker, via Urenform ID
+	 * @param udid
+	 * @return
+	 */
+	@GetMapping("/meturendeclaratieid/{udid}")
+	public Urendeclaratie getMedewerkerUrendeclaraties(@PathVariable Long udid) {
+		return urenDeclaratieService.getUrendeclaratie(udid);
+	}
+	
+	/** 1 * HAAL ALLE URENDECs VAN 1 MEDEWERKER
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/metmedewerkerid/{mwid}")
+	public java.util.Set<Urendeclaratie> getMedewerkerUrendeclaratie(@PathVariable Long mwid) {
+		return medewerkerRepository.findById(mwid).get().getUrendeclaraties();
+	}
+	
+	
 	/** 1 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
 	 * 1e.als er een ID meekomt, 2e. als er geen ID meekomt
 	 * @param Urendeclaratie object
@@ -85,7 +108,7 @@ public class UrendeclaratieEndpoints {
 	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) 
 	{
 		System.out.println("getUrendeclaratie");
-		return urenDeclaratieService.getUrendeclaraties(Long.parseLong(idUrendeclaratie));
+		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	
 	/** 5 * GET ALL URENDECLARATIES
@@ -103,18 +126,15 @@ public class UrendeclaratieEndpoints {
 	 * @param maandNaam
 	 * @param maandNr
 	 */
-	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
+	@GetMapping("/urendeclaratie/{maandnaam}/{maandnr}")
 	public void maakLegeUrendeclaratieXXXXX(@PathVariable(value = "maandnaam") String maandNaam, 
-			@PathVariable(value = "maandnr") int maandNr) {
-
+			@PathVariable(value = "maandnr") int maandNr) 
+	{
 		urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
 
 
-
-	/**
-	 * GewerkteDag ENDPOINTS
-	 * UPDATE
+	/** 7 * UPDATE 1 GewerkteDag
 	 * 
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
@@ -123,6 +143,7 @@ public class UrendeclaratieEndpoints {
 	{
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
+	
 	//=======================================================>> welicht overbodige functionaliteiten
 		/** 6 *	koppel een form aan een specifieke medewerker
 		 * 
@@ -130,7 +151,7 @@ public class UrendeclaratieEndpoints {
 		 * @param medewerkerId
 		 * @return gekoppeld formulier
 		 */
-		@PutMapping("/koppelaanmedewerker/{formId}/{medewerkerId}")
+		@GetMapping("/koppelaanmedewerker/{formId}/{medewerkerId}")
 		public Urendeclaratie koppelZe(@PathVariable(value = "formId") long formId, 
 				@PathVariable(value = "medewerkerId") long medewerkerId)
 		{

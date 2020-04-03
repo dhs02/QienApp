@@ -28,6 +28,15 @@ public class UrenDeclaratieService {
 	@Autowired
 	private GewerkteDagRepository gewerkteDagRepository;
 	
+	/** 2e VERSNELLING zoek met een field
+	 * 
+	 * @param maandNaam
+	 * @return lijst betreffende UD's
+	 */
+	public List<Urendeclaratie> byMaandNaam(String maandNaam) {
+		return urenDeclaratieRepository.findAllBymaandNaam(maandNaam);
+	}
+	
 	/** 1 *
 	 * UPDATEURENDECLARATIE
 	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
@@ -119,7 +128,7 @@ public class UrenDeclaratieService {
 	 * @PARAM id	ID van een specifieke urendeclaratie
 	 * @RETURN		de gevraagde urendeclaratie
 	 */
-	public Urendeclaratie getUrendeclaraties(Long id) {
+	public Urendeclaratie getUrendeclaratie(Long id) {
 		return urenDeclaratieRepository.findById(id).get();
 	}
 
@@ -141,7 +150,7 @@ public class UrenDeclaratieService {
 	 */
 	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) 
 	{
-		Urendeclaratie tempUd = getUrendeclaraties(formId);
+		Urendeclaratie tempUd = getUrendeclaratie(formId);
 		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
 		System.out.println("DEBUG" + tempUd);
 		System.out.println("DEBUG" + tempMw);
@@ -152,16 +161,4 @@ public class UrenDeclaratieService {
 		//medewerkerRepository.save(tempMw);
 		return urenDeclaratieRepository.save(tempUd);
 	}
-	
-	public Iterable<Urendeclaratie> hemZnUrendeclaraties(long uid) {
-		//Medewerker m = medewerkerRepository.findById(uid).get();
-		System.out.println("DEBUG doet i het?");
-		return urenDeclaratieRepository.findByMedewerkerId(uid);
-	}
-	
-
-	
-
-
-	
 }

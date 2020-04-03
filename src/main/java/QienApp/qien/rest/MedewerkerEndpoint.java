@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.MedewerkerService;
+import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
+import QienApp.qien.controller.urenform.UrenDeclaratieService;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
@@ -22,11 +24,6 @@ public class MedewerkerEndpoint {
 	@Autowired
 	MedewerkerRepository medewerkerRepository;
 	
-	@GetMapping("/{id}/urendeclaratie")
-	public java.util.Set<Urendeclaratie> getMedewerkerUrendeclaratie(@PathVariable Long id) {
-		return medewerkerRepository.findById(id).get().getUrendeclaraties();
-	}
-
 	@GetMapping
 	public Iterable<Medewerker> verkrijgMedewerkers() {
 		return medewerkerService.getAllMedewerkers();
