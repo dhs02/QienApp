@@ -1,12 +1,11 @@
 package QienApp.qien.rest;
 
+import QienApp.qien.controller.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.domein.EmailBericht;
@@ -22,6 +21,14 @@ public class EmailEndpoints {
 
     public EmailEndpoints(EmailCfg emailCfg) {
         this.emailCfg = emailCfg;
+    }
+
+    @Autowired
+    private MailService mailService;
+
+    @GetMapping("/jojo")
+    public void jojo(){
+        mailService.mailVersturen();
     }
 
     @PostMapping
@@ -48,6 +55,6 @@ public class EmailEndpoints {
         // Send mail
         mailSender.send(mailMessage);
         
-        System.out.println("Mail sended");
+        System.out.println("Mail sent");
     }
 }
