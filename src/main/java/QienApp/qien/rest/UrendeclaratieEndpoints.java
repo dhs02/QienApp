@@ -23,8 +23,6 @@ import QienApp.qien.domein.urenform.Urendeclaratie;
 @RestController
 @RequestMapping("/api/urendeclaraties")
 public class UrendeclaratieEndpoints {
-
-	//ik ben vrienden met deze lui:
 	@Autowired
 	UrenDeclaratieService urenDeclaratieService;
 	@Autowired
@@ -55,10 +53,8 @@ public class UrendeclaratieEndpoints {
 	 * TODO iets met ENUM maandnaam en maandnummers
 	 * @return		leeg urenform
 	 */
-	@PostMapping("/{maandnaam}/{maandnr}")
-	public Urendeclaratie maakLegeUrendeclaratie1(@PathVariable(value = "maandnaam") String maandNaam, 
-			@PathVariable(value = "maandnr") int maandNr) 
-	{
+	@GetMapping("/maakurendeclaratie/{maandnaam}/{maandnr}")
+	public Urendeclaratie maakLegeUrendeclaratie1(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
 		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
 	
@@ -136,10 +132,8 @@ public class UrendeclaratieEndpoints {
  * @param maandNaam
  * @param maandNr
  */
-	@PostMapping("/urendeclaratie/{maandnaam}/{maandnr}")
-	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, 
-			@PathVariable(value = "maandnr") int maandNr) {
-
+	@GetMapping("/urendeclaratie/{maandnaam}/{maandnr}")
+	public void maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
 		urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
 
@@ -158,9 +152,7 @@ public class UrendeclaratieEndpoints {
 	 * 
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
-	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId,
-			@RequestBody GewerkteDag dagDetails) 
-	{
+	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId, @RequestBody GewerkteDag dagDetails) {
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
 }
