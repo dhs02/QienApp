@@ -18,14 +18,13 @@ public class AuthExamplesEndpoints {
     private GebruikerService gebruikerService;
 
     @GetMapping("/user/{id}")
-    // In deze methode zie je hoe je de huidig ingelogde gebruiker
-    // kunt opvragen en bijvoorbeeld returnen naar de front-end
+    // In deze methode zie je hoe je de met Spring Security ingelogde
+    // gebruiker kunt opvragen en bijvoorbeeld returnen naar de front-end
     public Gebruiker getGebruiker(@PathVariable Long id,
                                   Authentication authentication) {
-        Gebruiker gebruiker
-                = ((GebruikerPrincipal) authentication.getPrincipal())
-                  .getGebruiker();
-        return gebruiker;
+        Gebruiker g = ((GebruikerPrincipal) authentication.getPrincipal())
+                      .getGebruiker();
+        return g;
     }
 
     @PostMapping
