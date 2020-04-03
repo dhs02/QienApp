@@ -5,6 +5,7 @@ import QienApp.qien.domein.Gebruiker;
 import QienApp.qien.security.domein.GebruikerPrincipal;
 import QienApp.qien.security.service.GebruikerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,11 +18,14 @@ public class AuthExamplesEndpoints {
     private GebruikerService gebruikerService;
 
     @GetMapping("/user/{id}")
-    public GebruikerPrincipal getGebruikerPrincipal(@PathVariable Long id) {
-        Gebruiker gebruiker = this.gebruikerService.findById(id).get();
-        return (GebruikerPrincipal) this
-                .gebruikerDetailsService
-                .loadUserByUsername(gebruiker.getEmail());
+    // In deze methode zie je hoe je de huidig ingelogde gebruiker
+    // kunt opvragen en bijvoorbeeld returnen naar de front-end
+    public Gebruiker getGebruiker(@PathVariable Long id,
+                                  Authentication authentication) {
+        Gebruiker gebruiker
+                = ((GebruikerPrincipal) authentication.getPrincipal())
+                  .getGebruiker();
+        return gebruiker;
     }
 
     @PostMapping
