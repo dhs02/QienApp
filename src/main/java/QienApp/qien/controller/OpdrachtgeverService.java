@@ -5,11 +5,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import QienApp.qien.domein.Opdrachtgever;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class OpdrachtgeverService {
 	@Autowired
 	OpdrachtgeverRepository opdrachtgeverRepository;
+
+	public Optional<Opdrachtgever> findByBedrijfsnaam(String bedrijfsnaam) {
+		return this.opdrachtgeverRepository.findByBedrijfsnaam(bedrijfsnaam);
+	}
 	
 	public Iterable<Opdrachtgever> getAllOpdrachtgevers() {
 		return opdrachtgeverRepository.findAll();
