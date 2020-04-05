@@ -1,5 +1,7 @@
 package QienApp.qien.rest;
+import QienApp.qien.controller.OpdrachtgeverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,12 +14,19 @@ import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.controller.OpdrachtgeverRepository;
 import QienApp.qien.domein.Contactpersoon;
 import QienApp.qien.domein.Opdrachtgever;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contactpersonen")
 public class ContactpersoonEndpoint {
 	@Autowired
 	ContactpersoonService contactpersoonService;
+
+	@Autowired
+	private OpdrachtgeverService opdrachtgeverService;
 
 	@GetMapping("/")
 	public Iterable<Contactpersoon> verkrijgContactpersonen() {
@@ -27,6 +36,16 @@ public class ContactpersoonEndpoint {
 	public Contactpersoon verkrijgContactpersoon(@PathVariable(value = "id") String contactpersoonId) {
 		return contactpersoonService.getContactpersoonById(Long.parseLong(contactpersoonId));
 	}
+
+	@GetMapping("/opdrachtgever/{opdrachtgeverId}")
+	public Iterable<Contactpersoon> getAllOpdrachtgeversById(@PathVariable Long opdrachtgeverId) {
+		Opdrachtgever opdrachtgever = opdrachtgeverService.getOpdrachtgeverById(opdrachtgeverId);
+		if (opdrachtgever == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "OpdrachtgeverId bestaat niet.");
+		}
+		return this.contactpersoonService.findAllByOpdrachtgever(opdrachtgever);
+	}
+
 	@GetMapping("/opdrachtgever/{cpid}/{ogid}") // @PostMapping alleen met objecten meesturen
 	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="ogid") String opdrachtgeverId) {
 		contactpersoonService.addOpdrachtgever(Long.parseLong(contactpersoonId), Long.parseLong(opdrachtgeverId));
@@ -43,7 +62,7 @@ public class ContactpersoonEndpoint {
 	public Contactpersoon vernieuwContactpersoon(@PathVariable(value = "id") String contactpersoonId, @RequestBody Contactpersoon contactpersoonDetails) {
 		return contactpersoonService.updateContactpersoon(Long.parseLong(contactpersoonId), contactpersoonDetails);
 	}
-	
+
 	@PostMapping("/{ogid}")
 	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(@PathVariable(value = "ogid") String opdrachtgeverId, @RequestBody Contactpersoon contactpersoon){
 		return contactpersoonService.toevoegenContactpersoonMetOpdrachtgever(opdrachtgeverId, contactpersoon);
