@@ -26,6 +26,11 @@ public class ContactpersoonService {
 	public Iterable<Contactpersoon> getAllContactpersonen() {
 		return contactpersoonRepository.findAll();
 	}
+
+	public Iterable<Contactpersoon> findAllByOpdrachtgever(Opdrachtgever opdrachtgever) {
+		return this.contactpersoonRepository.findAllByOpdrachtgever(opdrachtgever);
+	}
+
 	public Contactpersoon getContactpersoonById(Long userId) {
 		System.out.println("Contactpersoon gevonden in Database");
 		return contactpersoonRepository.findById(userId).get();
