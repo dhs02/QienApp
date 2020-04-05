@@ -66,11 +66,9 @@ public class ContactpersoonService {
 	}
 	
 	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(String opdrachtgeverId, Contactpersoon contactpersoon) {
-		Contactpersoon nieuweCp = addContactpersoon(contactpersoon);
 		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(Long.parseLong(opdrachtgeverId)).get();
 		contactpersoon.setOpdrachtgever(opdrachtgever);
-		contactpersoonRepository.save(contactpersoon);
 		System.out.println("Contactpersoon aangemaakt en opdrachtgever aan toegevoegd.");
-		return contactpersoon;
+		return contactpersoonRepository.save(contactpersoon);
 	}
 }
