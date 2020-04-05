@@ -11,7 +11,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /* Comprehensive guide on JWT-based authentication and authorisation
@@ -27,17 +29,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    /* Creates test user with default credentials
-     * NOTE: remove in production
-     */
-    @Autowired
-    public void configure(GebruikerService gebruikerService) {
-        Gebruiker gebruiker = new Admin();
-        gebruiker.setEmail("banaan@eten.nl");
-        gebruiker.setWachtwoordHash(passwordEncoder().encode("chiquita"));
-        gebruikerService.addGebruiker(gebruiker);
     }
 
 
