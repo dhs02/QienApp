@@ -64,4 +64,11 @@ public class ContactpersoonService {
 	    System.out.println("Contactpersoon veranderd in Database");
 	    return contactpersoonRepository.save(contactpersoon);
 	}
+	
+	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(String opdrachtgeverId, Contactpersoon contactpersoon) {
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(Long.parseLong(opdrachtgeverId)).get();
+		contactpersoon.setOpdrachtgever(opdrachtgever);
+		System.out.println("Contactpersoon aangemaakt en opdrachtgever aan toegevoegd.");
+		return contactpersoonRepository.save(contactpersoon);
+	}
 }
