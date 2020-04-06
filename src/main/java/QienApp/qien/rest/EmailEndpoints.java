@@ -27,35 +27,16 @@ public class EmailEndpoints {
     private MailService mailService;
 
     @GetMapping("/{id}")
-    public void getEmail(@PathVariable(value = "id")long contactpersoonId){
+    public void getEmail(@PathVariable(value = "id") long contactpersoonId) {
         System.out.println(contactpersoonId + "jojo");
         mailService.mailVersturen(contactpersoonId);
     }
 
     @PostMapping
     public void sendFeedback(@RequestBody EmailBericht emailBericht,
-                             BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Feedback is not valid");
         }
-
-        // Create a mail sender
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(this.emailCfg.getHost());
-        mailSender.setPort(this.emailCfg.getPort());
-        mailSender.setUsername(this.emailCfg.getUsername());
-        mailSender.setPassword(this.emailCfg.getPassword());
-
-        // Create an email instance
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(emailBericht.getEmail());
-        mailMessage.setTo(emailBericht.getEmail());
-        mailMessage.setSubject("Goedkeuring vereist " + emailBericht.getName());
-        mailMessage.setText(emailBericht.getFeedback());
-
-        // Send mail
-        mailSender.send(mailMessage);
-        
-        System.out.println("Mail sent");
     }
 }
