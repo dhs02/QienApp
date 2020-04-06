@@ -82,4 +82,9 @@ public class Gebruiker {
 	public void setWachtwoordHash(String wachtwoordHash) {
 		this.wachtwoordHash = passwordEncoder.encode(wachtwoordHash);
 	}
+
+	public String getGebruikerType() {
+		String gebruikerType = this.getClass().toString();
+		return gebruikerType.substring(gebruikerType.lastIndexOf('.') + 1);
+	}
 }
