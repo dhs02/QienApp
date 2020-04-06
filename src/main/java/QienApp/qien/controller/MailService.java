@@ -1,8 +1,6 @@
 package QienApp.qien.controller;
 
-import QienApp.qien.domein.EmailBericht;
-import QienApp.qien.domein.EmailCfg;
-import QienApp.qien.domein.Opdrachtgever;
+import QienApp.qien.domein.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,19 +13,19 @@ import java.util.Optional;
 public class MailService {
 
     @Autowired
-    OpdrachtgeverRepository opdrachtgeverRepository;
+    GebruikerRepository gebruikerRepository;
     @Autowired
     EmailCfg emailCfg;
 //    @Autowired
 //    EmailBericht emailBericht;
 
-    public void mailVersturen(long opdrachtgeverId){
+    public void mailVersturen(long contactpersoonId){
         System.out.println("email versturen");
 
 
-        Optional <Opdrachtgever> opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId);
-        boolean a = opdrachtgever.isPresent();
-        Opdrachtgever b = opdrachtgever.get();
+        Optional<Gebruiker> contactpersoon = gebruikerRepository.findById(contactpersoonId);
+        boolean a = contactpersoon.isPresent();
+        Gebruiker b = contactpersoon.get();
         System.out.println(b.getEmail());
 
         System.out.println();
@@ -42,8 +40,8 @@ public class MailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("rubenvanrij@gmail.com");
         mailMessage.setTo(b.getEmail());
-        mailMessage.setSubject("Goedkeuring vereist " + b.getBedrijfsnaam());
-        mailMessage.setText("" + opdrachtgeverId);
+        mailMessage.setSubject("Goedkeuring vereist " + b.getVoornaam() + b.getAchternaam());
+        mailMessage.setText("" + contactpersoonId);
 
         // Send mail
         mailSender.send(mailMessage);
