@@ -41,6 +41,7 @@ public class GebruikerService {
 	}
 	public Gebruiker updateGebruiker(Long userId, Gebruiker gebruikerDetails) {
 		Gebruiker gebruiker = gebruikerRepository.findById(userId).get();
+
 		if (gebruikerDetails.getVoornaam() != null && gebruikerDetails.getVoornaam() != "") {
 			gebruiker.setVoornaam(gebruikerDetails.getVoornaam());
 		}

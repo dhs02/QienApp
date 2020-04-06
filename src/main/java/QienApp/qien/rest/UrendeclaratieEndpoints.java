@@ -2,7 +2,11 @@ package QienApp.qien.rest;
 
 import java.util.List;
 
+import QienApp.qien.domein.Gebruiker;
+import QienApp.qien.domein.Medewerker;
+import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,8 +77,23 @@ public class UrendeclaratieEndpoints {
 	 * @param Urendeclaratie object
 	 * @return het nieuwe Urendeclaratie object
 	 */
+	@PostMapping
+	public Urendeclaratie postUrendeclaratieMethode(@RequestBody Urendeclaratie u,
+													Authentication authentication) {
+		return this.urenDeclaratieMethode(u, authentication);
+	}
+
 	@PutMapping("/")
-	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u) {
+	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u,
+												Authentication authentication) {
+		if (authentication != null) {
+			Gebruiker g = ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+			if (g instanceof Medewerker) {
+				Medewerker m = (Medewerker) g;
+				u.setMedewerker(m);
+			}
+
+		}
 		return urenDeclaratieService.postOrUpdateUrendeclaratie(u);
 	}
 
