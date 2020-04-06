@@ -1,5 +1,7 @@
 package QienApp.qien.domein.urenform;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,7 @@ public class GewerkteDag {
 	private String verklaringOverig;
 	
 	//DATUM DINGEN TIJDELIJK
-	private String datum;
+	private Date datum;
 	private int dagnr;
 	
 	
@@ -89,10 +91,10 @@ public class GewerkteDag {
 	public void setVerklaringOverig(String verklaringOverig) {
 		this.verklaringOverig = verklaringOverig;
 	}
-	public String getDatum() {
+	public Date getDatum() {
 		return datum;
 	}
-	public void setDatum(String datum) {
+	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
 	public int getDagnr() {

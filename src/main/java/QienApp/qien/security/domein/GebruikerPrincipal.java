@@ -15,6 +15,14 @@ public class GebruikerPrincipal implements UserDetails {
         this.gebruiker = gebruiker;
     }
 
+    public Gebruiker getGebruiker() {
+        return this.gebruiker;
+    }
+
+    public void setGebruiker(Gebruiker gebruiker) {
+        this.gebruiker = gebruiker;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
