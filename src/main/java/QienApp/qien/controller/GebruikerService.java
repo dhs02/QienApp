@@ -13,12 +13,11 @@ public class GebruikerService {
 	@Autowired
 	GebruikerRepository<Gebruiker> gebruikerRepository;
 	
+	public List<Gebruiker> findByVoornaam(String voornaam) {
+		return gebruikerRepository.findByVoornaam(voornaam);
+	}
 	public List<Gebruiker> findByAchternaam(String achternaam) {
 		return gebruikerRepository.findByAchternaam(achternaam);
-	}
-	
-	public Optional<Gebruiker> findByVoornaam(String voornaam) {
-		return gebruikerRepository.findByVoornaam(voornaam);
 	}
 	
 	public Optional<Gebruiker> findById(Long id) {

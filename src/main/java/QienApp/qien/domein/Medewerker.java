@@ -19,6 +19,10 @@ public class Medewerker extends Gebruiker {
 
 	@ManyToOne
 	Contactpersoon contactpersoon;
+	
+	@OneToMany
+	@JoinColumn(name="medewerker_id")
+	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
 
 	public Opdrachtgever getOpdrachtgever() {
 		return opdrachtgever;
@@ -26,11 +30,20 @@ public class Medewerker extends Gebruiker {
 	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
 		this.opdrachtgever = opdrachtgever;
 	}
+	
 	public Contactpersoon getContactpersoon() {
 		return contactpersoon;
 	}
 	public void setContactpersoon(Contactpersoon contactpersoon) {
 		this.contactpersoon = contactpersoon;
+	}
+	
+	@JsonIgnore
+	public Set<Urendeclaratie> getUrendeclaraties() {
+		return urendeclaraties;
+	} 
+	public void setUrendeclaraties(Set<Urendeclaratie> urendeclaraties) {
+		this.urendeclaraties = urendeclaraties;
 	}
 
 
@@ -43,23 +56,6 @@ public class Medewerker extends Gebruiker {
 	
 	//@JsonBackReference
 	
-	
-	@OneToMany
-	@JoinColumn(name="medewerker_id")
-	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
-	
-	@JsonIgnore
-	public Set<Urendeclaratie> getUrendeclaraties() {
-		return urendeclaraties;
-	} 
-	
-	/**
-	 * TOT HIER =================================
-	 */
-
-	public void setUrendeclaraties(Set<Urendeclaratie> urendeclaraties) {
-		this.urendeclaraties = urendeclaraties;
-	}
 	public void addUrendeclaratie(Urendeclaratie tempUd) {
 		tempUd.setMedewerker(this);
 		urendeclaraties.add(tempUd);

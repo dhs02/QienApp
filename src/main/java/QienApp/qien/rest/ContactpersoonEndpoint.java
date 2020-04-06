@@ -1,4 +1,5 @@
 package QienApp.qien.rest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import QienApp.qien.controller.ContactpersoonService;
-import QienApp.qien.controller.OpdrachtgeverRepository;
 import QienApp.qien.domein.Contactpersoon;
-import QienApp.qien.domein.Opdrachtgever;
 
 @RestController
 @RequestMapping("/api/contactpersonen")
@@ -47,6 +47,5 @@ public class ContactpersoonEndpoint {
 	@PostMapping("/{ogid}")
 	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(@PathVariable(value = "ogid") String opdrachtgeverId, @RequestBody Contactpersoon contactpersoon){
 		return contactpersoonService.toevoegenContactpersoonMetOpdrachtgever(opdrachtgeverId, contactpersoon);
-	}
-	
+	}	
 }

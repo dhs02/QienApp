@@ -9,13 +9,8 @@ import QienApp.qien.domein.Gebruiker;
 
 @Repository
 public interface GebruikerRepository<T extends Gebruiker> extends CrudRepository<T, Long> {
-	
 	List<T> findByAchternaam(String achternaam);
-	
-	Optional<T> findByVoornaam(String voornaam);
-
+	List<T> findByVoornaam(String voornaam);
 	Optional<Gebruiker> findByEmail(String email);
-	
 //	long countByLastname(String achternaam);
-	
 }
