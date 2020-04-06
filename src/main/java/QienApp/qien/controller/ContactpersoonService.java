@@ -26,6 +26,11 @@ public class ContactpersoonService {
 	public Iterable<Contactpersoon> getAllContactpersonen() {
 		return contactpersoonRepository.findAll();
 	}
+
+	public Iterable<Contactpersoon> findAllByOpdrachtgever(Opdrachtgever opdrachtgever) {
+		return this.contactpersoonRepository.findAllByOpdrachtgever(opdrachtgever);
+	}
+
 	public Contactpersoon getContactpersoonById(Long userId) {
 		System.out.println("Contactpersoon gevonden in Database");
 		return contactpersoonRepository.findById(userId).get();
@@ -63,5 +68,12 @@ public class ContactpersoonService {
 		}
 	    System.out.println("Contactpersoon veranderd in Database");
 	    return contactpersoonRepository.save(contactpersoon);
+	}
+	
+	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(String opdrachtgeverId, Contactpersoon contactpersoon) {
+		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(Long.parseLong(opdrachtgeverId)).get();
+		contactpersoon.setOpdrachtgever(opdrachtgever);
+		System.out.println("Contactpersoon aangemaakt en opdrachtgever aan toegevoegd.");
+		return contactpersoonRepository.save(contactpersoon);
 	}
 }

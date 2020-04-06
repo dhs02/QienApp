@@ -2,6 +2,8 @@ package QienApp.qien.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import QienApp.qien.domein.Contactpersoon;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.Opdrachtgever;
 
@@ -10,9 +12,10 @@ import QienApp.qien.domein.Opdrachtgever;
 public class MedewerkerService {
 	@Autowired
 	MedewerkerRepository medewerkerRepository;
-	
 	@Autowired
 	OpdrachtgeverRepository opdrachtgeverRepository;
+	@Autowired
+	ContactpersoonRepository contactpersoonRepository;
 	
 	public Iterable<Medewerker> getAllMedewerkers() {
 		return medewerkerRepository.findAll();
@@ -26,7 +29,14 @@ public class MedewerkerService {
 		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();
 		medewerker.setOpdrachtgever(opdrachtgever);
 		medewerkerRepository.save(medewerker);
-		System.out.println("Opdrachtgever toegevoegd aan werknemer.");
+		System.out.println("Opdrachtgever toegevoegd aan medewerker.");
+	}
+	public void addContactpersoon(Long medewerkerId, Long contactpersoonId) {
+		Medewerker medewerker = medewerkerRepository.findById(medewerkerId).get();
+		Contactpersoon contactpersoon = contactpersoonRepository.findById(contactpersoonId).get();
+		medewerker.setContactpersoon(contactpersoon);
+		medewerkerRepository.save(medewerker);
+		System.out.println("Contactpersoon toegevoegd aan medewerker.");
 	}
 	public Medewerker addMedewerker(Medewerker medewerker) {
 		System.out.println("Medewerker toegevoegd aan Database");

@@ -2,7 +2,10 @@ package QienApp.qien.rest;
 import java.util.List;
 import java.util.Optional;
 
+import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +37,26 @@ public class GebruikerEndpoint {
 	@GetMapping("/voornaam/{voornaam}") 
 	public Optional<Gebruiker> zoekVoornaam(@PathVariable(value="voornaam") String voornaam) {
 		return gebruikerService.findByVoornaam(voornaam);
+	}
+
+	@GetMapping("/me")
+	// Geeft de huidige gebruiker terug. De gebruiker moet dan wel zijn / haar
+	// gebruikersnaam en wachtwoord als HTTP Basic header toegevoegd bij de
+	// GET request meesturen.
+	//
+	// In Postman kun je dit testen door onder het tabblad "Authorization" de
+	// optie "Basic Auth" te selecteren en het emailadres en wachtwoord van een
+	// bestaande gebruiker in te vullen.
+	public Gebruiker getIngelogdeGebruiker(Authentication authentication) {
+		if (authentication == null) {
+			throw new AuthenticationCredentialsNotFoundException("Credentials "
+			+ "not found.");
+		}
+
+		GebruikerPrincipal gebruikerPrincipal
+				= (GebruikerPrincipal) authentication.getPrincipal();
+		Gebruiker gebruiker = gebruikerPrincipal.getGebruiker();
+		return gebruiker;
 	}
 
 	@GetMapping("/")
