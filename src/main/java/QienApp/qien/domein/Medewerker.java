@@ -1,7 +1,10 @@
 package QienApp.qien.domein;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,57 +22,36 @@ public class Medewerker extends Gebruiker {
 
 	@ManyToOne
 	Contactpersoon contactpersoon;
-
-	public Opdrachtgever getOpdrachtgever() {
-		return opdrachtgever;
-	}
-	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {
-		this.opdrachtgever = opdrachtgever;
-	}
-	public Contactpersoon getContactpersoon() {
-		return contactpersoon;
-	}
-	public void setContactpersoon(Contactpersoon contactpersoon) {
-		this.contactpersoon = contactpersoon;
-	}
-
-
-	/**
-	 * HOWTOPROGRAMWITHJAVA.COM=================
-	 * bidirectional test
-	 * 
-	 * 
-	 */
 	
-	//@JsonBackReference
+	@ElementCollection
+	private List<String> medewerkerInfo  = new ArrayList<>();
 	
+	public void addToMedewerkerInfo(String s) 
+	{
+		this.medewerkerInfo.add(s); 
+	}
 	
 	@OneToMany
 	@JoinColumn(name="medewerker_id")
 	private Set<Urendeclaratie> urendeclaraties = new HashSet<Urendeclaratie>();
 	
 	@JsonIgnore
-	public Set<Urendeclaratie> getUrendeclaraties() {
+	public Set<Urendeclaratie> getUrendeclaraties() 
+	{
 		return urendeclaraties;
 	} 
-	
-	/**
-	 * TOT HIER =================================
-	 */
-
-	public void setUrendeclaraties(Set<Urendeclaratie> urendeclaraties) {
-		this.urendeclaraties = urendeclaraties;
-	}
-	public void addUrendeclaratie(Urendeclaratie tempUd) {
-		tempUd.setMedewerker(this);
+	public void addUrendeclaratie(Urendeclaratie tempUd) 
+	{
 		urendeclaraties.add(tempUd);
 	}
 
-	//	public List<Urendeclaratie> getUrendeclaraties() {
-	//		return urendeclaraties;
-	//	}
-	//
-	//	public void setUrendeclaraties(List<Urendeclaratie> urendeclaraties) {
-	//		this.urendeclaraties = urendeclaraties;
-	//	}
+	public Opdrachtgever getOpdrachtgever() {return opdrachtgever;}
+	public void setOpdrachtgever(Opdrachtgever opdrachtgever) {this.opdrachtgever = opdrachtgever;}
+	public Contactpersoon getContactpersoon() {return contactpersoon;}
+	public void setContactpersoon(Contactpersoon contactpersoon) {this.contactpersoon = contactpersoon;}
+	public void setUrendeclaraties(Set<Urendeclaratie> urendeclaraties) {this.urendeclaraties = urendeclaraties;}
+	public List<String> getMedewerkerInfo() {return medewerkerInfo;}
+	public void setMedewerkerInfo(List<String> medewerkerInfo) {this.medewerkerInfo = medewerkerInfo;}
+
 }
+
