@@ -1,4 +1,6 @@
 package QienApp.qien.domein;
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 import io.swagger.annotations.ApiModel;
@@ -32,6 +34,26 @@ public class Gebruiker {
 	private String telefoonNummer;
 	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
+	
+	//NIEUW
+	//Versturen in JSON JAAR-MAAND-DAG
+	private LocalDate datumInDienst;
+	//NIEUW
+	private LocalDate datumUitDienst;
+	
+
+	public LocalDate getDatumInDienst() {
+		return datumInDienst;
+	}
+	public void setDatumInDienst(LocalDate datumInDienst) {
+		this.datumInDienst = datumInDienst;
+	}
+	public LocalDate getDatumUitDienst() {
+		return datumUitDienst;
+	}
+	public void setDatumUitDienst(LocalDate datumUitDienst) {
+		this.datumUitDienst = datumUitDienst;
+	}
 
 	public long getId() {
 		return id;
