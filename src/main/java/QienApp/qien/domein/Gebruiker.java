@@ -35,10 +35,8 @@ public class Gebruiker {
 	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
 	
-	//NIEUW
-	//Versturen in JSON JAAR-MAAND-DAG
 	private LocalDate datumInDienst;
-	//NIEUW
+	
 	private LocalDate datumUitDienst;
 	
 

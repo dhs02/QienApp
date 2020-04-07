@@ -83,4 +83,9 @@ public class GebruikerEndpoint {
 	public Gebruiker vernieuwGebruiker(@PathVariable(value = "id") String gebruikerId, @RequestBody Gebruiker gebruikerDetails) {
 		return gebruikerService.updateGebruiker(Long.parseLong(gebruikerId), gebruikerDetails);
 	}
+	
+	@GetMapping("/getByEmail/{email}")
+	public Gebruiker getByEmail(@PathVariable(value = "email") String email) {
+		return gebruikerService.getByEmail(email);
+	}
 }
