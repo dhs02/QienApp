@@ -35,12 +35,12 @@ public class Gebruiker {
 	private String telefoonNummer;
 	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
+	@ApiModelProperty(position = 8, value = "De profielfoto van een Gebruiker.")
+	private String afbeelding;
 	
 	private LocalDate datumInDienst;
-	
 	private LocalDate datumUitDienst;
 	
-
 	public LocalDate getDatumInDienst() {
 		return datumInDienst;
 	}
@@ -101,9 +101,15 @@ public class Gebruiker {
 	public String getWachtwoordHash() {
 		return wachtwoordHash;
 	}
-
 	public void setWachtwoordHash(String wachtwoordHash) {
 		this.wachtwoordHash = passwordEncoder.encode(wachtwoordHash);
+	}
+	
+	public String getAfbeelding() {
+		return afbeelding;
+	}
+	public void setAfbeelding(String afbeelding) {
+		this.afbeelding = afbeelding;
 	}
 
 	public String getGebruikerType() {
