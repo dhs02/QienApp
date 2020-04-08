@@ -19,7 +19,7 @@ public class MailService {
 //    @Autowired
 //    EmailBericht emailBericht;
 
-    public void mailVersturen(long contactpersoonId){
+    public void mailVersturen(long contactpersoonId, long urendeclaratieId){
         System.out.println("email versturen");
 
 
@@ -42,7 +42,7 @@ public class MailService {
         mailMessage.setTo(b.getEmail());
         mailMessage.setSubject("Goedkeuring vereist voor Qien trainee");
         mailMessage.setText("Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" +
-                "Hier moet de link komen van uren declaratie." + "\n\n" + "Met vriendelijke groet," + "\n\n" +  "Qien" );
+                "http://localhost:8082/goedafkeuring.html?uid=" + urendeclaratieId + "\n\n" + "Met vriendelijke groet," + "\n\n" +  "Qien" );
 
         // Send mail
         mailSender.send(mailMessage);

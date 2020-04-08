@@ -22,10 +22,10 @@ public class EmailEndpoints {
     @Autowired
     private MailService mailService;
 
-    @GetMapping("/{id}")
-    public void getEmail(@PathVariable(value = "id") long contactpersoonId) {
+    @GetMapping("/{cid}/{uid}/")
+    public void getEmail(@PathVariable(value = "cid") long contactpersoonId, @PathVariable(value = "uid") long urendeclaratieId) {
         System.out.println(contactpersoonId);
-        mailService.mailVersturen(contactpersoonId);
+        mailService.mailVersturen(contactpersoonId, urendeclaratieId);
     }
 
     @PostMapping
