@@ -1,4 +1,5 @@
 package QienApp.qien.rest;
+import QienApp.qien.domein.Contactpersoon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,13 @@ public class OpdrachtgeverEndpoint {
 	public Opdrachtgever verkrijgOpdrachtgever(@PathVariable(value = "id") String opdrachtgeverId) {
 		return opdrachtgeverService.getOpdrachtgeverById(Long.parseLong(opdrachtgeverId));
 	}
+
+	@GetMapping("/{id}/contactpersonen")
+	public Iterable<Contactpersoon> verkrijgOpdrachtgeverContactpersonen(
+			@PathVariable Long id) {
+		return this.opdrachtgeverService.getOpdrachtgeverById(id).getContactpersonen();
+	}
+
 	@PostMapping("/")
 	public Opdrachtgever toevoegenOpdrachtgever(@RequestBody Opdrachtgever opdrachtgever) {
 		return opdrachtgeverService.addOpdrachtgever(opdrachtgever);
