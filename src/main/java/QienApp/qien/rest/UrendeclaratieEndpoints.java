@@ -53,6 +53,9 @@ public class UrendeclaratieEndpoints {
 	@GetMapping("/{uid}")		//	GET 1 BY UDEC ID
 	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "uid") String idUrendeclaratie) 
 	{
+		Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
+		Long cid = u.getMedewerker().getContactpersoon().getId();
+		
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	

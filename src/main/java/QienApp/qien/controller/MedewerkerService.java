@@ -20,18 +20,6 @@ public class MedewerkerService {
 	@Autowired
 	ContactpersoonRepository contactpersoonRepository;
 	
-	public void putMedewerkerInfo(Urendeclaratie u) 
-	{
-		Medewerker medewerker = u.getMedewerker();
-			medewerker.addToMedewerkerInfo(medewerker.getVoornaam());
-			medewerker.addToMedewerkerInfo(medewerker.getAchternaam());
-			medewerker.addToMedewerkerInfo(medewerker.getGeboorteDatum());
-			medewerker.addToMedewerkerInfo(medewerker.getAdres());
-			medewerker.addToMedewerkerInfo(medewerker.getTelefoonNummer());
-			medewerker.addToMedewerkerInfo(medewerker.getEmail());
-			medewerkerRepository.save(medewerker);
-	}
-	
 	public Iterable<Medewerker> getAllMedewerkers() {
 		return medewerkerRepository.findAll();
 	}
