@@ -100,6 +100,7 @@ public class UrenDeclaratieService {
 		for (Medewerker persoon: medewerkerRepository.findAll()) {
 			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
 			u.setMedewerker(persoon);
+			u.setStatus(QienApp.qien.domein.urenform.Status.BESCHIKBAAR);
 			//persoon.addUrendeclaratie(u);
 			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);

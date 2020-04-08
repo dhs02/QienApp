@@ -78,8 +78,7 @@ public class UrendeclaratieEndpoints {
 	 * @return het nieuwe Urendeclaratie object
 	 */
 	@PostMapping
-	public Urendeclaratie postUrendeclaratieMethode(@RequestBody Urendeclaratie u,
-													Authentication authentication) {
+	public Urendeclaratie postUrendeclaratieMethode(@RequestBody Urendeclaratie u, Authentication authentication) {
 		return this.urenDeclaratieMethode(u, authentication);
 	}
 

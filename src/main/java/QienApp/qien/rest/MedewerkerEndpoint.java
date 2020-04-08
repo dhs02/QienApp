@@ -1,4 +1,5 @@
 package QienApp.qien.rest;
+
 import QienApp.qien.controller.OpdrachtgeverService;
 import QienApp.qien.domein.Opdrachtgever;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.domein.Medewerker;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +38,20 @@ public class MedewerkerEndpoint {
 	public Medewerker verkrijgMedewerker(@PathVariable(value = "id") String medewerkerId) {
 		return medewerkerService.getMedewerkerById(Long.parseLong(medewerkerId));
 	}
+	
+	@GetMapping("/voornaam/{voornaam}") 
+	public List<Medewerker> zoekVoornaam(@PathVariable(value="voornaam") String voornaam) {
+		return medewerkerService.findByVoornaam(voornaam);
+	}
+	@GetMapping("/achternaam/{achternaam}") 
+	public List<Medewerker> zoekAchternaam(@PathVariable(value="achternaam") String achternaam) {
+		return medewerkerService.findByAchternaam(achternaam);
+	}
+	@GetMapping("/voornaamenachternaam/{voornaam}/{achternaam}")
+	public List<Medewerker> zoekVoornaamEnAchternaam(@PathVariable String voornaam, @PathVariable String achternaam) {
+		return medewerkerService.findByVoornaamAndAchternaam(voornaam, achternaam);
+	}
+	
 	@GetMapping("/opdrachtgever/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
 	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
 		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));

@@ -3,8 +3,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import QienApp.qien.domein.Gebruiker;
@@ -14,13 +12,12 @@ import QienApp.qien.domein.Gebruiker;
 public class GebruikerService {
 	@Autowired
 	GebruikerRepository<Gebruiker> gebruikerRepository;
-
+	
+	public List<Gebruiker> findByVoornaam(String voornaam) {
+		return gebruikerRepository.findByVoornaam(voornaam);
+	}
 	public List<Gebruiker> findByAchternaam(String achternaam) {
 		return gebruikerRepository.findByAchternaam(achternaam);
-	}
-	
-	public Optional<Gebruiker> findByVoornaam(String voornaam) {
-		return gebruikerRepository.findByVoornaam(voornaam);
 	}
 	
 	public Optional<Gebruiker> findById(Long id) {
