@@ -1,4 +1,5 @@
 package QienApp.qien.rest;
+
 import QienApp.qien.controller.OpdrachtgeverService;
 import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import QienApp.qien.controller.ContactpersoonService;
 import QienApp.qien.domein.Contactpersoon;
 import org.springframework.web.server.ResponseStatusException;
