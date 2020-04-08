@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModel;
 @Entity
 @ApiModel(value="Opdrachtgever", description="Bevat alle waarden van de Opdrachtgever-entiteit.")
 public class Opdrachtgever {
-	public static String DEFAULT_BEDRIJFSNAAM = "Qien";
+	public static final String DEFAULT_BEDRIJFSNAAM = "Qien";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

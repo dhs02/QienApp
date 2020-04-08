@@ -1,19 +1,20 @@
 package QienApp.qien.domein;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.Table;
+import java.time.LocalDate;
+
+import javax.persistence.*;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @ApiModel(value="Gebruiker", description="Bevat alle waarden van de Gebruiker-entiteit.")
 @Inheritance
 @Table(name="gebruiker_table")
 public class Gebruiker {
+	private static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@ApiModelProperty(hidden = true)
@@ -33,6 +34,24 @@ public class Gebruiker {
 	private String telefoonNummer;
 	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
+	
+	private LocalDate datumInDienst;
+	
+	private LocalDate datumUitDienst;
+	
+
+	public LocalDate getDatumInDienst() {
+		return datumInDienst;
+	}
+	public void setDatumInDienst(LocalDate datumInDienst) {
+		this.datumInDienst = datumInDienst;
+	}
+	public LocalDate getDatumUitDienst() {
+		return datumUitDienst;
+	}
+	public void setDatumUitDienst(LocalDate datumUitDienst) {
+		this.datumUitDienst = datumUitDienst;
+	}
 
 	public long getId() {
 		return id;
@@ -79,7 +98,13 @@ public class Gebruiker {
 	public String getWachtwoordHash() {
 		return wachtwoordHash;
 	}
+
 	public void setWachtwoordHash(String wachtwoordHash) {
-		this.wachtwoordHash = wachtwoordHash;
+		this.wachtwoordHash = passwordEncoder.encode(wachtwoordHash);
+	}
+
+	public String getGebruikerType() {
+		String gebruikerType = this.getClass().toString();
+		return gebruikerType.substring(gebruikerType.lastIndexOf('.') + 1);
 	}
 }

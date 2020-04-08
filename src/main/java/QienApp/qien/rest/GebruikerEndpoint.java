@@ -1,6 +1,5 @@
 package QienApp.qien.rest;
 import java.util.List;
-import java.util.Optional;
 
 import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,15 @@ public class GebruikerEndpoint {
 	@Autowired
 	GebruikerService gebruikerService;
 	
+	@GetMapping("/voornaam/{voornaam}") 
+	public List<Gebruiker> zoekVoornaam(@PathVariable(value="voornaam") String voornaam) {
+		return gebruikerService.findByVoornaam(voornaam);
+	}
 	@GetMapping("/achternaam/{achternaam}") 
 	public List<Gebruiker> zoekAchternaam(@PathVariable(value="achternaam") String achternaam) {
 		return gebruikerService.findByAchternaam(achternaam);
 	}
 	
-	@GetMapping("/voornaam/{voornaam}") 
-	public Optional<Gebruiker> zoekVoornaam(@PathVariable(value="voornaam") String voornaam) {
-		return gebruikerService.findByVoornaam(voornaam);
-	}
-
 	@GetMapping("/me")
 	// Geeft de huidige gebruiker terug. De gebruiker moet dan wel zijn / haar
 	// gebruikersnaam en wachtwoord als HTTP Basic header toegevoegd bij de
@@ -82,5 +80,10 @@ public class GebruikerEndpoint {
 	@PutMapping("/{id}")
 	public Gebruiker vernieuwGebruiker(@PathVariable(value = "id") String gebruikerId, @RequestBody Gebruiker gebruikerDetails) {
 		return gebruikerService.updateGebruiker(Long.parseLong(gebruikerId), gebruikerDetails);
+	}
+	
+	@GetMapping("/getByEmail/{email}")
+	public Gebruiker getByEmail(@PathVariable(value = "email") String email) {
+		return gebruikerService.getByEmail(email);
 	}
 }

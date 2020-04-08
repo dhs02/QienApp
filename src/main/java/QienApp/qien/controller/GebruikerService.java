@@ -13,12 +13,11 @@ public class GebruikerService {
 	@Autowired
 	GebruikerRepository<Gebruiker> gebruikerRepository;
 	
+	public List<Gebruiker> findByVoornaam(String voornaam) {
+		return gebruikerRepository.findByVoornaam(voornaam);
+	}
 	public List<Gebruiker> findByAchternaam(String achternaam) {
 		return gebruikerRepository.findByAchternaam(achternaam);
-	}
-	
-	public Optional<Gebruiker> findByVoornaam(String voornaam) {
-		return gebruikerRepository.findByVoornaam(voornaam);
 	}
 	
 	public Optional<Gebruiker> findById(Long id) {
@@ -42,6 +41,7 @@ public class GebruikerService {
 	}
 	public Gebruiker updateGebruiker(Long userId, Gebruiker gebruikerDetails) {
 		Gebruiker gebruiker = gebruikerRepository.findById(userId).get();
+
 		if (gebruikerDetails.getVoornaam() != null && gebruikerDetails.getVoornaam() != "") {
 			gebruiker.setVoornaam(gebruikerDetails.getVoornaam());
 		}
@@ -65,5 +65,10 @@ public class GebruikerService {
 		}
 	    System.out.println("Gebruiker veranderd in Database");
 	    return gebruikerRepository.save(gebruiker);
+	}
+
+	public Gebruiker getByEmail(String email) {
+		System.out.println("GetByEmail in gebruikerService aangeroepen");
+		return gebruikerRepository.findByEmail(email).get();
 	}
 }

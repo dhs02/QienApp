@@ -1,4 +1,6 @@
 package QienApp.qien.controller;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,17 @@ public class MedewerkerService {
 		System.out.println("Medewerker gevonden in Database");
 		return medewerkerRepository.findById(userId).get();
 	}
+	
+	public List<Medewerker> findByVoornaam(String voornaam) {
+		return medewerkerRepository.findByVoornaam(voornaam);
+	}
+	public List<Medewerker> findByAchternaam(String achternaam) {
+		return medewerkerRepository.findByAchternaam(achternaam);
+	}
+	public List<Medewerker> findByVoornaamAndAchternaam(String voornaam, String achternaam) {
+		return medewerkerRepository.findByVoornaamAndAchternaam(voornaam, achternaam);
+	}
+	
 	public void addOpdrachtgever(Long medewerkerId, Long opdrachtgeverId) {
 		Medewerker medewerker = medewerkerRepository.findById(medewerkerId).get();
 		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();

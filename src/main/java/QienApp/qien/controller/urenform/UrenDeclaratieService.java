@@ -123,7 +123,8 @@ public class UrenDeclaratieService {
 		{
 			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
 			u.setMedewerker(persoon);
-			System.out.println("DEBUG UDEC medewerker gezet");
+			u.setStatus(Status.BESCHIKBAAR);
+			//persoon.addUrendeclaratie(u);
 			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);
 		}
