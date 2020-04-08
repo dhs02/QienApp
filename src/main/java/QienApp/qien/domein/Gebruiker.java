@@ -3,6 +3,7 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -95,6 +96,8 @@ public class Gebruiker {
 	public void setTelefoonNummer(String telefoonNummer) {
 		this.telefoonNummer = telefoonNummer;
 	}
+
+	@JsonIgnore
 	public String getWachtwoordHash() {
 		return wachtwoordHash;
 	}
