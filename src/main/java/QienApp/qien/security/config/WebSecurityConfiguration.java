@@ -48,9 +48,39 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests(authorize -> authorize
                         .antMatchers("/css/**", "/index").permitAll()
-                        .antMatchers("/api/auth-examples/**").hasRole("USER")
-                        .antMatchers("/api/dit-zijn-ook-beveiligde-endpoints/**").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/api/alleen-post-is-voor-deze-endpoint-beveiligd").hasRole("USER")
+
+                        .antMatchers(HttpMethod.GET, "/api/gebruikers/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/gebruikers/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/api/gebruikers/me").hasRole("USER")
+                        .antMatchers(HttpMethod.PUT, "/api/gebruikers/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/api/gebruikers/**").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET, "/api/admins/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/admins/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/api/admins/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/api/admins/**").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET, "/api/medewerkers/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/medewerkers/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/api/medewerkers/me").hasRole("MEDEWERKER")
+                        .antMatchers(HttpMethod.PUT, "/api/medewerkers/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/api/medewerkers/**").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET, "/api/contactpersonen/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/contactpersonen/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/api/contactpersonen/me").hasRole("CONTACTPERSOON")
+                        .antMatchers(HttpMethod.PUT, "/api/contactpersonen/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/api/contactpersonen/**").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET, "/api/opdrachtgevers/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/opdrachtgevers/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.PUT, "/api/opdrachtgevers/**").hasRole("ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/api/opdrachtgevers/**").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET, "/api/urendeclaraties/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/urendeclaraties/**").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/urendeclaraties/**").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/urendeclaraties/**").hasRole("ADMIN")
                 );
 
         http
