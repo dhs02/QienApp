@@ -1,7 +1,10 @@
 package QienApp.qien.rest;
 import QienApp.qien.controller.OpdrachtgeverService;
 import QienApp.qien.domein.Opdrachtgever;
+import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +39,11 @@ public class MedewerkerEndpoint {
 	public Medewerker verkrijgMedewerker(@PathVariable(value = "id") String medewerkerId) {
 		return medewerkerService.getMedewerkerById(Long.parseLong(medewerkerId));
 	}
-	@GetMapping("/opdrachtgever/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
+	@PutMapping("/opdrachtgever/{mwid}/{wgid}") // @PostMapping alleen met objecten meesturen
 	public void toevoegenOpdrachtgever(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="wgid") String opdrachtgeverId) {
 		medewerkerService.addOpdrachtgever(Long.parseLong(medewerkerId), Long.parseLong(opdrachtgeverId));
 	}
-	@GetMapping("/contactpersoon/{mwid}/{cpid}")
+	@PutMapping("/contactpersoon/{mwid}/{cpid}")
 	public void toevoegenContactpersoon(@PathVariable(value = "mwid") String medewerkerId, @PathVariable(value="cpid") String contactpersoonId) {
 		medewerkerService.addContactpersoon(Long.parseLong(medewerkerId), Long.parseLong(contactpersoonId));
 	}
@@ -62,10 +65,30 @@ public class MedewerkerEndpoint {
 	public Medewerker vernieuwMedewerker(@PathVariable(value = "id") String medewerkerId, @RequestBody Medewerker medewerkerDetails) {
 		return medewerkerService.updateMedewerker(Long.parseLong(medewerkerId), medewerkerDetails);
 	}
-	@PutMapping("/maakMedewerkerenKoppelOpdrachtgever/{wgid}")
-	public Medewerker toevoegenMedewerkerMetOpdrachtgever(@RequestBody Medewerker medewerker ,@PathVariable(value = "wgid") String opdrachtgeverId){
+	@PostMapping("/maakMedewerkerenKoppelOpdrachtgever/{wgid}")
+	public Medewerker toevoegenMedewerkerMetOpdrachtgever(@RequestBody Medewerker medewerker, @PathVariable(value = "wgid") String opdrachtgeverId){
 		Medewerker nieuweMedewerker = medewerkerService.addMedewerker(medewerker);
 		medewerkerService.addOpdrachtgever(nieuweMedewerker.getId(), Long.parseLong(opdrachtgeverId));
 		return nieuweMedewerker;
+	}
+
+	@GetMapping("/me")
+	public Medewerker getIngelogdeMedewerker(Authentication authentication) {
+		checkAuth(authentication);
+		return (Medewerker) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+	}
+
+	@PutMapping("/me")
+	public Medewerker updateIngelogdeMedewerker(Authentication authentication, @RequestBody Medewerker medewerkerDetails) {
+		checkAuth(authentication);
+		Medewerker me = (Medewerker) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+		return this.medewerkerService.updateMedewerker(me.getId(), medewerkerDetails);
+	}
+
+	private static void checkAuth(Authentication authentication) {
+		if (authentication == null
+				|| !(authentication.getPrincipal() instanceof Medewerker)) {
+			throw new AuthenticationCredentialsNotFoundException("No or incorrect credentials supplied.");
+		}
 	}
 }

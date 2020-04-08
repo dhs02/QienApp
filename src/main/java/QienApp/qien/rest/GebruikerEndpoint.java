@@ -39,26 +39,6 @@ public class GebruikerEndpoint {
 		return gebruikerService.findByVoornaam(voornaam);
 	}
 
-	@GetMapping("/me")
-	// Geeft de huidige gebruiker terug. De gebruiker moet dan wel zijn / haar
-	// gebruikersnaam en wachtwoord als HTTP Basic header toegevoegd bij de
-	// GET request meesturen.
-	//
-	// In Postman kun je dit testen door onder het tabblad "Authorization" de
-	// optie "Basic Auth" te selecteren en het emailadres en wachtwoord van een
-	// bestaande gebruiker in te vullen.
-	public Gebruiker getIngelogdeGebruiker(Authentication authentication) {
-		if (authentication == null) {
-			throw new AuthenticationCredentialsNotFoundException("Credentials "
-			+ "not found.");
-		}
-
-		GebruikerPrincipal gebruikerPrincipal
-				= (GebruikerPrincipal) authentication.getPrincipal();
-		Gebruiker gebruiker = gebruikerPrincipal.getGebruiker();
-		return gebruiker;
-	}
-
 	@GetMapping("/")
 	public Iterable<Gebruiker> verkrijgGebruikers() {
 		return gebruikerService.getAllGebruikers();
@@ -87,5 +67,24 @@ public class GebruikerEndpoint {
 	@GetMapping("/getByEmail/{email}")
 	public Gebruiker getByEmail(@PathVariable(value = "email") String email) {
 		return gebruikerService.getByEmail(email);
+	}
+
+	@GetMapping("/me")
+	public Gebruiker getIngelogdeGebruiker(Authentication authentication) {
+		checkAuth(authentication);
+		return (Gebruiker) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+	}
+
+	@PutMapping("/me")
+	public Gebruiker updateIngelogdeGebruiker(Authentication authentication, @RequestBody Gebruiker gebruikerDetails) {
+		checkAuth(authentication);
+		Gebruiker me = (Gebruiker) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+		return this.gebruikerService.updateGebruiker(me.getId(), gebruikerDetails);
+	}
+
+	private static void checkAuth(Authentication authentication) {
+		if (authentication == null) {
+			throw new AuthenticationCredentialsNotFoundException("No or incorrect credentials supplied.");
+		}
 	}
 }

@@ -48,7 +48,7 @@ public class UrendeclaratieEndpoints {
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	
-	@GetMapping("/maakurendeclaratie/{maandnaam}/{maandnr}")
+	@PostMapping("/maakurendeclaratie/{maandnaam}/{maandnr}")
 	public Urendeclaratie maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
 		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
@@ -86,14 +86,16 @@ public class UrendeclaratieEndpoints {
 	@PutMapping("/")
 	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u,
 												Authentication authentication) {
-		if (authentication != null) {
-			Gebruiker g = ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
-			if (g instanceof Medewerker) {
-				Medewerker m = (Medewerker) g;
-				u.setMedewerker(m);
-			}
+		Gebruiker g = ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
 
+		/*  Een Medewerker mag alleen een urendeclaratie voor zichzelf
+		 *  POSTen of PUTten.
+		 */
+		if (g instanceof Medewerker) {
+			Medewerker m = (Medewerker) g;
+			u.setMedewerker(m);
 		}
+
 		return urenDeclaratieService.postOrUpdateUrendeclaratie(u);
 	}
 

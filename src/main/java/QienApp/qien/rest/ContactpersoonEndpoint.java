@@ -1,7 +1,10 @@
 package QienApp.qien.rest;
 import QienApp.qien.controller.OpdrachtgeverService;
+import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import QienApp.qien.controller.ContactpersoonService;
-import QienApp.qien.controller.OpdrachtgeverRepository;
 import QienApp.qien.domein.Contactpersoon;
-import QienApp.qien.domein.Opdrachtgever;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/contactpersonen")
@@ -38,15 +39,17 @@ public class ContactpersoonEndpoint {
 	}
 
 	@GetMapping("/opdrachtgever/{opdrachtgeverId}")
-	public Iterable<Contactpersoon> getAllOpdrachtgeversById(@PathVariable Long opdrachtgeverId) {
-		Opdrachtgever opdrachtgever = opdrachtgeverService.getOpdrachtgeverById(opdrachtgeverId);
-		if (opdrachtgever == null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "OpdrachtgeverId bestaat niet.");
+	public void getAllContactpersonenByOpdrachtgever(HttpServletResponse response,
+													 @PathVariable Long opdrachtgeverId) {
+		try {
+			response.sendRedirect("/api/opdrachtgevers/" + opdrachtgeverId + "/contactpersonen");
 		}
-		return this.contactpersoonService.findAllByOpdrachtgever(opdrachtgever);
+		catch (IOException ioe) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Redirect failed.");
+		}
 	}
 
-	@GetMapping("/opdrachtgever/{cpid}/{ogid}") // @PostMapping alleen met objecten meesturen
+	@PutMapping("/opdrachtgever/{cpid}/{ogid}") // @PostMapping alleen met objecten meesturen
 	public void toevoegenOpdrachtgever(@PathVariable(value = "cpid") String contactpersoonId, @PathVariable(value="ogid") String opdrachtgeverId) {
 		contactpersoonService.addOpdrachtgever(Long.parseLong(contactpersoonId), Long.parseLong(opdrachtgeverId));
 	}
@@ -67,5 +70,24 @@ public class ContactpersoonEndpoint {
 	public Contactpersoon toevoegenContactpersoonMetOpdrachtgever(@PathVariable(value = "ogid") String opdrachtgeverId, @RequestBody Contactpersoon contactpersoon){
 		return contactpersoonService.toevoegenContactpersoonMetOpdrachtgever(opdrachtgeverId, contactpersoon);
 	}
-	
+
+	@GetMapping("/me")
+	public Contactpersoon getIngelogdeContactpersoon(Authentication authentication) {
+		checkAuth(authentication);
+		return (Contactpersoon) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+	}
+
+	@PutMapping("/me")
+	public Contactpersoon updateIngelogdeContactpersoon(Authentication authentication, @RequestBody Contactpersoon contactpersoonDetails) {
+		checkAuth(authentication);
+		Contactpersoon me = (Contactpersoon) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+		return this.contactpersoonService.updateContactpersoon(me.getId(), contactpersoonDetails);
+	}
+
+	private static void checkAuth(Authentication authentication) {
+		if (authentication == null
+				|| !(authentication.getPrincipal() instanceof Contactpersoon)) {
+			throw new AuthenticationCredentialsNotFoundException("No or incorrect credentials supplied.");
+		}
+	}
 }
