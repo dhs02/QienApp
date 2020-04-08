@@ -19,7 +19,11 @@ public class ContactpersoonService {
 		Contactpersoon contactpersoon = contactpersoonRepository.findById(contactpersoonId).get();
 		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(opdrachtgeverId).get();
 		contactpersoon.setOpdrachtgever(opdrachtgever);
-		contactpersoonRepository.save(contactpersoon);
+		Contactpersoon savedContactpersoon = contactpersoonRepository.save(contactpersoon);
+
+		opdrachtgever.getContactpersonen().add(savedContactpersoon);
+		opdrachtgeverRepository.save(opdrachtgever);
+
 		System.out.println("Opdrachtgever toegevoegd aan contactpersoon.");
 	}
 	
@@ -41,6 +45,10 @@ public class ContactpersoonService {
 	}
 	public void deleteContactpersoon(Long userId) {
 		System.out.println("Contactpersoon verwijderd uit Database");
+
+		Contactpersoon c = contactpersoonRepository.findById(userId).get();
+		opdrachtgeverRepository.findById(c.getOpdrachtgever().getId()).get().getContactpersonen().remove(c);
+
 		contactpersoonRepository.deleteById(userId);
 	}
 	public Contactpersoon updateContactpersoon(Long userId, Contactpersoon contactpersoonDetails) {
@@ -74,6 +82,11 @@ public class ContactpersoonService {
 		Opdrachtgever opdrachtgever = opdrachtgeverRepository.findById(Long.parseLong(opdrachtgeverId)).get();
 		contactpersoon.setOpdrachtgever(opdrachtgever);
 		System.out.println("Contactpersoon aangemaakt en opdrachtgever aan toegevoegd.");
-		return contactpersoonRepository.save(contactpersoon);
+		Contactpersoon savedContactpersoon = contactpersoonRepository.save(contactpersoon);
+
+		opdrachtgever.getContactpersonen().add(savedContactpersoon);
+		opdrachtgeverRepository.save(opdrachtgever);
+
+		return savedContactpersoon;
 	}
 }

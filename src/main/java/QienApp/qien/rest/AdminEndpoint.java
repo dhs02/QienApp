@@ -1,5 +1,8 @@
 package QienApp.qien.rest;
+import QienApp.qien.security.domein.GebruikerPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,5 +40,32 @@ public class AdminEndpoint {
 	@PutMapping("/{id}")
 	public Admin vernieuwAdmin(@PathVariable(value = "id") String adminId, @RequestBody Admin adminDetails) {
 		return adminService.updateAdmin(Long.parseLong(adminId), adminDetails);
+	}
+
+	@GetMapping("/me")
+	public Admin getIngelogdeAdmin(Authentication authentication) {
+		checkAuth(authentication);
+		return (Admin) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+	}
+
+	@PutMapping("/me")
+	public Admin updateIngelogdeAdmin(Authentication authentication, @RequestBody Admin adminDetails) {
+		checkAuth(authentication);
+		Admin me = (Admin) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+		return this.adminService.updateAdmin(me.getId(), adminDetails);
+	}
+
+	@DeleteMapping("/me")
+	public void deleteIngelogdeAdmin(Authentication authentication) {
+		checkAuth(authentication);
+		Admin me = (Admin) ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
+		this.adminService.deleteAdmin(me.getId());
+	}
+
+	private static void checkAuth(Authentication authentication) {
+		if (authentication == null
+				|| !(authentication.getPrincipal() instanceof Admin)) {
+			throw new AuthenticationCredentialsNotFoundException("No or incorrect credentials supplied.");
+		}
 	}
 }
