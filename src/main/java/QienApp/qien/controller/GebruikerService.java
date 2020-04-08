@@ -42,6 +42,9 @@ public class GebruikerService {
 	public Gebruiker updateGebruiker(Long userId, Gebruiker gebruikerDetails) {
 		Gebruiker gebruiker = gebruikerRepository.findById(userId).get();
 
+		if (gebruikerDetails.getAanhef() != null && gebruikerDetails.getAanhef() != "") {
+			gebruiker.setAanhef(gebruikerDetails.getAanhef());
+		}
 		if (gebruikerDetails.getVoornaam() != null && gebruikerDetails.getVoornaam() != "") {
 			gebruiker.setVoornaam(gebruikerDetails.getVoornaam());
 		}
@@ -54,14 +57,29 @@ public class GebruikerService {
 		if (gebruikerDetails.getAdres() != null && gebruikerDetails.getAdres() != "") {
 			gebruiker.setAdres(gebruikerDetails.getAdres());
 		}
+		if (gebruikerDetails.getPostcode() != null && gebruikerDetails.getPostcode() != "") {
+			gebruiker.setPostcode(gebruikerDetails.getPostcode());
+		}
+		if (gebruikerDetails.getPlaats() != null && gebruikerDetails.getPlaats() != "") {
+			gebruiker.setPlaats(gebruikerDetails.getPlaats());
+		}
 		if (gebruikerDetails.getEmail() != null && gebruikerDetails.getEmail() != "") {
 			gebruiker.setEmail(gebruikerDetails.getEmail());
 		}
 		if (gebruikerDetails.getTelefoonNummer() != null && gebruikerDetails.getTelefoonNummer() != "") {
 			gebruiker.setTelefoonNummer(gebruikerDetails.getTelefoonNummer());
 		}
+		if (gebruikerDetails.getDatumInDienst() != null && gebruikerDetails.getDatumInDienst() != "") {
+			gebruiker.setDatumInDienst(gebruikerDetails.getDatumInDienst());
+		}
+		if (gebruikerDetails.getDatumUitDienst() != null && gebruikerDetails.getDatumUitDienst() != "") {
+			gebruiker.setDatumUitDienst(gebruikerDetails.getDatumUitDienst());
+		}
 		if (gebruikerDetails.getWachtwoordHash() != null && gebruikerDetails.getWachtwoordHash() != "") {
 			gebruiker.setWachtwoordHash(gebruikerDetails.getWachtwoordHash());
+		}
+		if (gebruikerDetails.getAfbeelding() != null && gebruikerDetails.getAfbeelding() != "") {
+			gebruiker.setAfbeelding(gebruikerDetails.getAfbeelding());
 		}
 	    System.out.println("Gebruiker veranderd in Database");
 	    return gebruikerRepository.save(gebruiker);

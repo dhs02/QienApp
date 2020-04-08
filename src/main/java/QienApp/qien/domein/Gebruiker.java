@@ -1,6 +1,4 @@
 package QienApp.qien.domein;
-import java.time.LocalDate;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,44 +20,46 @@ public class Gebruiker {
 	@ApiModelProperty(hidden = true)
 	private long id;
 	
-	@ApiModelProperty(position = 1, value = "De voornaam van een Gebruiker.")
+	@ApiModelProperty(position = 1, value = "De aanhef van een Gebruiker.")
+	private String aanhef;
+	@ApiModelProperty(position = 2, value = "De voornaam van een Gebruiker.")
 	private String voornaam;
-	@ApiModelProperty(position = 2, value = "De achternaam van een Gebruiker.")
+	@ApiModelProperty(position = 3, value = "De achternaam van een Gebruiker.")
 	private String achternaam;
-	@ApiModelProperty(position = 3, value = "De geboortedatum van een Gebruiker.")
+	@ApiModelProperty(position = 4, value = "De geboortedatum van een Gebruiker.")
 	private String geboorteDatum;
-	@ApiModelProperty(position = 4, value = "Het adres van een Gebruiker.")
+	@ApiModelProperty(position = 5, value = "Het adres van een Gebruiker.")
 	private String adres;
-	@ApiModelProperty(position = 5, value = "Het emailadres van een Gebruiker.")
+	@ApiModelProperty(position = 6, value = "De postcode van een Gebruiker.")
+	private String postcode;
+	@ApiModelProperty(position = 7, value = "De plaatsnaam van een Gebruiker.")
+	private String plaats;
+	@ApiModelProperty(position = 8, value = "Het emailadres van een Gebruiker.")
 	private String email;
-	@ApiModelProperty(position = 6, value = "Het telefoonnummer van een Gebruiker.")
+	@ApiModelProperty(position = 9, value = "Het telefoonnummer van een Gebruiker.")
 	private String telefoonNummer;
-	@ApiModelProperty(position = 7, value = "De wachtwoordhash van een Gebruiker.")
+	
+	@ApiModelProperty(position = 10, value = "De datum van indiensttreding van een Gebruiker.")
+	private String datumInDienst;
+	@ApiModelProperty(position = 11, value = "De datum van uitdiensttreding van een Gebruiker.")
+	private String datumUitDienst;
+	
+	@ApiModelProperty(position = 12, value = "De wachtwoordhash van een Gebruiker.")
 	private String wachtwoordHash;
-	@ApiModelProperty(position = 8, value = "De profielfoto van een Gebruiker.")
+	@ApiModelProperty(position = 13, value = "De profielfoto van een Gebruiker.")
 	private String afbeelding;
 	
-	private LocalDate datumInDienst;
-	private LocalDate datumUitDienst;
-	
-	public LocalDate getDatumInDienst() {
-		return datumInDienst;
-	}
-	public void setDatumInDienst(LocalDate datumInDienst) {
-		this.datumInDienst = datumInDienst;
-	}
-	public LocalDate getDatumUitDienst() {
-		return datumUitDienst;
-	}
-	public void setDatumUitDienst(LocalDate datumUitDienst) {
-		this.datumUitDienst = datumUitDienst;
-	}
-
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getAanhef() {
+		return aanhef;
+	}
+	public void setAanhef(String aanhef) {
+		this.aanhef = aanhef;
 	}
 	public String getVoornaam() {
 		return voornaam;
@@ -85,6 +85,18 @@ public class Gebruiker {
 	public void setAdres(String adres) {
 		this.adres = adres;
 	}
+	public String getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+	public String getPlaats() {
+		return plaats;
+	}
+	public void setPlaats(String plaats) {
+		this.plaats = plaats;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -97,7 +109,20 @@ public class Gebruiker {
 	public void setTelefoonNummer(String telefoonNummer) {
 		this.telefoonNummer = telefoonNummer;
 	}
-
+	
+	public String getDatumInDienst() {
+		return datumInDienst;
+	}
+	public void setDatumInDienst(String datumInDienst) {
+		this.datumInDienst = datumInDienst;
+	}
+	public String getDatumUitDienst() {
+		return datumUitDienst;
+	}
+	public void setDatumUitDienst(String datumUitDienst) {
+		this.datumUitDienst = datumUitDienst;
+	}
+	
 	@JsonIgnore
 	public String getWachtwoordHash() {
 		return wachtwoordHash;
@@ -106,7 +131,6 @@ public class Gebruiker {
 	public void setWachtwoordHash(String wachtwoordHash) {
 		this.wachtwoordHash = passwordEncoder.encode(wachtwoordHash);
 	}
-	
 	public String getAfbeelding() {
 		return afbeelding;
 	}
