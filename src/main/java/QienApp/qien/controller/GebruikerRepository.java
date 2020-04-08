@@ -18,4 +18,6 @@ public interface GebruikerRepository<T extends Gebruiker> extends CrudRepository
 	
 //	long countByLastname(String achternaam);
 	
+	
+	
 }

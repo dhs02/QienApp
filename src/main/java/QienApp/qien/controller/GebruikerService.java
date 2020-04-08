@@ -69,4 +69,9 @@ public class GebruikerService {
 	    System.out.println("Gebruiker veranderd in Database");
 	    return gebruikerRepository.save(gebruiker);
 	}
+
+	public Gebruiker getByEmail(String email) {
+		System.out.println("GetByEmail in gebruikerService aangeroepen");
+		return gebruikerRepository.findByEmail(email).get();
+	}
 }
