@@ -1,13 +1,9 @@
 package QienApp.qien.rest;
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import QienApp.qien.controller.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import QienApp.qien.domein.EmailBericht;
 import QienApp.qien.domein.EmailCfg;
 
@@ -23,30 +19,20 @@ public class EmailEndpoints {
         this.emailCfg = emailCfg;
     }
 
+    @Autowired
+    private MailService mailService;
+
+    @GetMapping("/{cid}/{uid}/")
+    public void getEmail(@PathVariable(value = "cid") long contactpersoonId, @PathVariable(value = "uid") long urendeclaratieId) {
+        System.out.println(contactpersoonId);
+        mailService.mailVersturen(contactpersoonId, urendeclaratieId);
+    }
+
     @PostMapping
     public void sendFeedback(@RequestBody EmailBericht emailBericht,
-                             BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Feedback is not valid");
         }
-
-        // Create a mail sender
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(this.emailCfg.getHost());
-        mailSender.setPort(this.emailCfg.getPort());
-        mailSender.setUsername(this.emailCfg.getUsername());
-        mailSender.setPassword(this.emailCfg.getPassword());
-
-        // Create an email instance
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(emailBericht.getEmail());
-        mailMessage.setTo("Werkgever@nos.nl");
-        mailMessage.setSubject("Goedkeuring vereist " + emailBericht.getName());
-        mailMessage.setText(emailBericht.getFeedback());
-
-        // Send mail
-        mailSender.send(mailMessage);
-        
-        System.out.println("Mail sended");
     }
 }
