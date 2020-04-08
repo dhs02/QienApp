@@ -13,7 +13,7 @@ import java.util.Optional;
 public class MailService {
 
     @Autowired
-    GebruikerRepository gebruikerRepository;
+    GebruikerRepository<Gebruiker> gebruikerRepository;
     @Autowired
     EmailCfg emailCfg;
 //    @Autowired
@@ -24,11 +24,11 @@ public class MailService {
 
 
         Optional<Gebruiker> contactpersoon = gebruikerRepository.findById(contactpersoonId);
-        boolean a = contactpersoon.isPresent();
-        Gebruiker b = contactpersoon.get();
+
+        Gebruiker b = contactpersoon.orElse(null);
         System.out.println(b.getEmail());
 
-        System.out.println();
+
         // Create a mail sender
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(this.emailCfg.getHost());
