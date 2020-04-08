@@ -112,7 +112,8 @@ public class UrenDeclaratieService {
 		return dezemaand;
 	}
 
-	/** TEST * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+	/**  
+	 * MAAK & KOPPEL EEN LEEG UREDEC VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
 	 * @param u		leeg urendeclaratieobject
 	 * @return		mededeling dat het gelukt is
 	 */
@@ -126,7 +127,8 @@ public class UrenDeclaratieService {
 			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);
 		}
-		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+		return "Alle medewerkers kunnen nu de declaratie van "+
+				maandNaam + " gaan invullen";
 	}
 
 	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE

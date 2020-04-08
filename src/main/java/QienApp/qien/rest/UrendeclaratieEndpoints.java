@@ -52,16 +52,19 @@ public class UrendeclaratieEndpoints {
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	
-	@GetMapping("/medewerkerinfo/{uid}")	// GET MEDEWERKERINFO BY IUD
-	public List<String> getMedewerkerInfo(@PathVariable(value = "uid") String idUrendeclaratie) 
+	/**
+	 * GET MEDEWERKERINFO BY IUD
+	 * @param idUrendeclaratie
+	 * @return de info
+	 * @author QienDevelopers
+	 */
+	@GetMapping("/medewerkerinfo/{uid}")	
+	public Medewerker getMedewerkerInfo(@PathVariable(value = "uid") String idUrendeclaratie) 
 	{	
-		Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
-		
-		medewerkerService.putMedewerkerInfo(u);
-		
-		return u.getMedewerker().getMedewerkerInfo();
+		return urenDeclaratieService
+				.getUrendeclaratie(Long.parseLong(idUrendeclaratie))
+				.getMedewerker();
 	}
-	
 
 	/** 2e versnelling RepZoek;	//	GET ALL BY maandNaam
 	 * @param maandNaam
@@ -90,7 +93,7 @@ public class UrendeclaratieEndpoints {
 	 * @AUTHOR Laszlo & Michiel!!!
 	 */
 	@GetMapping("/maakenkoppelaanallen/{maandnaam}/{maandnr}")
-	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
+	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam,@PathVariable(value = "maandnr") int maandNr) {
 		return urenDeclaratieService.maakEnKoppelAanAllen(maandNaam, maandNr);
 	}
 
