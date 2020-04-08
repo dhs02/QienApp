@@ -40,7 +40,7 @@ public class MailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("rubenvanrij@gmail.com");
         mailMessage.setTo(b.getEmail());
-        mailMessage.setSubject("Goedkeuring vereist " + b.getVoornaam() + " " + b.getAchternaam());
+        mailMessage.setSubject("Goedkeuring vereist voor Qien trainee");
         mailMessage.setText("Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" +
                 "Hier moet de link komen van uren declaratie." + "\n\n" + "Met vriendelijke groet," + "\n\n" +  "Qien" );
 
