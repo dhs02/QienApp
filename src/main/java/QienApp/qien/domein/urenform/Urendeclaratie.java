@@ -40,7 +40,7 @@ public class Urendeclaratie {
 	private String notitie;
 	private int jaar = Calendar.getInstance().get(Calendar.YEAR);
 	private String maandNaam;
-	private Status mijnStatus = Status.BESCHIKBAAR;
+	private Status status = Status.BESCHIKBAAR;
 
 	/**
 	 * ORM fields
