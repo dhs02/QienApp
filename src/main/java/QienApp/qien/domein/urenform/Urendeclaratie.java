@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,10 +36,10 @@ public class Urendeclaratie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String notitie;
-	private int jaar = Calendar.getInstance().get(Calendar.YEAR);
 	private String maandNaam;
-	private Status mijnStatus = Status.BESCHIKBAAR;
+	private int jaar = Calendar.getInstance().get(Calendar.YEAR);
+	private String notitie;
+	private Status status = Status.BESCHIKBAAR;
 
 	/**
 	 * ORM fields
@@ -61,23 +60,48 @@ public class Urendeclaratie {
 		this.gewerkteDagen.add(dag);
 	}
 	
-	/**
-	 * VEEL GETTER & SETTERS
-	 */
-	public long getId() { return id; }
-	public void setId(long id) { this.id = id; }
-	public String getMaandNaam() { return maandNaam; }
-	public void setMaandNaam(String maandNaam) { this.maandNaam = maandNaam; }
-	public List<GewerkteDag> getGewerkteDagen() { return gewerkteDagen; }
-	public void setGewerkteDagen(List<GewerkteDag> gewerkteDagen) { this.gewerkteDagen = gewerkteDagen; }
-	public Status getStatus() { return mijnStatus; }
-	public void setStatus(Status status) { this.mijnStatus = status; }
-	public Status getMijnStatus() { return mijnStatus; }
-	public void setMijnStatus(Status mijnStatus) { this.mijnStatus = mijnStatus; }
-	public Medewerker getMedewerker() { return medewerker; }
-	public void setMedewerker(Medewerker medewerker) { this.medewerker = medewerker; }
-	public String getNotitie() { return notitie; }
-	public void setNotitie(String notitie) { this.notitie = notitie; }
-	public int getJaar() { return jaar; }
-	public void setJaar(int jaar) { this.jaar = jaar; }
+	public long getId() { 
+		return id;
+	}
+	public void setId(long id) { 
+		this.id = id;
+	}
+	public String getMaandNaam() { 
+		return maandNaam;
+	}
+	public void setMaandNaam(String maandNaam) {
+		this.maandNaam = maandNaam;
+	}
+	public int getJaar() {
+		return jaar;
+	}
+	public void setJaar(int jaar) {
+		this.jaar = jaar;
+	}
+	public String getNotitie() {
+		return notitie;
+	}
+	public void setNotitie(String notitie) {
+		this.notitie = notitie;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	public Medewerker getMedewerker() {
+		return medewerker;
+	}
+	public void setMedewerker(Medewerker medewerker) {
+		this.medewerker = medewerker;
+	}
+
+	public List<GewerkteDag> getGewerkteDagen() {
+		return gewerkteDagen;
+	}
+	public void setGewerkteDagen(List<GewerkteDag> gewerkteDagen) {
+		this.gewerkteDagen = gewerkteDagen;
+	}
 }
