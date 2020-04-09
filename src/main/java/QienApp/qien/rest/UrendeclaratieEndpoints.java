@@ -54,6 +54,16 @@ public class UrendeclaratieEndpoints {
 	{
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
+	/**
+	 * 							// UPDATE UDEC adh van UID
+	 * @param idUrendeclaratie
+	 * @return
+	 */
+	@PutMapping("/{uid}")		//	GET 1 BY UDEC ID
+	public Urendeclaratie updateUrendeclaratie(@PathVariable(value = "uid") String idUrendeclaratie) 
+	{
+		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
+	}
 	
 	/**
 	 * GET MEDEWERKERINFO BY IUD

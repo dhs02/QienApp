@@ -71,6 +71,10 @@ public class UrenDeclaratieService {
 		//MICHIEL nieuwe methode tot hier
 		return urenDeclaratieRepository.save(urendeclaratie);
 	}
+	
+	public Urendeclaratie updateUrendeclaratie(Urendeclaratie urendeclaratie) {
+		return urenDeclaratieRepository.save(urendeclaratie);
+	}
 
 	/** 2 *
 	 * MAAK EEN LEEG URENDECLARATIEFORMULIER, gevuld met dagen
