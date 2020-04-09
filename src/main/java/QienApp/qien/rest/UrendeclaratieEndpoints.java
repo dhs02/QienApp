@@ -20,7 +20,6 @@ import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.controller.urenform.GewerkteDagService;
 import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
 import QienApp.qien.controller.urenform.UrenDeclaratieService;
-import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
@@ -53,9 +52,6 @@ public class UrendeclaratieEndpoints {
 	@GetMapping("/{uid}")		//	GET 1 BY UDEC ID
 	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "uid") String idUrendeclaratie) 
 	{
-		Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
-		Long cid = u.getMedewerker().getContactpersoon().getId();
-		
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	
