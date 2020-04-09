@@ -112,10 +112,8 @@ public class UrendeclaratieEndpoints {
 	}
 
 	@PutMapping("/")
-	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u,
-												Authentication authentication) {
+	public Urendeclaratie urenDeclaratieMethode(@RequestBody Urendeclaratie u, Authentication authentication) {
 		Gebruiker g = ((GebruikerPrincipal) authentication.getPrincipal()).getGebruiker();
-
 		/*  Een Medewerker mag alleen een urendeclaratie voor zichzelf
 		 *  POSTen of PUTten.
 		 */
@@ -123,7 +121,6 @@ public class UrendeclaratieEndpoints {
 			Medewerker m = (Medewerker) g;
 			u.setMedewerker(m);
 		}
-
 		return urenDeclaratieService.postOrUpdateUrendeclaratie(u);
 	}
 	/** 						
