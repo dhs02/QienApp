@@ -39,7 +39,7 @@ public class EmailEndpoints {
      * @param bindingResult
      */
     @GetMapping("/{uid}/")
-    public void maakMeeltje(@PathVariable(value = "uid") long urendeclaratieId) {
+    public void maakMeeltje(@PathVariable(value = "uid") String urendeclaratieId) {
     	
     	Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(urendeclaratieId);
     	System.out.println("udec id" + urendeclaratieId);
