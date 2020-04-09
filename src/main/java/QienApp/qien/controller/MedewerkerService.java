@@ -62,6 +62,10 @@ public class MedewerkerService {
 	}
 	public Medewerker updateMedewerker(Long userId, Medewerker medewerkerDetails) {
 		Medewerker medewerker = medewerkerRepository.findById(userId).get();
+		
+		if (medewerkerDetails.getAanhef() != null && medewerkerDetails.getAanhef() != "") {
+			medewerker.setAanhef(medewerkerDetails.getAanhef());
+		}
 		if (medewerkerDetails.getVoornaam() != null && medewerkerDetails.getVoornaam() != "") {
 			medewerker.setVoornaam(medewerkerDetails.getVoornaam());
 		}
@@ -74,14 +78,29 @@ public class MedewerkerService {
 		if (medewerkerDetails.getAdres() != null && medewerkerDetails.getAdres() != "") {
 			medewerker.setAdres(medewerkerDetails.getAdres());
 		}
+		if (medewerkerDetails.getPostcode() != null && medewerkerDetails.getPostcode() != "") {
+			medewerker.setPostcode(medewerkerDetails.getPostcode());
+		}
+		if (medewerkerDetails.getPlaats() != null && medewerkerDetails.getPlaats() != "") {
+			medewerker.setPlaats(medewerkerDetails.getPlaats());
+		}
 		if (medewerkerDetails.getEmail() != null && medewerkerDetails.getEmail() != "") {
 			medewerker.setEmail(medewerkerDetails.getEmail());
 		}
 		if (medewerkerDetails.getTelefoonNummer() != null && medewerkerDetails.getTelefoonNummer() != "") {
 			medewerker.setTelefoonNummer(medewerkerDetails.getTelefoonNummer());
 		}
+		if (medewerkerDetails.getDatumInDienst() != null && medewerkerDetails.getDatumInDienst() != "") {
+			medewerker.setDatumInDienst(medewerkerDetails.getDatumInDienst());
+		}
+		if (medewerkerDetails.getDatumUitDienst() != null && medewerkerDetails.getDatumUitDienst() != "") {
+			medewerker.setDatumUitDienst(medewerkerDetails.getDatumUitDienst());
+		}
 		if (medewerkerDetails.getWachtwoordHash() != null && medewerkerDetails.getWachtwoordHash() != "") {
 			medewerker.setWachtwoordHash(medewerkerDetails.getWachtwoordHash());
+		}
+		if (medewerkerDetails.getAfbeelding() != null && medewerkerDetails.getAfbeelding() != "") {
+			medewerker.setAfbeelding(medewerkerDetails.getAfbeelding());
 		}
 	    System.out.println("Medewerker veranderd in Database");
 	    return medewerkerRepository.save(medewerker);

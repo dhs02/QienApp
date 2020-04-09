@@ -53,6 +53,10 @@ public class ContactpersoonService {
 	}
 	public Contactpersoon updateContactpersoon(Long userId, Contactpersoon contactpersoonDetails) {
 		Contactpersoon contactpersoon = contactpersoonRepository.findById(userId).get();
+		
+		if (contactpersoonDetails.getAanhef() != null && contactpersoonDetails.getAanhef() != "") {
+			contactpersoon.setAanhef(contactpersoonDetails.getAanhef());
+		}
 		if (contactpersoonDetails.getVoornaam() != null && contactpersoonDetails.getVoornaam() != "") {
 			contactpersoon.setVoornaam(contactpersoonDetails.getVoornaam());
 		}
@@ -65,6 +69,12 @@ public class ContactpersoonService {
 		if (contactpersoonDetails.getAdres() != null && contactpersoonDetails.getAdres() != "") {
 			contactpersoon.setAdres(contactpersoonDetails.getAdres());
 		}
+		if (contactpersoonDetails.getPostcode() != null && contactpersoonDetails.getPostcode() != "") {
+			contactpersoon.setPostcode(contactpersoonDetails.getPostcode());
+		}
+		if (contactpersoonDetails.getPlaats() != null && contactpersoonDetails.getPlaats() != "") {
+			contactpersoon.setPlaats(contactpersoonDetails.getPlaats());
+		}
 		if (contactpersoonDetails.getEmail() != null && contactpersoonDetails.getEmail() != "") {
 			contactpersoon.setEmail(contactpersoonDetails.getEmail());
 		}
@@ -73,6 +83,9 @@ public class ContactpersoonService {
 		}
 		if (contactpersoonDetails.getWachtwoordHash() != null && contactpersoonDetails.getWachtwoordHash() != "") {
 			contactpersoon.setWachtwoordHash(contactpersoonDetails.getWachtwoordHash());
+		}
+		if (contactpersoonDetails.getAfbeelding() != null && contactpersoonDetails.getAfbeelding() != "") {
+			contactpersoon.setAfbeelding(contactpersoonDetails.getAfbeelding());
 		}
 	    System.out.println("Contactpersoon veranderd in Database");
 	    return contactpersoonRepository.save(contactpersoon);
