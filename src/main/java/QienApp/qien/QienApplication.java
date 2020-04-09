@@ -7,5 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class QienApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QienApplication.class, args);
+		System.out.println("\nProgramming 101: Changing stuff an seeing what happens...");
 	}
 }

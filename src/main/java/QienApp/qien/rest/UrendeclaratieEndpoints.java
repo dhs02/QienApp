@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import QienApp.qien.controller.MedewerkerRepository;
+import QienApp.qien.controller.MedewerkerService;
 import QienApp.qien.controller.urenform.GewerkteDagService;
 import QienApp.qien.controller.urenform.UrenDeclaratieRepository;
 import QienApp.qien.controller.urenform.UrenDeclaratieService;
@@ -27,33 +28,48 @@ import QienApp.qien.domein.urenform.Urendeclaratie;
 public class UrendeclaratieEndpoints {
 	@Autowired
 	UrenDeclaratieService urenDeclaratieService;
-	
 	@Autowired
-	GewerkteDagService dagService;
-	
+	GewerkteDagService dagService;	
 	@Autowired
 	MedewerkerRepository medewerkerRepository;
-	
+	@Autowired
+	MedewerkerService medewerkerService;
 	@Autowired
 	UrenDeclaratieRepository urenDeclaratieRepository;
-
-	@GetMapping("/")
+	/** 
+	 * 		BASIC GETS
+	 */
+	@GetMapping("/")			//	GET ALL UDECS
 	public Iterable<Urendeclaratie> getUrendeclaraties() {
 		return urenDeclaratieService.getAllUrendeclaraties();
 	}
-	
-	@GetMapping("/{id}")	
-	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "id") String idUrendeclaratie) {
-		System.out.println("getUrendeclaratie");
+
+	/**
+	 * 							// DEZE 2 VOOR DE MAIL LINK VAN DE CONTACTPERSOON
+	 * @param idUrendeclaratie
+	 * @return
+	 */
+	@GetMapping("/{uid}")		//	GET 1 BY UDEC ID
+	public Urendeclaratie getUrendeclaratie(@PathVariable(value = "uid") String idUrendeclaratie) 
+	{
 		return urenDeclaratieService.getUrendeclaratie(Long.parseLong(idUrendeclaratie));
 	}
 	
-	@PostMapping("/maakurendeclaratie/{maandnaam}/{maandnr}")
-	public Urendeclaratie maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
-		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
+	/**
+	 * GET MEDEWERKERINFO BY IUD
+	 * @param idUrendeclaratie
+	 * @return de info
+	 * @author QienDevelopers
+	 */
+	@GetMapping("/medewerkerinfo/{uid}")	
+	public Medewerker getMedewerkerInfo(@PathVariable(value = "uid") String idUrendeclaratie) 
+	{	
+		return urenDeclaratieService
+				.getUrendeclaratie(Long.parseLong(idUrendeclaratie))
+				.getMedewerker();
 	}
-	
-	/** 2e versnelling RepZoek; get alle udecs BY maandnaam
+
+	/** 2e versnelling RepZoek;	//	GET ALL BY maandNaam
 	 * @param maandNaam
 	 * @return lijst Udecs.
 	 */
@@ -61,18 +77,31 @@ public class UrendeclaratieEndpoints {
 	public List<Urendeclaratie> byMaandNaam(@PathVariable(value = "maandNaam") String maandNaam) {
 		return urenDeclaratieService.byMaandNaam(maandNaam);
 	}
-
-	/** 1 * HAAL ALLE URENDECs VAN 1 MEDEWERKER
+	/** 1 * 					//	GET ALL by Medwerker ID
 	 * @param id
-	 * @return
+	 * @return list udecs
 	 */
 	@GetMapping("/metmedewerkerid/{mwid}")
 	public java.util.Set<Urendeclaratie> getMedewerkerUrendeclaratie(@PathVariable Long mwid) {
 		return medewerkerRepository.findById(mwid).get().getUrendeclaraties();
 	}
-	
-	
-	/** 1 * UPDATE EXISTING or CREATE NEW URENDECLARATIE
+	/** 
+	 *		 CREATE UDECS
+	 */
+
+	/** TESTESTEST DOET HET NIET!!!
+	 * 							//	CREATE NEW FOR ALL Medewerkers
+	 * @param urendeclaratie object
+	 * @return statusbericht: gekoppeld
+	 * @AUTHOR Laszlo & Michiel!!!
+	 */
+	@GetMapping("/maakenkoppelaanallen/{maandnaam}/{maandnr}")
+	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam,@PathVariable(value = "maandnr") int maandNr) {
+		return urenDeclaratieService.maakEnKoppelAanAllen(maandNaam, maandNr);
+	}
+
+	/**		 					
+	 * 							// UPDATE EXISTING or CREATE NEW URENDECLARATIE by UDEC body
 	 * 1e.als er een ID meekomt, 2e. als er geen ID meekomt
 	 * @param Urendeclaratie object
 	 * @return het nieuwe Urendeclaratie object
@@ -97,37 +126,38 @@ public class UrendeclaratieEndpoints {
 
 		return urenDeclaratieService.postOrUpdateUrendeclaratie(u);
 	}
-
-
-
-	/** 3 * koppel een nieuw gegenereerd leeg form aan alle medewerkers
-	 * 
-	 * @param urendeclaratie object
-	 * @return statusbericht: gekoppeld
-	 * @AUTHOR Laszlo & Michiel!!!
+	/** 						
+	 * 						// CREATE 1 UDEC BY maandNaam, maandNr
+	 * @param	String maandNaam, int maandNr
+	 * @return	udec
 	 */
-	@PostMapping("/maakenkoppelaanallen/{maandnaam}/{maandnr}")
-	public String maakLegeUrendeclaratieEnKoppelAanAllen(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
-		return urenDeclaratieService.maakEnKoppelAanAllen(maandNaam, maandNr);
+	@GetMapping("/maakurendeclaratie/{maandnaam}/{maandnr}")
+	public Urendeclaratie maakLegeUrendeclaratie(@PathVariable(value = "maandnaam") String maandNaam, @PathVariable(value = "maandnr") int maandNr) {
+		return urenDeclaratieService.maakUrendeclaratieForm(maandNaam, maandNr);
 	}
 
-	/** 7 * UPDATE 1 GewerkteDag
-	 * 
+	/**
+	 * UPDATE STUFF // 
+	 */
+
+
+	/**
+	 * 							//	UPDATE 1 GewerkteDag
 	 */
 	@PutMapping("/gewerktedag/{dagId}")
 	public GewerkteDag updatePersoonDrDag(@PathVariable(value = "dagId") String dagId, @RequestBody GewerkteDag dagDetails) {
 		return dagService.updateDag(Long.parseLong(dagId), dagDetails);
 	}
-	
+
 	//=======================================================>> welicht overbodige functionaliteiten
-		/** 6 *	koppel een form aan een specifieke medewerker
-		 * 
-		 * @param formId
-		 * @param medewerkerId
-		 * @return gekoppeld formulier
-		 */
-//	@GetMapping("/koppelaanmedewerker/{udid}/{mwid}")
-//	public Urendeclaratie koppelZe(@PathVariable(value = "udid") String udid, @PathVariable(value = "mwid") String mwid){
-//		return urenDeclaratieService.koppelFormAanMedewerker(Long.parseLong(udid), Long.parseLong(mwid));
-//	}
+	/** 6 *	koppel een form aan een specifieke medewerker
+	 * 
+	 * @param formId
+	 * @param medewerkerId
+	 * @return gekoppeld formulier
+	 */
+//		@GetMapping("/koppelaanmedewerker/{udid}/{mwid}")
+//		public Urendeclaratie koppelZe(@PathVariable(value = "udid") String udid, @PathVariable(value = "mwid") String mwid){
+//			return urenDeclaratieService.koppelFormAanMedewerker(Long.parseLong(udid), Long.parseLong(mwid));
+//		}
 }
