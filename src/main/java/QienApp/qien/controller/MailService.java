@@ -42,8 +42,9 @@ public class MailService {
         mailMessage.setTo("rubenvanrij@gmail.com");
         mailMessage.setSubject("Goedkeuring vereist voor Qien trainee");
         mailMessage.setText(
-        		"Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" +
-                "http://localhost:8082/goedafkeuring.html?uid=" + urendeclaratieId + "\n\n" + "Met vriendelijke groet," + "\n\n" +  "Qien" );
+        		"Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" + "Ik heb mijn uren ingevuld. Dit is inzichtelijk via deze link: "
+                 + "http://localhost:8082/goedafkeuring.html?uid=" + urendeclaratieId + "Wil je dit controleren en vervolgens accoderen." + "\n\n" +
+                        "Alvast bedankt en een mooie werkdag!\n" + "Groet," + "\n\n" +  "Qien" );
 
         // Send mail
         mailSender.send(mailMessage);
