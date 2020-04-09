@@ -49,7 +49,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         Gebruiker gebruiker = new Admin();
         gebruiker.setEmail(DEFAULT_USER_USERNAME);
-        gebruiker.setWachtwoordHash(passwordEncoder().encode(DEFAULT_USER_PASSWORD));
+        gebruiker.setWachtwoordHash(DEFAULT_USER_PASSWORD);
         gebruikerService.addGebruiker(gebruiker);
     }
 
