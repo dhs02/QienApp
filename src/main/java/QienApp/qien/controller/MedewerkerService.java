@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import QienApp.qien.domein.Contactpersoon;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.Opdrachtgever;
+import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @Service
 @Transactional

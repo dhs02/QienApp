@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import QienApp.qien.controller.MedewerkerRepository;
 import QienApp.qien.domein.Medewerker;
 import QienApp.qien.domein.urenform.GewerkteDag;
+import QienApp.qien.domein.urenform.Status;
 import QienApp.qien.domein.urenform.Urendeclaratie;
 
 @Service
@@ -19,12 +20,12 @@ public class UrenDeclaratieService {
 	private GewerkteDagService gewerkteDagService;
 	@Autowired
 	private GewerkteDagRepository gewerkteDagRepository;
-	
+
 	// VIND ALLE URENDECLARATIEFORMULIEREN
 	public Iterable<Urendeclaratie> getAllUrendeclaraties() {
 		return urenDeclaratieRepository.findAll();
 	}
-	
+
 	/** 2 *
 	 * GET ONE URENDECLARATIE
 	 * @PARAM id	ID van een specifieke urendeclaratie
@@ -33,7 +34,7 @@ public class UrenDeclaratieService {
 	public Urendeclaratie getUrendeclaratie(long id) {
 		return urenDeclaratieRepository.findById(id).get();
 	}
-	
+
 	/** 2e VERSNELLING zoek met een field
 	 * 
 	 * @param maandNaam
@@ -42,16 +43,35 @@ public class UrenDeclaratieService {
 	public List<Urendeclaratie> byMaandNaam(String maandNaam) {
 		return urenDeclaratieRepository.findAllBymaandNaam(maandNaam);
 	}
-	
+
 	/** 1 *
 	 * UPDATEURENDECLARATIE
 	 * @param urendDeclaratieDetails	nieuw urendeclaratie object
 	 * @return ud						de aangepaste urendeclaratie		
 	 */
 	public Urendeclaratie postOrUpdateUrendeclaratie(Urendeclaratie urendeclaratie) {
+		//MICHIEL dit wordt een status switch
+		Status s = urendeclaratie.getStatus();
+		switch (s) {
+		case BESCHIKBAAR:
+			System.out.println("beschikbaar");
+			break;
+		case TER_GOEDKEURING:
+			break;
+		case 	GOEDGEKEURD:
+			break;
+
+		case 	AFGEKEURD:
+			break;
+		case 	AFGEROND:
+			break;
+		default:
+			break;
+		}
+		//MICHIEL nieuwe methode tot hier
 		return urenDeclaratieRepository.save(urendeclaratie);
 	}
-	
+
 	/** 2 *
 	 * MAAK EEN LEEG URENDECLARATIEFORMULIER, gevuld met dagen
 	 * @PARAM maandNaam		de naam van de maand waarvoor het formulier wordt aangemaakt
@@ -91,37 +111,41 @@ public class UrenDeclaratieService {
 		urenDeclaratieRepository.save(dezemaand);
 		return dezemaand;
 	}
-	
-	/** TEST * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
+
+	/**  
+	 * MAAK & KOPPEL EEN LEEG UREDEC VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
 	 * @param u		leeg urendeclaratieobject
 	 * @return		mededeling dat het gelukt is
 	 */
-	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) {
-		for (Medewerker persoon: medewerkerRepository.findAll()) {
+	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) 
+	{
+		for (Medewerker persoon: medewerkerRepository.findAll()) 
+		{
 			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
 			u.setMedewerker(persoon);
-			u.setStatus(QienApp.qien.domein.urenform.Status.BESCHIKBAAR);
+			u.setStatus(Status.BESCHIKBAAR);
 			//persoon.addUrendeclaratie(u);
 			urenDeclaratieRepository.save(u);
 			medewerkerRepository.save(persoon);
 		}
-		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+		return "Alle medewerkers kunnen nu de declaratie van "+
+				maandNaam + " gaan invullen";
 	}
-	
+
 	/** 3 * MAAK & KOPPEL EEN LEEG URENDECLARATIEOBJECT VOOR/AAN ALLE MEDEWERKERS IN DE DATABASE
 	 * @param u		leeg urendeclaratieobject
 	 * @return		mededeling dat het gelukt is
 	 */
-//	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) {
-//		for (Medewerker persoon: medewerkerRepository.findAll()) {
-//			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
-//			persoon.addUrendeclaratie(u);
-//			medewerkerRepository.save(persoon);
-//			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
-//			//urenDeclaratieRepository.save(u);
-//		}
-//		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
-//	}
+	//	public String maakEnKoppelAanAllen(String maandNaam, int maandNr) {
+	//		for (Medewerker persoon: medewerkerRepository.findAll()) {
+	//			Urendeclaratie u = maakUrendeclaratieForm(maandNaam, maandNr);
+	//			persoon.addUrendeclaratie(u);
+	//			medewerkerRepository.save(persoon);
+	//			//u.setMedewerker(persoon);  ==>>> TODO relatie is nog niet bidrectioneel
+	//			//urenDeclaratieRepository.save(u);
+	//		}
+	//		return "Alle medewerkers kunnen nu de declaratie van "+ maandNaam + " gaan invullen";
+	//	}
 
 	/** 3.
 	 * KOPPEL FORM AAN MEDEWERKER & SAVE
@@ -129,16 +153,16 @@ public class UrenDeclaratieService {
 	 * @param medewerkerId		
 	 * @return urendeclaratieformulier met eigenaar
 	 */
-//	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) {
-//		Urendeclaratie tempUd = getUrendeclaratie(formId);
-//		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
-//		System.out.println("DEBUG" + tempUd);
-//		System.out.println("DEBUG" + tempMw);
-//		//add FORM to MW
-//		tempMw.addUrendeclaratie(tempUd);
-//		//tempUd.setMedewerker(tempMw);
-//		
-//		//medewerkerRepository.save(tempMw);
-//		return urenDeclaratieRepository.save(tempUd);
-//	}
+	//	public Urendeclaratie koppelFormAanMedewerker(Long formId, Long medewerkerId) {
+	//		Urendeclaratie tempUd = getUrendeclaratie(formId);
+	//		Medewerker tempMw = medewerkerService.getMedewerkerById(medewerkerId);
+	//		System.out.println("DEBUG" + tempUd);
+	//		System.out.println("DEBUG" + tempMw);
+	//		//add FORM to MW
+	//		tempMw.addUrendeclaratie(tempUd);
+	//		//tempUd.setMedewerker(tempMw);
+	//		
+	//		//medewerkerRepository.save(tempMw);
+	//		return urenDeclaratieRepository.save(tempUd);
+	//	}
 }
