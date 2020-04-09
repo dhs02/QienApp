@@ -35,6 +35,7 @@ public class Gebruiker {
 	@ApiModelProperty(position = 7, value = "De plaatsnaam van een Gebruiker.")
 	private String plaats;
 	@ApiModelProperty(position = 8, value = "Het emailadres van een Gebruiker.")
+	@Column(unique = true)
 	private String email;
 	@ApiModelProperty(position = 9, value = "Het telefoonnummer van een Gebruiker.")
 	private String telefoonNummer;

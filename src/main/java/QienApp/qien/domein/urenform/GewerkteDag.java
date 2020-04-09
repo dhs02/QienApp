@@ -29,7 +29,6 @@ public class GewerkteDag {
 	private Date datum;
 	private int dagnr;
 	
-	
 	/* CLASS DIAGRAM SAYS:
 	- datum: LocalDate
 	- opdracht: float
@@ -40,9 +39,7 @@ public class GewerkteDag {
 	- overig: float
 	- verklaringOverig: String
 	*/
-	
-	//VEEL GETTERS & SETTERS
-	
+
 	public long getId() {
 		return id;
 	}
@@ -103,5 +100,4 @@ public class GewerkteDag {
 	public void setDagnr(int dagnr) {
 		this.dagnr = dagnr;
 	}
-
 }
