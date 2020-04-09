@@ -41,12 +41,12 @@ public class EmailEndpoints {
     @GetMapping("/{uid}/")
     public void maakMeeltje(@PathVariable(value = "uid") String urendeclaratieId) {
     	
-    	Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(urendeclaratieId);
+    	Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(Long.parseLong(urendeclaratieId));
     	System.out.println("udec id" + urendeclaratieId);
     	long contactpersoonId = u.getMedewerker().getContactpersoon().getId();
     	System.out.println("gelukt! contactpersoon id" + contactpersoonId);
     	
-        mailService.mailVersturen(contactpersoonId, urendeclaratieId);
+        mailService.mailVersturen(contactpersoonId, Long.parseLong(urendeclaratieId));
     }
 	
 
