@@ -39,7 +39,7 @@ public class MailService {
         // Create an email instance
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("rubenvanrij@gmail.com");
-        mailMessage.setTo(b.getEmail());
+        mailMessage.setTo("rubenvanrij@gmail.com");
         mailMessage.setSubject("Goedkeuring vereist voor Qien trainee");
         mailMessage.setText(
         		"Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" +
