@@ -85,6 +85,10 @@ public class GebruikerService {
 	    return gebruikerRepository.save(gebruiker);
 	}
 
+	public Optional<Gebruiker> findByEmail(String email) {
+		return this.gebruikerRepository.findByEmail(email);
+	}
+
 	public Gebruiker getByEmail(String email) {
 		System.out.println("GetByEmail in gebruikerService aangeroepen");
 		return gebruikerRepository.findByEmail(email).get();

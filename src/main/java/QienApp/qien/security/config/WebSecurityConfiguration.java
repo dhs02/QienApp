@@ -5,6 +5,7 @@ import QienApp.qien.domein.Admin;
 import QienApp.qien.domein.Gebruiker;
 import QienApp.qien.security.service.GebruikerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Value("${urenapp.default-admin.username}")
+    private String DEFAULT_USER_USERNAME;
+
+    @Value("${urenapp.default-admin.password}")
+    private String DEFAULT_USER_PASSWORD;
 
     @Autowired
     private GebruikerDetailsService gebruikerDetailsService;
@@ -31,6 +37,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    /* Creates admin user with default credentials,
+     * if it does not already exist. Don't forget to
+     * change the password.
+     */
+    @Autowired
+    public void configure(GebruikerService gebruikerService) {
+        if (gebruikerService.findByEmail(DEFAULT_USER_USERNAME).isPresent()) {
+            return;
+        }
+
+        Gebruiker gebruiker = new Admin();
+        gebruiker.setEmail(DEFAULT_USER_USERNAME);
+        gebruiker.setWachtwoordHash(DEFAULT_USER_PASSWORD);
+        gebruikerService.addGebruiker(gebruiker);
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -52,7 +73,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.GET, "/api/gebruikers/**").authenticated()
                         .antMatchers(HttpMethod.POST, "/api/gebruikers/**").hasRole("ADMIN")
                         .antMatchers(HttpMethod.PUT, "/api/gebruikers/me").hasRole("USER")
-                        .antMatchers(HttpMethod.PUT, "/api/gebruikers/**").hasRole("USER")
+                        .antMatchers(HttpMethod.PUT, "/api/gebruikers/**").hasRole("ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/api/gebruikers/**").hasRole("ADMIN")
 
                         .antMatchers(HttpMethod.GET, "/api/admins/**").authenticated()
