@@ -28,25 +28,21 @@ public class EmailEndpoints {
     private UrenDeclaratieService urenDeclaratieService;
 
     @GetMapping("/{cid}/{uid}/")
-    public void getEmail(@PathVariable(value = "cid") long contactpersoonId, @PathVariable(value = "uid") long urendeclaratieId) {
+    public void getMail(@PathVariable(value = "cid") long contactpersoonId, @PathVariable(value = "uid") long urendeclaratieId) {
         System.out.println(contactpersoonId);
         mailService.mailVersturen(contactpersoonId, urendeclaratieId);
     }
     
-    /**MICHIELS TESTMETHODE
-     * 
-     * @param emailBericht
-     * @param bindingResult
-     */
+
     @GetMapping("/{uid}/")
     public void maakMeeltje(@PathVariable(value = "uid") String urendeclaratieId) {
     	
-    	Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(urendeclaratieId);
+    	Urendeclaratie u = urenDeclaratieService.getUrendeclaratie(Long.parseLong(urendeclaratieId));
     	System.out.println("udec id" + urendeclaratieId);
     	long contactpersoonId = u.getMedewerker().getContactpersoon().getId();
     	System.out.println("gelukt! contactpersoon id" + contactpersoonId);
     	
-        mailService.mailVersturen(contactpersoonId, urendeclaratieId);
+        mailService.mailVersturen(contactpersoonId, Long.parseLong(urendeclaratieId));
     }
 	
 

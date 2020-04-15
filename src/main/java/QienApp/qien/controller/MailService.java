@@ -16,18 +16,14 @@ public class MailService {
     GebruikerRepository<Gebruiker> gebruikerRepository;
     @Autowired
     EmailCfg emailCfg;
-//    @Autowired
-//    EmailBericht emailBericht;
+    @Autowired
+    EmailBericht emailBericht;
 
     public void mailVersturen(long contactpersoonId, long urendeclaratieId){
-        System.out.println("email versturen");
-
 
         Optional<Gebruiker> contactpersoon = gebruikerRepository.findById(contactpersoonId);
 
         Gebruiker b = contactpersoon.orElse(null);
-        System.out.println(b.getEmail());
-
 
         // Create a mail sender
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -38,13 +34,13 @@ public class MailService {
 
         // Create an email instance
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("rubenvanrij@gmail.com");
-        mailMessage.setTo("rubenvanrij@gmail.com");
+        mailMessage.setFrom("email@placeholder.com");
+        mailMessage.setTo(b.getEmail());
         mailMessage.setSubject("Goedkeuring vereist voor Qien trainee");
         mailMessage.setText(
         		"Beste " + b.getVoornaam() + " " + b.getAchternaam() + "," + "\n\n" + "Ik heb mijn uren ingevuld. Dit is inzichtelijk via deze link: "
-                 + "http://localhost:8082/goedafkeuring.html?uid=" + urendeclaratieId + "Wil je dit controleren en vervolgens accoderen." + "\n\n" +
-                        "Alvast bedankt en een mooie werkdag!\n" + "Groet," + "\n\n" +  "Qien" );
+                 + "https://qienurenapp.brandlift.nl/landing.html" + urendeclaratieId + "Wil je dit controleren en vervolgens accorderen." + "\n\n" +
+                        "Alvast bedankt en een mooie werkdag!\n\n" + "Groet," + "\n\n" +  "Qien" );
 
         // Send mail
         mailSender.send(mailMessage);
