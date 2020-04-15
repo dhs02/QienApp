@@ -16,8 +16,8 @@ public class MailService {
     GebruikerRepository<Gebruiker> gebruikerRepository;
     @Autowired
     EmailCfg emailCfg;
-    @Autowired
-    EmailBericht emailBericht;
+    //@Autowired
+    //EmailBericht emailBericht;
 
     public void mailVersturen(long contactpersoonId, long urendeclaratieId){
 
